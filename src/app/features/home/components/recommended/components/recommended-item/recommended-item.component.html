@@ -1,0 +1,34 @@
+@let pastel = recommended();
+
+@if (pastel.isNew) {
+  <div class="relative z-10">
+    <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 badge badge-primary badge-sm">
+      ¡Recién llegado!
+    </span>
+  </div>
+}
+<div class="card bg-base-100 shadow-xl hover:scale-105 transition-transform h-full">
+  <figure>
+    <img [src]="pastel.image" [alt]="pastel.name + 'image'" />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title">
+      {{pastel.name}}
+    </h2>
+    <p>{{pastel.description}}</p>
+    <div class="card-actions justify-center">
+      <div class="tooltip tooltip-bottom">
+        <div class="tooltip-content">
+          <div class="animate-bounce text-orange-400 -rotate-1 text-md font-black">
+            {{ getRandomToolTip() }}
+          </div>
+        </div>
+        <button class="btn btn-wide btn-secondary text-secondary-content ">
+          <i class="fa-solid fa-clipboard"></i>
+          Ver más
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

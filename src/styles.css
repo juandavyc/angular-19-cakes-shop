@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+@plugin "daisyui"{
+  themes: cupcake --default, dark --prefersdark;
+}
+body {
+  font-family: 'Quicksand', sans-serif;
+}
+
+.container {
+  display: flex;
+  max-width: 80rem;
+  gap: 1rem; /* 16px */
+  padding: 1rem; /* 16px */
+  margin: 0 auto; /* Centrar en la pantalla */
+}
