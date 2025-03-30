@@ -7,6 +7,6 @@
   </div>
   <div class="drawer-side">
     <div (click)="toggleDrawer()" class="drawer-overlay"></div>
-    <app-sidebar />
+    <app-sidebar (toggle)="toggleDrawer()" />
   </div>
 </div>

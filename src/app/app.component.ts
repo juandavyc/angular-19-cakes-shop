@@ -23,7 +23,6 @@ export class AppComponent {
   public isOpen = signal<boolean>(false);
 
   public toggleDrawer(){
-    console.log("aaa")
     this.isOpen.update(value=>!value);
   }
 

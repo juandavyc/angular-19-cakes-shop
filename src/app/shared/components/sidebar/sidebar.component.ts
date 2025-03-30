@@ -1,4 +1,4 @@
-import {  Component } from '@angular/core';
+import {  Component, output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -12,5 +12,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent {
+
+  toggle = output<void>();
 
 }

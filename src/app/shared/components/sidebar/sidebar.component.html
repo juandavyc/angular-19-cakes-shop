@@ -1,22 +1,21 @@
-<ul class="menu bg-base-200 w-80 h-screen p-4 gap-3 pt-10 text-xl">
+<ul class="menu bg-base-200 w-80 h-screen p-4 gap-3 pt-10 text-xl" (click)="toggle.emit()">
   <li>
     <h1 class="sm:text-2xl text-2xl font-bold text-pink-600 text-outline-pink tracking-widest">
       Pasteleria JB
     </h1>
   </li>
   <li>
-    <a [routerLink]="['/']" routerLinkActive="menu-active">
-      <i class="fa-solid fa-house-chimney"></i>
+    <a [routerLink]="['/']" routerLinkActive="bg-accent text-accent-content" [routerLinkActiveOptions]="{exact:true}">
       Home
     </a>
   </li>
   <li>
-    <a [routerLink]="['/about-us']" routerLinkActive="menu-active">
+    <a [routerLink]="['/about-us']" routerLinkActive="bg-accent text-accent-content">
       Nosotros
     </a>
   </li>
   <li>
-    <a [routerLink]="['/shop']" routerLinkActive="menu-active" class="flex items-center gap-1">
+    <a [routerLink]="['/shop']" routerLinkActive="bg-accent text-accent-content" class="flex items-center gap-1">
       Tienda
       <span class="badge badge-xs badge-secondary relative -translate-y-1">
         <i class="fa-solid fa-cart-shopping"></i>
@@ -24,7 +23,7 @@
     </a>
   </li>
   <li>
-    <a [routerLink]="['/contact']" routerLinkActive="menu-active">
+    <a [routerLink]="['/contact']" routerLinkActive="bg-accent text-accent-content">
       Contactanos
     </a>
   </li>

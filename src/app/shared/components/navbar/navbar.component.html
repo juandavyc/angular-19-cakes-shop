@@ -3,23 +3,23 @@
     <h1 class="sm:text-3xl text-2xl font-bold text-pink-600 text-outline-pink tracking-widest" >Pasteleria JB</h1>
   </div>
   <div class="hidden flex-none lg:block">
-    <ul class="menu menu-horizontal gap-3">
+    <ul class="menu menu-horizontal gap-3 font-bold">
       <li>
         <input type="text" class="input input-sm" placeholder="Buscar">
       </li>
       <li>
-        <a [routerLink]="['/']" routerLinkActive="menu-active" [routerLinkActiveOptions]="{exact:true}">
+        <a [routerLink]="['/']" routerLinkActive="bg-accent text-accent-content" [routerLinkActiveOptions]="{exact:true}">
           <i class="fa-solid fa-house-chimney"></i>
           Home
         </a>
       </li>
       <li>
-        <a [routerLink]="['/about-us']" routerLinkActive="menu-active">
+        <a [routerLink]="['/about-us']" routerLinkActive="bg-accent text-accent-content">
           Nosotros
         </a>
       </li>
       <li>
-        <a [routerLink]="['/shop']" routerLinkActive="menu-active" class="flex items-center gap-1">
+        <a [routerLink]="['/shop']" routerLinkActive="bg-accent text-accent-content" class="flex items-center gap-1">
           Tienda
           <span class="badge badge-xs badge-secondary relative -translate-y-1">
             <i class="fa-solid fa-cart-shopping"></i>
@@ -27,14 +27,14 @@
         </a>
       </li>
       <li>
-        <a [routerLink]="['/contact']" routerLinkActive="menu-active">
+        <a [routerLink]="['/contact']" routerLinkActive="bg-accent text-accent-content">
           Contactanos
         </a>
       </li>
     </ul>
   </div>
   <div class="flex-none lg:hidden">
-    <button class="btn btn-soft btn-accent text-accent-content" (click)="toggle.emit()">
+    <button class="btn btn-accent text-accent-content btn-md" (click)="toggle.emit()">
       <i class="fa-solid fa-bars"></i>
     </button>
   </div>
