@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @plugin "daisyui"{
-  themes: cupcake --default, dark --prefersdark;
+  themes: cupcake;
 }
 body {
   font-family: 'Quicksand', sans-serif;
@@ -14,3 +14,4 @@ body {
   padding: 1rem; /* 16px */
   margin: 0 auto; /* Centrar en la pantalla */
 }
+

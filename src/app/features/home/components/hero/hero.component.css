@@ -9,3 +9,7 @@
 .animate-soft-bounce {
   animation: softBounce 1.2s infinite ease-in-out;
 }
+
+h1{
+  font-family: "Playfair Display", serif;
+}

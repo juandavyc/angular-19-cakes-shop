@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import { ASSETS } from '@core/assets';
 import { Recommended } from './interfaces/recommended.interface';
 import { RecommendedItemComponent } from './components/recommended-item/recommended-item.component';
+import { HeroTitleComponent } from '@shared/components/hero-title/hero-title.component';
 
 
 @Component({
   selector: 'recommended',
   imports: [
     RecommendedItemComponent,
+    HeroTitleComponent
   ],
   templateUrl: './recommended.component.html',
   styleUrl: './recommended.component.css',
@@ -15,7 +17,10 @@ import { RecommendedItemComponent } from './components/recommended-item/recommen
 })
 export class RecommendedComponent {
 
-  public title = 'Nuestros clientes aman estos sabores';
+  public dataAOS =['fade-right', 'fade-up', 'fade-up', 'fade-left'];
+
+  public title = 'Recomendados';
+  public subtitle = 'Nuestros clientes aman estos sabores';
 
   public recommendedList: Recommended[] = [
     {

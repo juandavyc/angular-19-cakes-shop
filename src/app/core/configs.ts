@@ -7,5 +7,10 @@ export const CONFIG = {
   '¡Se ve delicioso!',
   '¡Este es perfecto para ti!',
   '¡Si, Sii este es!'
-  ]
+  ],
+  STATS:{
+    cakes:600,
+    years:'5 Años',
+    rating:4.8
+  }
 };
