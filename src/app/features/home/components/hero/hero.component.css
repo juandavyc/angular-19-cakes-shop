@@ -1,6 +1,3 @@
-:host {
-  display: block;
-}
 @keyframes softBounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-3px); } /* Rebote más pequeño */
