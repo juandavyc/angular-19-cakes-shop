@@ -17,7 +17,7 @@ import { HeroTitleComponent } from '@shared/components/hero-title/hero-title.com
 })
 export class RecommendedComponent {
 
-  public dataAOS =['fade-right', 'fade-up', 'fade-up', 'fade-left'];
+  public dataAOS =['fade-right', 'fade-up', 'fade-up', 'fade-right'];
 
   public title = 'Recomendados';
   public subtitle = 'Nuestros clientes aman estos sabores';
