@@ -1,9 +1,12 @@
 import { Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { FooterComponent } from '@shared/components/footer/footer.component';
-import { isPlatformBrowser } from '@angular/common';
+import { BreadcrumbComponent } from '@shared/components/breadcrumb/breadcrumb.component';
+
 import AOS from 'aos';
 
 @Component({
@@ -11,6 +14,7 @@ import AOS from 'aos';
   imports: [
     NavbarComponent,
     SidebarComponent,
+    BreadcrumbComponent,
     RouterOutlet,
     FooterComponent,
   ],

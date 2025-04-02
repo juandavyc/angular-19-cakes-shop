@@ -16,9 +16,9 @@ export const ASSETS ={
     'images/category-4.jpg',
     'images/category-5.jpg',
     'images/category-6.jpg',
+  ],
+  ABOUTUS:[
+    'images/about-us-0.jpg',
+    'images/about-us-1.jpg',
   ]
-
-
-
-
-}
+};

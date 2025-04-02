@@ -2,6 +2,7 @@
   <input type="checkbox" [checked]="isOpen()" (change)="toggleDrawer()" class="drawer-toggle" />
   <div class="drawer-content flex flex-col">
     <app-navbar (toggle)="toggleDrawer()" />
+    <app-breadcrumb />
     <router-outlet />
     <app-footer />
   </div>

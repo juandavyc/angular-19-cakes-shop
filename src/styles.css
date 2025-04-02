@@ -8,10 +8,6 @@ body {
 }
 
 .container {
-  display: flex;
-  max-width: 80rem;
-  gap: 1rem; /* 16px */
-  padding: 1rem; /* 16px */
-  margin: 0 auto; /* Centrar en la pantalla */
+  margin: 0 auto;
 }
 

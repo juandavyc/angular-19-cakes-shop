@@ -1,0 +1,22 @@
+
+@if(breadcrumbs().length>0){
+  <div class="breadcrumbs text-sm px-3 py-5">
+    <ul>
+      @for (breadcrumb of breadcrumbs(); track $index; let last = $last; let firts = $first;) {
+        <li>
+          @if(last){
+            {{breadcrumb.title}}
+          }
+          @else{
+            @if(firts){
+              <i class="fa-solid fa-house-chimney fa-sm pe-1 text-accent-content/50"></i>
+            }
+            <a class="text-accent-content font-semibold" [routerLink]="breadcrumb.path">
+              {{breadcrumb.title}}
+            </a>
+          }
+        </li>
+      }
+    </ul>
+  </div>
+}

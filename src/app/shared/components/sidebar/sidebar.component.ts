@@ -1,5 +1,6 @@
 import {  Component, output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { CONFIG } from '@core/configs';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,6 +14,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class SidebarComponent {
 
+  name = CONFIG.APP_NAME;
   toggle = output<void>();
 
 }

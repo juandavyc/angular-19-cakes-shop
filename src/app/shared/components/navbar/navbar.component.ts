@@ -1,5 +1,6 @@
 import { Component, output, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { CONFIG } from '@core/configs';
 
 @Component({
   selector: 'app-navbar',
@@ -13,6 +14,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class NavbarComponent {
 
+  name = CONFIG.APP_NAME;
   toggle = output<void>();
 
 }

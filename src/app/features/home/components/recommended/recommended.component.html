@@ -1,5 +1,8 @@
 <div class="container py-10 flex flex-col gap-5">
-    <hero-title [title]="title" [subtitle]="subtitle" />
+    <hero-title [title]="title" [subtitle]="subtitle"
+      data-aos="fade-right"
+      data-aos-offset="100"
+      data-aos-duration="500" />
     <div class="grid sm:gap-6 gap-10 sm:grid-cols-2 lg:grid-cols-4 justify-center">
       @for (recommended of recommendedList; track $index; let i = $index;) {
         <recommended-item [recommended]="recommended" [attr.data-aos]="dataAOS[i]"/>
