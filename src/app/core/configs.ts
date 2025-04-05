@@ -14,13 +14,13 @@ export const CONFIG = {
     rating: 4.8
   },
   SOCIAL: {
-    title:{
+    title: {
       facebook: 'Pastelería JB',
       instagram: 'Pastelería J.B',
       tiktok: 'johanna.bonilla3',
       whatsapp: '311 238 8851',
     },
-    url:{
+    url: {
       facebook: 'https://www.facebook.com/profile.php?id=100065153166630',
       instagram: 'https://www.instagram.com/pasteleriajb2024/',
       tiktok: 'https://www.tiktok.com/@johanna.bonilla3',
@@ -30,5 +30,51 @@ export const CONFIG = {
   CREDITS: {
     name: 'juandavyc',
     url: 'http://juandavyc.netlify.app'
+  },
+  SHOP: {
+    DEFAULTS: {
+      occasion: 'todas-las-ocasiones',
+      category: 'todas-las-categorias',
+      title: '',
+      min_price: '',
+      max_price: '',
+      minPrice: '',
+      maxPrice: '',
+      sort: 'created',
+      limit: '9',
+    },
+    SORT:[
+      'created',
+      'min_price',
+      'max_price'
+    ],
+    LIMIT:[
+      9,
+      12,
+      15
+    ],
+    OCCASIONS: [
+      'todas-las-ocasiones', //dont delete this
+      'aniversarios',
+      'baby-shower',
+      'corporativos',
+      'cumpleanios',
+      'grados',
+      'matrimonio',
+      'personalizados',
+      'regalos',
+    ],
+    CATEGORIES: [
+      'todas-las-categorias', //dont delete this
+      'anchetas',
+      'chocolates',
+      'cupcakes',
+      'desayunos',
+      'panaderia',
+      'pateles',
+      'postres',
+      'tortas',
+      'yogurt'
+    ]
   }
 };

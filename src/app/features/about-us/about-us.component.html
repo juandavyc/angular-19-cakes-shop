@@ -1,103 +1,30 @@
 <div class="flex justify-center my-5">
   <hero-title [title]="title" [subtitle]="subtitle" class="text-center" />
 </div>
+
 <section class="my-10">
   <div class="container bg-white rounded-xl shadow-lg border-base-200 border-[1px] p-10">
     <div class="grid lg:grid-cols-2 grid-cols-1 gap-3">
       <div class="sm:order-1 order-2">
-        <p class="text-justify">
-          <strong class="text-lg">¡Hola! Soy Johanna Bonilla, creadora de Pastelería JB</strong>
-          <br><br>
-          Desde siempre, la repostería ha sido mi gran pasión.
-          <br><br>
-          Comencé este hermoso proyecto en 2024, con el sueño de endulzar momentos especiales y compartir mi amor por los postres con cada
-          persona que prueba mis creaciones.
-          <br><br>
-          <strong>Gracias por apoyar este sueño.</strong>
-          <br><br>
-        </p>
+        <overview />
       </div>
-
       <div class="lg:order-2 order-1">
-        <figure class="diff aspect-video rounded-3xl lg:h-[244px] h-[125px]" tabindex="0">
-          <div class="diff-item-1" role="img">
-            <img alt="about us left image" [src]="diffLeft" />
-          </div>
-          <div class="diff-item-2" role="img" tabindex="0">
-            <img alt="about-us right image" [src]="diffRight" />
-          </div>
-          <div class="diff-resizer"></div>
-        </figure>
+        <overview-images [left]="left" [right]="right" />
       </div>
     </div>
 
-    <div class="divider divider-accent text-accent-content font-semibold my-10">Preguntas y respuestas</div>
+    <div class="divider divider-accent text-accent-content font-semibold my-10">
+      Preguntas y respuestas
+    </div>
 
     <div class="flex justify-center">
       <div class="max-w-5xl w-full bg-[#E1EEE9] rounded-4xl px-3 py-10">
-        <div class="chat chat-end w-full">
-          <div class="chat-bubble w-fit bg-[#D9FDD3] text-black shadow-sm">
-            ¡Hola! Johanna, estas lista para las preguntas?
-          </div>
-        </div>
-        <div class="chat chat-start w-full" data-aos="fade-right">
-          <div class="chat-bubble w-fit bg-white shadow-sm">
-            Si si, dale!
-          </div>
-        </div>
-        <div class="chat chat-end w-full" data-aos="fade-up">
-          <div class="chat-bubble w-fit bg-[#D9FDD3] shadow-sm">
-            ¿Cómo nació la pastelería?
-          </div>
-        </div>
-        <div class="chat chat-start w-full" data-aos="fade-right">
-          <div class="chat-bubble w-fit bg-white shadow-sm">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias, fugiat!
-          </div>
-        </div>
-        <div class="chat chat-end w-full" data-aos="fade-up">
-          <div class="chat-bubble w-fit bg-[#D9FDD3] shadow-sm">
-            ¿Qué te inspiró a hacer pasteles?
-          </div>
-        </div>
-        <div class="chat chat-start w-full" data-aos="fade-right">
-          <div class="chat-bubble w-fit bg-white shadow-sm">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi harum illo iure!
-          </div>
-        </div>
-
-        <div class="chat chat-end w-full" data-aos="fade-up">
-          <div class="chat-bubble w-fit bg-[#D9FDD3] shadow-sm">
-            ¿Por qué amas hacer pasteles?
-          </div>
-        </div>
-
-        <div class="chat chat-start w-full" data-aos="fade-right">
-          <div class="chat-bubble w-fit bg-white shadow-sm">
-           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, ducimus?
-          </div>
-        </div>
-
-        <div class="chat chat-end w-full" data-aos="fade-up">
-          <div class="chat-bubble w-fit bg-[#D9FDD3] shadow-sm">
-            ¿Qué sueñas lograr con Pastelería JB en el futuro?
-          </div>
-        </div>
-        <div class="chat chat-start w-full" data-aos="fade-right">
-          <div class="chat-bubble w-fit bg-white shadow-sm">
-            Lorem ipsum dolor sit amet consectetur.
-          </div>
-        </div>
-        <div class="chat chat-end w-full" data-aos="fade-up">
-          <div class="chat-bubble w-fit bg-[#D9FDD3] shadow-sm">
-           ¡Gracias por las respuetas!
-          </div>
-        </div>
-        <div class="chat chat-start w-full" data-aos="fade-right">
-          <div class="chat-bubble w-fit bg-white shadow-sm">
-            Lorem ipsum dolor.
-          </div>
-        </div>
+        @for (chat of chats; track $index;let i = $index;) {
+          <chat-item
+            [isSender]="chat.isSender"
+            [message]="chat.message"
+            [attr.data-aos]="chat.isSender | chatAosAnimation: i " />
+        }
       </div>
     </div>
   </div>

@@ -1,55 +1,147 @@
-<div class="bg-white">
-  <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-    <h2 class="text-2xl font-bold tracking-tight text-gray-900">Customers also purchased</h2>
-
-    <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-      <div class="group relative ">
-        <img src="images/category-0.jpg" alt="Front of men&#039;s Basic Tee in black." class="aspect-square w-full rounded-4xl bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80 ">
-        <div class="mt-4 flex justify-between">
-          <div>
-            <h3 class="text-sm text-gray-700">
-              <a href="#">
-                <span aria-hidden="true" class="absolute inset-0"></span>
-                Basic Tee
-              </a>
-            </h3>
-            <p class="mt-1 text-sm text-gray-500">Black</p>
-          </div>
-          <p class="text-sm font-medium text-gray-900">$35</p>
-        </div>
-      </div>
-      <div class="group relative ">
-        <img src="images/category-1.jpg" alt="Front of men&#039;s Basic Tee in black." class="aspect-square w-full rounded-4xl bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80 ">
-        <div class="mt-4 flex justify-between">
-          <div>
-            <h3 class="text-sm text-gray-700">
-              <a href="#">
-                <span aria-hidden="true" class="absolute inset-0"></span>
-                Basic Tee
-              </a>
-            </h3>
-            <p class="mt-1 text-sm text-gray-500">Black</p>
-          </div>
-          <p class="text-sm font-medium text-gray-900">$35</p>
-        </div>
-      </div>
-      <div class="group relative ">
-        <img src="images/category-2.jpg" alt="Front of men&#039;s Basic Tee in black." class="aspect-square w-full rounded-4xl bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80 ">
-        <div class="mt-4 flex justify-between">
-          <div>
-            <h3 class="text-sm text-gray-700">
-              <a href="#">
-                <span aria-hidden="true" class="absolute inset-0"></span>
-                Basic Tee
-              </a>
-            </h3>
-            <p class="mt-1 text-sm text-gray-500">Black</p>
-          </div>
-          <p class="text-sm font-medium text-gray-900">$35</p>
-        </div>
-      </div>
-      <!-- More products... -->
-    </div>
-  </div>
+<div class="flex flex-col justify-center my-5">
+  <hero-title [title]="title" [subtitle]="subtitle" class="text-center" />
+  <p class="text-center italic">- Socrates</p>
 </div>
 
+<section class="my-10">
+
+  <div class="bg-white shadow-lg border-base-200 border-[1px] sm:p-10 p-5">
+
+    <div class="grid grid-cols-1 md:grid-cols-[300px_auto] gap-4">
+      <!-- filters -->
+      <form [formGroup]="myForm">
+        <div class="border-e-2 border-accent">
+          <div class="flex flex-col gap-3 me-3">
+            <label class="font-semibold">Titulo</label>
+            <input type="text" class="input" placeholder="Pastel de rutos rojos" formControlName="title" />
+            @if (isInvalidField('title')){
+            <p class="text-error text-sm text-shadow-sm">{{getErrorField('title')}}</p>
+            }
+            <label class="font-semibold">Precios</label>
+            <div class="grid grid-cols-2 gap-3 ">
+              <input type="text" class="input" placeholder="Minimo" formControlName="minPrice" />
+              <input type="text" class="input" placeholder="Maximo" formControlName="maxPrice" />
+              <div>
+                @if (isInvalidField('minPrice')){
+                  <p class="text-error text-sm text-shadow-sm">{{getErrorField('minPrice')}}</p>
+                }
+              </div>
+              <div>
+                @if (isInvalidField('maxPrice')){
+                  <p class="text-error text-sm text-shadow-sm">{{getErrorField('maxPrice')}}</p>
+                }
+              </div>
+            </div>
+            <label class="font-semibold">Categorias</label>
+            <div class="flex flex-col gap-3">
+              @for (category of CATEGORIES; track $index) {
+                <label class="flex items-center gap-2">
+                  <input type="radio" name="category" [value]="category" class="radio" formControlName="category" />
+                  <span class="cursor-pointer">{{category | titlecase}}</span>
+                </label>
+              }
+            </div>
+            @if (isInvalidField('category')){
+              <p class="text-error text-sm text-shadow-sm">{{getErrorField('category')}}</p>
+            }
+            <label class="font-semibold">Momentos</label>
+            <div class="flex flex-wrap gap-2">
+              @for (occasion of OCCASIONS; track $index) {
+                <input
+                  type="radio"
+                  name="occasion"
+                  class="join-item btn"
+                  [value]="occasion" [attr.aria-label]="occasion | titlecase"
+                  formControlName="occasion"/>
+              }
+
+            </div>
+            @if (isInvalidField('occasion')){
+              <p class="text-error text-sm text-shadow-sm">{{getErrorField('occasion')}}</p>
+            }
+          </div>
+          <!-- <div class="my-5">
+            <button class="btn btn-neutral" (click)="onSubmit()"> buscar </button>
+          </div> -->
+        </div>
+      </form>
+      <!-- @for (item of [1,2,3,4,5]; track $index; let even = $even; ) {
+
+            <div class="flex flex-col">
+              <div class="skeleton aspect-[4/3] w-full"></div>
+              <div class="flex flex-col gap-3 my-5">
+                <div class="skeleton h-7 w-full"></div>
+                <div class="skeleton h-7 w-1/2"></div>
+                <div class="skeleton h-7 w-1/3"></div>
+              </div>
+            </div>
+        } -->
+
+      <div class="flex flex-col gap-3">
+        <label class="text-right"> Mostrando 1 - 12 de 20 resultados</label>
+        <div class="flex sm:flex-row flex-col gap-3 justify-end" [formGroup]="myForm">
+          <label class="select w-auto">
+            <span class="label min-w-[77px]">Orden</span>
+            <select formControlName="sort">
+              <option value="created">Creado</option>
+              <option value="min_price">Precio mas Bajo</option>
+              <option value="max_price">Precio mas Alto</option>
+            </select>
+          </label>
+          <label class="select w-auto">
+            <span class="label min-w-[77px]">Mostrar</span>
+            <select formControlName="limit">
+              <option value="9">9</option>
+              <option value="12">12</option>
+              <option value="15">15</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+
+          @for (item of [1,2,3,4,5]; track $index; let even = $even; ) {
+          <div class="card bg-[#FFFDFB] border border-base-200 hover:border-neutral">
+            <figure>
+              <a href="#" class="hover:opacity-75">
+                @if(even){
+                <img class="object-cover w-full aspect-[4/3] " src="images/category-1.jpg" alt="Shoes" />
+                }
+                @else{
+                <img class="object-cover w-full aspect-[4/3] " src="images/about-us-0.jpg" alt="Shoes" />
+                }
+              </a>
+            </figure>
+            <div class="card-body flex flex-col flex-grow sm:text-base md:text-lg">
+              <h3 class=" text-gray-700 font-semibold">
+                @if(even){
+                <a href="" class="hover:text-pink-500">Pastel 3 leches ¡rico y cremoso ohh si ohh que ricoo!</a>
+                }
+                @else{
+                <a href="" class="hover:text-pink-500">Pastel 3 leches ¡rico y cremoso!</a>
+                }
+              </h3>
+              <div class="flex flex-row gap-3 text-gray-600 mt-auto">
+                <span class="">$150.000</span>
+                -
+                <span class="">$250.000</span>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+
+        <div class="flex justify-center items-center">
+          <div class="join">
+            <button class="join-item btn">«</button>
+            <button class="join-item btn">1</button>
+            <button class="join-item btn btn-primary">2</button>
+            <button class="join-item btn">3</button>
+            <button class="join-item btn">4</button>
+            <button class="join-item btn">»</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

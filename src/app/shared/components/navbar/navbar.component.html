@@ -5,14 +5,16 @@
     </h1>
   </div>
   <div class="hidden flex-none lg:block">
-    <ul class="menu menu-horizontal gap-2 font-bold">
+    <ul class="menu menu-horizontal font-bold gap-1">
       <li>
-        <input type="text" class="input input-sm" placeholder="Buscar">
+        <button class="btn btn-soft btn-sm">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
       </li>
       <li>
         <a [routerLink]="['/']" routerLinkActive="bg-accent text-accent-content" [routerLinkActiveOptions]="{exact:true}">
           <i class="fa-solid fa-house-chimney"></i>
-          Home
+          Inicio
         </a>
       </li>
       <li>
@@ -21,12 +23,15 @@
         </a>
       </li>
       <li>
-        <a [routerLink]="['/shop']" routerLinkActive="bg-accent text-accent-content" class="flex items-center gap-1">
+        <a [routerLink]="['/shop']" routerLinkActive="bg-accent text-accent-content">
+          Tienda
+        </a>
+        <!-- <a [routerLink]="['/shop']" routerLinkActive="bg-accent text-accent-content" class="flex items-center gap-1">
           Tienda
           <span class="badge badge-xs badge-secondary relative -translate-y-1">
             <i class="fa-solid fa-cart-shopping"></i>
           </span>
-        </a>
+        </a> -->
       </li>
       <li>
         <a [routerLink]="['/contact']" routerLinkActive="bg-accent text-accent-content">

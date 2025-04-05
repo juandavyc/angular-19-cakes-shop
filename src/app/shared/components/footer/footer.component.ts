@@ -30,5 +30,4 @@ export class FooterComponent {
   public tiktok = CONFIG.SOCIAL.title.tiktok;
   public whatsapp = CONFIG.SOCIAL.title.whatsapp;
 
-
 }

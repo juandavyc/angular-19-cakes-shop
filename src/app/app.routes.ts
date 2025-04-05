@@ -1,9 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
 import { AboutUsComponent } from './features/about-us/about-us.component';
-import { ShopComponent } from './features/shop/shop.component';
 import { ContactComponent } from './features/contact/contact.component';
-import { title } from 'process';
 
 export const routes: Routes = [
 
@@ -16,13 +14,11 @@ export const routes: Routes = [
     component: AboutUsComponent,
     data: { title: 'About us' }
   },
-
   {
     path: 'shop',
-    component: ShopComponent,
+    loadChildren: () => import('./features/shop/shop.routes'),
     data: { title: 'Shop' }
   },
-
   {
     path: 'contact',
     component: ContactComponent,

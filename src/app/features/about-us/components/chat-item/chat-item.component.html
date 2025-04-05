@@ -1,0 +1,16 @@
+@if(isSender()){
+  <!-- data-aos="fade-up" -->
+  <div class="chat chat-end w-full" >
+    <div class="chat-bubble w-fit bg-[#D9FDD3] shadow-sm">
+      {{message()}}
+    </div>
+  </div>
+}
+@else{
+  <!-- data-aos="fade-right" -->
+  <div class="chat chat-start w-full">
+    <div class="chat-bubble w-fit bg-white shadow-sm">
+      {{message()}}
+    </div>
+  </div>
+}

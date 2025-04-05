@@ -10,4 +10,7 @@ body {
 .container {
   margin: 0 auto;
 }
-
+/*
+.input, .textarea{
+  background: white;
+} */
