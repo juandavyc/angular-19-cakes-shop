@@ -1,16 +1,20 @@
-import { ChangeDetectionStrategy, Component, effect, inject, linkedSignal, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, signal } from '@angular/core';
 import { HeroTitleComponent } from '@shared/components/hero-title/hero-title.component';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
-import { FormValidatorService } from '@core/services/form-validator.service';
-import { digitsOnlyValidator } from '@core/validators/digits-only.validator';
-import { TitleCasePipe } from '@angular/common';
-import { debounceTime, distinctUntilChanged, filter, map, of, startWith, tap } from 'rxjs';
-import { ShopService } from './services/shop.service';
-import { CONFIG } from '@core/configs';
-import { ActivatedRoute, Router } from '@angular/router';
-import { QueryParamsKeys } from './enums';
 
+import { debounceTime, distinctUntilChanged, filter, map, Observable, of, startWith, tap } from 'rxjs';
+import { ShopService } from './services/shop.service';
+
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormFilterService } from './services/form-filter.service';
+import { BasicFormComponent } from './components/basic-form/basic-form.component';
+import { AdvancedFormComponent } from './components/advanced-form/advanced-form.component';
+import { BuildUrlsService } from './services/build-urls.service';
+import { QueryParamsKeys } from './enums';
+import { PaginationService } from '@shared/service/pagination.service';
+import { ShopResponse } from './interfaces';
+import { PaginationResponse } from '@shared/interfaces';
+import { PaginationFormComponent } from './components/pagination-form/pagination-form.component';
 
 // interface FormData{
 
@@ -25,8 +29,11 @@ import { QueryParamsKeys } from './enums';
   selector: 'app-shop',
   imports: [
     HeroTitleComponent,
-    ReactiveFormsModule,
-    TitleCasePipe,
+    // components
+    BasicFormComponent,
+    AdvancedFormComponent,
+    PaginationFormComponent,
+
   ],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.css',
@@ -37,44 +44,25 @@ export class ShopComponent {
   title = 'Tienda';
   subtitle = '"La felicidad tiene sabor a pastel recién horneado"';
 
-  readonly OCCASIONS = CONFIG.SHOP.OCCASIONS;
-  readonly CATEGORIES = CONFIG.SHOP.CATEGORIES;
-
-  private fb = inject(FormBuilder);
-
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
 
   private shopService = inject(ShopService);
-  private formValidatorService = inject(FormValidatorService);
+  private formFilterService = inject(FormFilterService);
+  private buildUrlsService = inject(BuildUrlsService);
 
-  public myForm = this.fb.group({
-    title: ['',
-      [Validators.minLength(2), Validators.maxLength(50)]
-    ],
-    minPrice: ['',
-      [Validators.minLength(4), Validators.maxLength(7), digitsOnlyValidator()]
-    ],
-    maxPrice: ['',
-      [Validators.minLength(4), Validators.maxLength(7), digitsOnlyValidator()]
-    ],
-    category: [this.CATEGORIES[0], Validators.required],
-    occasion: [this.OCCASIONS[0], Validators.required],
-    sort: ['created', Validators.required],
-    limit: ['9', Validators.required]
-  });
-
+  private paginationService = inject(PaginationService);
 
   private httpPathParams = toSignal(
     this.activatedRoute.paramMap.pipe(
-      map(params => this.shopService.getOccasionParam(params)),
+      map(params => this.buildUrlsService.getOccasionParam(params)),
       tap((occasion) => {
-        if (!this.shopService.isValidOccasion(occasion)) {
+        if (!this.buildUrlsService.isValidOccasion(occasion)) {
           this.router.navigate(['/shop']);
         }
       }),
       tap((occasion) => {
-        this.myForm.patchValue({
+        this.formFilterService.form.patchValue({
           occasion
         }, { emitEvent: false })
       })
@@ -84,19 +72,20 @@ export class ShopComponent {
   private httpQueryParams = toSignal(
     this.activatedRoute.queryParams.pipe(
       map(params => ({
-        title: this.shopService.getQueryParam(params, QueryParamsKeys.TITLE),
-        minPrice: this.shopService.getQueryParam(params, QueryParamsKeys.MIN_PRICE),
-        maxPrice: this.shopService.getQueryParam(params, QueryParamsKeys.MAX_PRICE),
-        category: this.shopService.getQueryParam(params, QueryParamsKeys.CATEGORY),
-        sort: this.shopService.getQueryParam(params, QueryParamsKeys.SORT),
-        limit: this.shopService.getQueryParam(params, QueryParamsKeys.LIMIT),
+        title: this.buildUrlsService.getQueryParam(params, QueryParamsKeys.TITLE),
+        minPrice: this.buildUrlsService.getQueryParam(params, QueryParamsKeys.MIN_PRICE),
+        maxPrice: this.buildUrlsService.getQueryParam(params, QueryParamsKeys.MAX_PRICE),
+        category: this.buildUrlsService.getQueryParam(params, QueryParamsKeys.CATEGORY),
+        sort: this.buildUrlsService.getQueryParam(params, QueryParamsKeys.SORT),
+        size: this.buildUrlsService.getQueryParam(params, QueryParamsKeys.SIZE),
+        page: this.buildUrlsService.getQueryParam(params, QueryParamsKeys.PAGE),
       })),
       tap(params => {
-        if (this.myForm.invalid) {
+        if (this.formFilterService.form.invalid) {
           this.router.navigate(['/shop']);
         }
         else {
-          this.myForm.patchValue({
+          this.formFilterService.form.patchValue({
             ...params
           }, { emitEvent: false })
         }
@@ -104,41 +93,49 @@ export class ShopComponent {
     )
   )
 
-  isInvalidField(field: string): boolean | null {
-    return this.formValidatorService.isInvalidField(this.myForm, field);
-  }
-  getErrorField(field: string): string | null {
-    return this.formValidatorService.getErrorField(this.myForm, field);
-  }
-
   private myFormSignal = toSignal(
-    this.myForm.valueChanges
+    this.formFilterService.form.valueChanges
       .pipe(
         debounceTime(1000),
         distinctUntilChanged(),
-        startWith(this.myForm.value),
-        filter(() => this.myForm.valid),
-
+        startWith(this.formFilterService.form.value),
+        filter(() => this.formFilterService.form.valid),
       )
   )
 
-  cakesRxResource = rxResource({
+  public shopPagination = linkedSignal({
+    source: () => this.shopRxResource,
+    computation: (source): PaginationResponse | null => {
+      if (source.error()) return { message: 'Error', pagination: null };
+      if (source.hasValue()) return this.paginationService.getPagination(source.value().pageInformation);
+      return { message: 'Cargando...', pagination: null };
+    }
+  })
+
+
+  public shopRxResource = rxResource({
     request: () => ({ form: this.myFormSignal() }),
-    loader: ({ request }) => {
+    loader: (params): Observable<ShopResponse> => {
+
+      const { request } = params;
       if (request.form) {
-
-        const {occasion, ...requestForm} = request.form;
-
-        const pathParams = this.shopService.buildPathParams(occasion);
-
-        const queryParams = this.shopService.buildQueryParams(requestForm);
+        const { occasion, ...requestForm } = request.form;
+        const pathParams = this.buildUrlsService.buildPathParams(occasion);
+        const queryParams = this.buildUrlsService.buildQueryParams(requestForm);
+        const httpRequest = this.buildUrlsService.buildQueryBackend([...pathParams], { ...queryParams });
         this.router.navigate(pathParams, {
           queryParams,
         });
-        return this.shopService.getCakes(request.form);
+
+        return this.shopService.getCakes(httpRequest);
       }
-      return of([]);
+      else {
+        return this.shopService.getEmptyShop();
+      }
     }
   })
+
+
+
 
 }

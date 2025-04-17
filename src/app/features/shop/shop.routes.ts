@@ -1,15 +1,27 @@
 import { Routes } from "@angular/router";
 import { ShopComponent } from "./shop.component";
+import { ShopLayoutComponent } from "./layouts/shop-layout/shop-layout.component";
 
 const ShopRoutes: Routes = [
   {
     path: '',
-    component: ShopComponent
+    component: ShopLayoutComponent,
+    children: [
+      {
+        path: '',
+        component: ShopComponent,
+      },
+      {
+        path: ':occasion',
+        component: ShopComponent,
+      },
+      {
+        path: '**',
+        redirectTo: ''
+      }
+    ]
   },
-  {
-    path: ':occasion',
-    component: ShopComponent
-  },
+
   {
     path: '**',
     redirectTo: ''

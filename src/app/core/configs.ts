@@ -33,22 +33,36 @@ export const CONFIG = {
   },
   SHOP: {
     DEFAULTS: {
-      occasion: 'todas-las-ocasiones',
-      category: 'todas-las-categorias',
-      title: '',
-      min_price: '',
-      max_price: '',
-      minPrice: '',
-      maxPrice: '',
-      sort: 'created',
-      limit: '9',
+
+      form: {
+        occasion: 'todas-las-ocasiones',
+        category: 'todas-las-categorias',
+        title: '',
+        minPrice: '',
+        maxPrice: '',
+        sort: 'created',
+        size: '9',
+      },
+      url: {
+        occasion: 'todas-las-ocasiones',
+        category: 'todas-las-categorias',
+        title: '',
+        "min-price": '',
+        "max-price": '',
+        sort: 'created',
+        size: '9',
+        page: '0'
+      }
+
     },
-    SORT:[
+
+    SORT: [
       'created',
       'min_price',
       'max_price'
     ],
-    LIMIT:[
+    LIMIT: [
+      1,
       9,
       12,
       15

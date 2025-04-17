@@ -1,8 +1,5 @@
-import { Injectable } from '@angular/core';
-import { inject, linkedSignal } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter, map } from 'rxjs';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Injectable, signal } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Breadcrumb } from '../interfaces/breadcrumb';
 
 @Injectable({
@@ -11,27 +8,8 @@ import { Breadcrumb } from '../interfaces/breadcrumb';
 
 export class BreadcrumbService {
 
-  private router = inject(Router);
-  private activatedRoute = inject(ActivatedRoute);
 
-  private breadcrumb$ = toSignal(
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-      map(router => router.url)
-    )
-  );
-
-  public breadcrumb = linkedSignal({
-    source: () => this.breadcrumb$(),
-    computation: (source) => {
-      if (source && !['/home', '/'].includes(source)) {
-        return [{ title: 'Home', path: '/' }, ...this.create(this.activatedRoute)]
-      }
-      return []
-    }
-  });
-
-  private create(
+  public create(
     route: ActivatedRoute,
     url = '',
     breadcrumbs: Breadcrumb[] = []
@@ -41,14 +19,22 @@ export class BreadcrumbService {
     if (children.length === 0) {
       return breadcrumbs;
     }
-    children.forEach((child) => {
-      const routeURL: string = child.snapshot.url.map(seg => seg.path).join('/')
+
+    for (const child of children) {
+      const routeURL = child.snapshot.url.map(seg => seg.path).join('/');
       if (routeURL) {
         url += `/${routeURL}`;
       }
-      breadcrumbs.push({ title: child.snapshot.data['title'], path: url });
-      return this.create(child, url, breadcrumbs);
-    })
+
+      const title = child.snapshot.data['title'];
+      if (title && !breadcrumbs.find(b => b.path === url)) {
+        breadcrumbs.push({ title, path: url });
+      }
+
+      // seguir recursivamente
+      this.create(child, url, breadcrumbs);
+    }
+
     return breadcrumbs;
   }
 

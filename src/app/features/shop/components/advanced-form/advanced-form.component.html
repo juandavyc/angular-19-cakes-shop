@@ -1,0 +1,75 @@
+<fieldset class="fieldset bg-[#FCFBFA] border border-base-300 p-4 rounded-box text-base">
+  <legend class="fieldset-legend lg:hidden block">Filtros</legend>
+  <form [formGroup]="form">
+    <div class="flex flex-col gap-3 me-3">
+      <!-- price-start -->
+      <label class="font-semibold">Precios</label>
+      <div class="grid grid-cols-2 gap-3 ">
+        <!-- price: min-input -->
+        <input type="text"
+          formControlName="minPrice"
+          class="input bg-white"
+          placeholder="Minimo" />
+
+        <!-- price: max-input -->
+        <input type="text"
+          formControlName="maxPrice"
+          class="input bg-white"
+          placeholder="Maximo" />
+
+        <!-- price: min-errors -->
+        <div>
+          @if (isInvalidField('minPrice')){
+            <p class="text-error text-sm text-shadow-sm">{{getErrorField('minPrice')}}</p>
+          }
+        </div>
+
+        <!-- price: max-errors -->
+        <div>
+          @if (isInvalidField('maxPrice')){
+            <p class="text-error text-sm text-shadow-sm">{{getErrorField('maxPrice')}}</p>
+          }
+        </div>
+      </div>
+      <!-- price-end -->
+
+      <!-- categories-start -->
+      <label class="font-semibold">Categorias</label>
+      <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-col-2 gap-3">
+        <!-- categories:loop - radios -->
+        @for (category of Cateogries; track $index) {
+          <label class="flex items-center gap-2">
+            <input type="radio"
+              formControlName="category"
+              name="category"
+              [value]="category"
+              class="radio bg-white" />
+            <span class="cursor-pointer">{{category | titlecase}}</span>
+          </label>
+        }
+
+      </div>
+      @if (isInvalidField('category')){
+        <p class="text-error text-sm text-shadow-sm">{{getErrorField('category')}}</p>
+      }
+      <!-- categories-end -->
+
+      <!-- occasions-start -->
+      <label class="font-semibold">Momentos</label>
+      <div class="flex flex-wrap gap-2">
+        <!-- occasions:loop - radios -->
+        @for (occasion of Occasions; track $index) {
+          <input type="radio"
+            formControlName="occasion"
+            name="occasion"
+            class="join-item btn" [value]="occasion" [attr.aria-label]="occasion | titlecase"/>
+        }
+      </div>
+      <!-- occasions: errors -->
+      @if (isInvalidField('occasion')){
+        <p class="text-error text-sm text-shadow-sm">{{getErrorField('occasion')}}</p>
+      }
+      <!-- occasions-end -->
+    </div>
+  </form>
+</fieldset>

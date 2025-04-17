@@ -5,4 +5,5 @@ export enum FormKeys {
   CATEGORY = 'category',
   SORT = 'sort',
   LIMIT = 'limit',
+  PAGE = 'page',
 }

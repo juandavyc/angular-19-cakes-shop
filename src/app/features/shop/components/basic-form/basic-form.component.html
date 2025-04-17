@@ -1,0 +1,56 @@
+
+<div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" [formGroup]="form">
+  <!-- input: search by title - description start-->
+  <div class="col-span-1">
+    <div class="flex flex-col gap-3 justify-center">
+      <label class="font-semibold md:text-start text-center">¿Tienes alguno en mente?</label>
+      <label class="input w-full">
+        <span class="label min-w-[80px]">Buscar</span>
+        <input type="text" formControlName="title" placeholder="Pastel de rutos rojos" />
+      </label>
+      <!-- input: search errors-->
+      @if (isInvalidField('title')){
+        <p class="text-error text-sm text-shadow-sm">{{getErrorField('title')}}</p>
+      }
+    </div>
+  </div>
+  <!-- input: search by title - description end-->
+
+  <!-- select: order - limit start -->
+
+  <div class="sm:col-span-1 md:col-span-1 lg:col-span-3">
+    <div class="flex sm:flex-row flex-col gap-4 md:justify-end justify-center">
+      <div class="flex flex-col gap-3">
+        <!-- label: show results -->
+        <p class="md:text-right text-center sm:text-base text-sm">
+            {{pageSummary()}}
+        </p>
+        <div class="flex sm:flex-row flex-col gap-3 justify-end">
+        <!-- select: order -->
+          <label class="select w-auto">
+            <span class="label min-w-[80px]">Ordenar</span>
+            <select formControlName="sort">
+              <option value="created">Creado</option>
+              <option value="min-price">Precio mas Bajo</option>
+              <option value="max-price">Precio mas Alto</option>
+            </select>
+          </label>
+        <!-- select: limit end -->
+        <!-- select: limit start-->
+          <label class="select w-auto">
+            <span class="label min-w-[80px]">Mostrar</span>
+            <select formControlName="size">
+              <option value="1">1</option>
+              <option value="9">9</option>
+              <option value="12">12</option>
+              <option value="15">15</option>
+            </select>
+          </label>
+
+        <!-- select: limit end -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- select: order - limit end -->
