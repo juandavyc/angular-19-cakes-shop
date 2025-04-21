@@ -1,6 +1,6 @@
 export const CONFIG = {
   APP_NAME: 'Pastelería JB x',
-  API_BASE_URL: 'https://api.pasteleriajb.com',
+  API_BASE_URL: 'http://localhost:8081/api',
   SUPPORT_EMAIL: 'soporte@pasteleriajb.com',
   TOOLTIPS: [
     '¡Lo encontraste!',
@@ -33,7 +33,6 @@ export const CONFIG = {
   },
   SHOP: {
     DEFAULTS: {
-
       form: {
         occasion: 'todas-las-ocasiones',
         category: 'todas-las-categorias',
@@ -67,28 +66,5 @@ export const CONFIG = {
       12,
       15
     ],
-    OCCASIONS: [
-      'todas-las-ocasiones', //dont delete this
-      'aniversarios',
-      'baby-shower',
-      'corporativos',
-      'cumpleanios',
-      'grados',
-      'matrimonio',
-      'personalizados',
-      'regalos',
-    ],
-    CATEGORIES: [
-      'todas-las-categorias', //dont delete this
-      'anchetas',
-      'chocolates',
-      'cupcakes',
-      'desayunos',
-      'panaderia',
-      'pateles',
-      'postres',
-      'tortas',
-      'yogurt'
-    ]
   }
 };

@@ -4,7 +4,6 @@ import { AboutUsComponent } from './features/about-us/about-us.component';
 import { ContactComponent } from './features/contact/contact.component';
 
 export const routes: Routes = [
-
   {
     path: '',
     component: HomeComponent
@@ -18,6 +17,11 @@ export const routes: Routes = [
     path: 'shop',
     loadChildren: () => import('./features/shop/shop.routes'),
     data: { title: 'Shop' }
+  },
+  {
+    path: 'product',
+    loadChildren: () => import('./features/product/product.routes'),
+    data: { title: 'Product' }
   },
   {
     path: 'contact',

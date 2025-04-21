@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormFilterService } from '../../services/form-filter.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TitleCasePipe } from '@angular/common';
+import { Category, Occasion } from '@core/interfaces';
 
 @Component({
   selector: 'advanced-form',
@@ -29,11 +30,11 @@ export class AdvancedFormComponent {
     return this.formFilterService.form;
   }
 
-  public get Occasions() {
+  public get Occasions():Occasion[] {
     return this.formFilterService.Occasions;
   }
 
-  public get Cateogries() {
+  public get Cateogries():Category[] {
     return this.formFilterService.Categories;
   }
 

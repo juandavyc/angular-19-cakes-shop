@@ -3,6 +3,8 @@ import { ParamMap, Params } from '@angular/router';
 import { CONFIG } from '@core/configs';
 import { QueryParamsKeys } from '../enums';
 import { QueryParams } from '../interfaces';
+import { OCCASIONS } from '@core/configs/products/occasions.config';
+import { CATEGORIES } from '@core/configs/products/categories.config';
 
 
 @Injectable({
@@ -11,8 +13,8 @@ import { QueryParams } from '../interfaces';
 export class BuildUrlsService {
 
   private readonly DEFAULTS = CONFIG.SHOP.DEFAULTS;
-  private readonly OCCASIONS = CONFIG.SHOP.OCCASIONS;
-  private readonly CATEGORIES = CONFIG.SHOP.CATEGORIES;
+  private readonly OCCASIONS = OCCASIONS;
+  private readonly CATEGORIES = CATEGORIES;
 
   private sortBackend = new Map<string, string>([
     ["min-price", "price,asc"],
@@ -20,9 +22,9 @@ export class BuildUrlsService {
   ])
 
 
-  private frontMap = new Map<string,string>([
-    ["maxPrice","max-price"],
-    ["minPrice","min-price"],
+  private frontMap = new Map<string, string>([
+    ["maxPrice", "max-price"],
+    ["minPrice", "min-price"],
   ])
 
   constructor() {
@@ -35,11 +37,10 @@ export class BuildUrlsService {
   // las que vienen del URL
   public getQueryParam(param: Params, key: QueryParamsKeys) {
     return param[key] ?? this.DEFAULTS.url[key];
-
   }
 
   public isValidOccasion(value: string): boolean {
-    return this.OCCASIONS.includes(value);
+    return this.OCCASIONS.some(occasion => occasion.slug === value);
   }
 
   buildPathParams(occasion: string | null | undefined): string[] {
@@ -76,7 +77,7 @@ export class BuildUrlsService {
     }
 
     Object.entries(queryParams).forEach(([key, value]) => {
-        queryParams[key] = this.sortBackend.get(queryParams[key]) ?? value;
+      queryParams[key] = this.sortBackend.get(queryParams[key]) ?? value;
     });
     return (new URLSearchParams(queryParams).toString());
   }

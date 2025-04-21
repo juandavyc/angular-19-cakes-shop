@@ -1,7 +1,7 @@
 export const ASSETS = {
   LOGO: 'images/logo.png',
   HERO_BACKGROUND: 'images/background.jpg',
-
+  NO_IMAGE: 'images/logo.png',
   RECOMMENDED: [
     'images/pastel-1.jpg',
     'images/pastel-2.jpg',

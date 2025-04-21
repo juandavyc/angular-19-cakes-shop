@@ -17,51 +17,7 @@
       <!-- filter form end-->
       <!-- results layout -->
       <div class="sm:order-1 md:order-1 lg:order-2 sm:col-span-2 md:col-span-2 lg:col-span-3 xl:grid-cols-4">
-        <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-
-          @if(shopRxResource.isLoading()){
-
-            @for (item of [1,2,3,4]; track $index; let even = $even; ) {
-            <div class="flex flex-col">
-              <div class="skeleton aspect-[4/3] w-full"></div>
-              <div class="flex flex-col gap-3 my-5">
-                <div class="skeleton h-7 w-full"></div>
-                <div class="skeleton h-7 w-1/2"></div>
-                <div class="skeleton h-7 w-1/3"></div>
-              </div>
-            </div>
-            }
-          }
-          @if(shopRxResource.hasValue()){
-            @for (product of shopRxResource.value().content; track product.id; ) {
-              <div class="card bg-[#FFFDFB] border border-base-200 hover:border-neutral">
-                <figure>
-                  <a href="#" class="hover:opacity-75">
-                    <img [src]="product.cover" [alt]="product.name+' image'" class="object-cover w-full aspect-[4/3]" />
-                  </a>
-                </figure>
-                <div class="card-body flex flex-col flex-grow sm:text-base md:text-lg p-3">
-                  <h3 class=" text-gray-700 font-semibold">
-                    <a href="#" class="hover:text-pink-500">{{product.name}}</a>
-                  </h3>
-                  <div class="flex flex-row gap-3 text-gray-600 mt-auto">
-                    <span class="">{{product.price}}</span>
-                  </div>
-                </div>
-              </div>
-            }
-            @empty {
-              <p>Sin productos</p>
-            }
-            <div class="col-span-full">
-              <pagination-form [pagePagination]="shopPagination()?.pagination"/>
-            </div>
-          }
-          @if (shopRxResource.error()) {
-          <p>Error</p>
-          <p class="text-red-500">{{shopRxResource.error()}}</p>
-          }
-        </div>
+        <products [shopRxResourceInput]="shopRxResource" [shopPaginationInput]="shopPagination()!.pagination" class="flex flex-col" />
       </div>
     </div>
   </div>

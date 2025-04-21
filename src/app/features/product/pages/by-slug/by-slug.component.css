@@ -1,0 +1,7 @@
+:host {
+  display: block;
+}
+
+.selected-image{
+  border: 4px solid #9f2d00;;
+}

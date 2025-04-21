@@ -14,11 +14,11 @@ import { FormFilterService } from '../../services/form-filter.service';
 })
 export class PaginationFormComponent {
 
-  formFilterService = inject(FormFilterService);
+  public formFilterService = inject(FormFilterService);
 
-  pagePagination = input<Pagination | null>();
+  public pagePagination = input<Pagination | null>();
 
-  gotToPage(page: number) {
+  public gotToPage(page: number) {
       this.formFilterService.form.controls.page.setValue(page.toString());
   }
 

@@ -14,7 +14,7 @@ import { QueryParamsKeys } from './enums';
 import { PaginationService } from '@shared/service/pagination.service';
 import { ShopResponse } from './interfaces';
 import { PaginationResponse } from '@shared/interfaces';
-import { PaginationFormComponent } from './components/pagination-form/pagination-form.component';
+import { ProductsComponent } from './components/products/products.component';
 
 // interface FormData{
 
@@ -32,8 +32,7 @@ import { PaginationFormComponent } from './components/pagination-form/pagination
     // components
     BasicFormComponent,
     AdvancedFormComponent,
-    PaginationFormComponent,
-
+    ProductsComponent,
   ],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.css',
