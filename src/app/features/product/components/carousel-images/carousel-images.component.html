@@ -1,0 +1,22 @@
+<fieldset class="fieldset border-base-200 bg-base-100/75 ">
+  <legend class="fieldset-legend text-gray-400">Fotos</legend>
+  <div class="flex justify-center px-3">
+    @let cover = coverInput();
+    @let images = imagesInput();
+    @let selected = selectedInput();
+    <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+      <img [src]="cover"
+          [class.selected-image]="cover === selected"
+          (click)="changeImage(cover)"
+          class="object-cover rounded-lg h-24 w-24 hover:bg-white hover:opacity-75 cursor-pointer"
+          alt="cover" />
+        @for (image of images; track image.id) {
+          <img [src]="image.url"
+            [alt]="image.altText"
+            [class.selected-image]="image.url === selected"
+            (click)="changeImage(image.url)"
+            class="object-cover rounded-lg h-24 w-24 hover:bg-white hover:opacity-75 cursor-pointer" />
+        }
+    </div>
+  </div>
+</fieldset>

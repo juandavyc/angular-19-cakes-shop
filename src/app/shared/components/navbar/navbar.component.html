@@ -1,4 +1,4 @@
-<nav class="navbar w-full bg.wmd:px-3 shadow-md">
+<nav class="navbar fixed top-0 left-0 lg:z-10 z-10 w-full bg-white md:px-3 shadow-md">
   <div class="flex-1 px-2">
     <h1 class="sm:text-4xl text-3xl font-extrabold text-pink-600 text-outline-pink tracking-widest">
       {{name}}
@@ -26,21 +26,30 @@
         <a [routerLink]="['/shop']" routerLinkActive="bg-accent text-accent-content">
           Tienda
         </a>
-        <!-- <a [routerLink]="['/shop']" routerLinkActive="bg-accent text-accent-content" class="flex items-center gap-1">
-          Tienda
-          <span class="badge badge-xs badge-secondary relative -translate-y-1">
-            <i class="fa-solid fa-cart-shopping"></i>
-          </span>
-        </a> -->
       </li>
       <li>
         <a [routerLink]="['/contact']" routerLinkActive="bg-accent text-accent-content">
           Contactanos
         </a>
       </li>
+      <li class="sm:block hidden">
+        <!-- <a [routerLink]="['/about-us']" routerLinkActive="bg-accent text-accent-content">
+          Carrito
+        </a> -->
+
+        <button class="btn" popovertarget="popover-1" style="anchor-name:--anchor-1">
+          Carrito
+        </button>
+        <div class="dropdown menu w-52 rounded-box bg-base-100 shadow-sm" popover id="popover-1" style="position-anchor:--anchor-1">
+            <cart-details />
+        </div>
+      </li>
     </ul>
   </div>
-  <div class="flex-none lg:hidden">
+  <div class="flex gap-3 lg:hidden">
+    <button class="btn btn-accent text-accent-content btn-md">
+      <i class="fa-solid fa-cart-shopping"></i>
+    </button>
     <button class="btn btn-accent text-accent-content btn-md" (click)="toggle.emit()">
       <i class="fa-solid fa-bars"></i>
     </button>

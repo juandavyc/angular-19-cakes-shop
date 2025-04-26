@@ -1,0 +1,45 @@
+<div class="fixed lg:right-0 lg:left-auto lg:top-0 lg:w-[258px] sm:h-[80px] lg:h-screen bottom-0 left-0 right-0 z-10 bg-accent">
+
+
+<div class="grid grid-cols-5 gap-3 p-2">
+
+  <div class="col-span-3">
+    <div class="flex flex-col gap-5 overflow-y-auto max-h-[65px] bg-white rounded-md p-1">
+
+      @for (cartProduct of cartProducts(); track cartProduct.id) {
+      <div class="flex flex-row gap-3" #divToScroll>
+        <figure>
+          <img [src]="cartProduct.cover" [alt]="cartProduct.name+' image'" class="object-cover w-14 h-14 aspect-[4/3]" />
+        </figure>
+        <div class="flex flex-col gap-3">
+          <p class="text-sm">{{cartProduct.name}}</p>
+          <div class="flex flex-row items-center gap-3">
+            <button class="btn btn-xs" (click)="decrementQuantity(cartProduct)"> - </button>
+            <p>{{cartProduct.quantity}}</p>
+            <button class="btn btn-xs" (click)="incrementQuantity(cartProduct)" [disabled]="cartProduct.quantity >= 10"> + </button>
+            <button class="btn btn-xs btn-soft btn-error" (click)="incrementQuantity(cartProduct)"> de </button>
+          </div>
+        </div>
+      </div>
+      }
+      <!-- <button (click)="scrollRight()">⏩ Derecha</button> -->
+      @empty {
+      <p>Sin productos en el carrito</p>
+      }
+    </div>
+  </div>
+  <div class="col-span-2">
+    <div class="flex flex-row gap-3">
+      <div class="flex flex-col justify-between gap-3 w-[40px]">
+        <button class="btn btn-xs btn-soft btn-info w-full" (click)="scrollLeft()"> up </button>
+        <button class="btn btn-xs btn-soft btn-info w-full" (click)="scrollLeft()"> do </button>
+      </div>
+      <div class="flex flex-col justify-between gap-3">
+        <span class="font-bold text-base">$ {{cartTotal() | number}} </span>
+         <button class="btn btn-xs btn-error w-full"> Ir a Pagar</button>
+       </div>
+    </div>
+  </div>
+
+</div>
+</div>

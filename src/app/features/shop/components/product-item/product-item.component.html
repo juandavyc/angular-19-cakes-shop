@@ -12,8 +12,13 @@
       <a [routerLink]="['/product', product.slug]"
         class="hover:text-pink-500">{{product.name | titlecase}}</a>
     </h3>
-    <div class="flex flex-row gap-3 mt-auto">
+    <div class="flex flex-row justify-between gap-3 mt-auto">
       <span class="text-gray-500 font-semibold">$ {{product.price | number }}</span>
+      <div class="tooltip" data-tip="Añadir al carrito">
+        <button class="btn btn-sm">
+          <i class="fa-solid fa-cart-plus"></i>
+        </button>
+      </div>
     </div>
   </div>
 </div>

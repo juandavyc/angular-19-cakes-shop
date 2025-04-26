@@ -20,10 +20,10 @@ export class ProductService {
 
     const url = `${this.baseUrl}/products/slug/${slug}`;
     console.log('request: ', url);
-    // return this.http.get<ProductResponse>(url).pipe(
-    //   delay(1000),
-    //   catchError(err => throwError(() => new Error(`An error ocurred: ${JSON.stringify(err)}`)))
-    // );
+    return this.http.get<ProductResponse>(url).pipe(
+      delay(1000),
+      catchError(err => throwError(() => new Error(`An error ocurred: ${JSON.stringify(err)}`)))
+    );
     return of(this.fakeResponse).pipe(
       delay(2000)
     );

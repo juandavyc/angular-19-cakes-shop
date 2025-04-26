@@ -8,6 +8,7 @@ import { FooterComponent } from '@shared/components/footer/footer.component';
 import { BreadcrumbComponent } from '@shared/components/breadcrumb/breadcrumb.component';
 
 import AOS from 'aos';
+import { CartDetailsComponent } from './features/cart/components/cart-details/cart-details.component';
 
 @Component({
   selector: 'app-root',
@@ -15,8 +16,10 @@ import AOS from 'aos';
     NavbarComponent,
     SidebarComponent,
     BreadcrumbComponent,
+    CartDetailsComponent,
     RouterOutlet,
     FooterComponent,
+    //AppCartDetailsComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

@@ -1,0 +1,17 @@
+<div class="flex flex-row justify-end items-center gap-3">
+  <h3 class="me-0.5 font-semibold">Compartir en: </h3>
+  <div class="join">
+    <div class="tooltip" [attr.data-tip]="socialNetworks.FACEBOOK | titlecase">
+      <button (click)="shareWith(socialNetworks.FACEBOOK)"
+        class="btn btn-ghost btn-primary text-primary-content join-item">
+        <i class="fa-brands fa-facebook-f fa-lg shrink-0"></i>
+      </button>
+    </div>
+    <div class="tooltip" [attr.data-tip]="socialNetworks.WHATSAPP | titlecase">
+      <button (click)="shareWith(socialNetworks.WHATSAPP)"
+        class="btn btn-ghost btn-primary text-primary-content join-item">
+        <i class="fa-brands fa-whatsapp fa-lg shrink-0"></i>
+      </button>
+    </div>
+  </div>
+</div>

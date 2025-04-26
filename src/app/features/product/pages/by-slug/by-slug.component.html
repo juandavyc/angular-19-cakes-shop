@@ -3,7 +3,6 @@
 <hero-title title="Producto" subtitle="Haz tu pedido antes de que se agote" class="text-center" />
 
 <section class="my-10">
-
   <div class="container bg-white rounded-xl shadow-lg border-base-200 border-[1px] p-10">
 
     @if(productRx.error()){
@@ -11,138 +10,65 @@
     }
     @if(productRx.isLoading()){
     <p>Cargando...</p>
-
-    }@if (productRx.hasValue()) {
+    }
+    @if (productRx.hasValue()) {
     @let product = productRx.value();
-
-    <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-7">
+    <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-3">
+      <!-- social-share -->
       <div class="col-span-full">
-        <div class="flex flex-row justify-end items-center">
-          <h3 class="me-0.5 font-semibold">Share </h3>
+        <social-share />
+      </div>
+      <div class="col-span-full">
+        <!-- name-top -->
+        <ordered-name [nameInput]="product.name" [isTopInput]="true" />
+      </div>
+      <!-- cover-image -->
+      <cover-image [selectedImageInput]="selectedImage()" />
+      <!-- product-details -->
+      <div class="flex flex-col">
+        <!-- name-right -->
+        <ordered-name [nameInput]="product.name" [isTopInput]="false" />
+        <!-- price -->
+        <price [priceInput]="product.price" />
+        <!-- carousel-images -->
+        <carousel-images [coverInput]="product.cover" [imagesInput]="product.productImages" [selectedInput]="selectedImage()"
+          (selectedOutput)="changeImage($event)" />
 
-          <div class="join">
-
-            <button (click)="sharedOn('facebook')" class="btn btn-ghost btn-primary text-primary-content join-item">
-              <i class="fa-brands fa-facebook-f shrink-0"></i>
-            </button>
-            <button (click)="sharedOn('facebook')" class="btn btn-ghost btn-primary text-primary-content join-item">
-              <i class="fa-brands fa-instagram shrink-0"></i>
-            </button>
-            <button (click)="sharedOn('facebook')" class="btn btn-ghost btn-primary text-primary-content join-item">
-              <i class="fa-brands fa-tiktok shrink-0"></i>
-            </button>
-            <button (click)="sharedOn('facebook')" class="btn btn-ghost btn-primary text-primary-content join-item">
-              <i class="fa-brands fa-whatsapp shrink-0"></i>
-            </button>
-
-          </div>
+        <div class="col-span-full">
+          <div class="divider"></div>
+        </div>
+        <!-- purshase-controls -->
+        <div class="col-span-full">
+          <purshase-controls [productInput]="product" />
         </div>
       </div>
-      <div class="col-span-full lg:hidden block">
-        <h1 class="text-2xl font-bold">{{product.name | titlecase}}</h1>
+      <div class="col-span-full">
+        <div class="divider"></div>
       </div>
-
-      <div class="w-full max-w-2xl mx-auto">
-        <div class="relative w-full aspect-[4/3] overflow-hidden rounded-lg shadow-lg">
-          <img
-            [src]="selectedImage()"
-            class="absolute inset-0 w-full h-full object-cover blur-xl scale-110 opacity-50"
-            aria-hidden="true"
-          />
-          <div class="relative flex justify-center items-center h-full">
-            <img
-              [src]="selectedImage()"
-              class="max-h-full max-w-full object-contain z-10 rounded-md shadow-md"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="flex flex-col gap-3">
-        <div class="lg:block hidden">
-          <h1 class="sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold">{{product.name | titlecase}}</h1>
-        </div>
-        <div class="bg-secondary/15 rounded px-3">
-          <div class="flex flex-row gap-3 text-2xl items-end">
-            <span class="font-bold"> $ 12.000 </span>
-            <span class="text-xl text-gray-400 line-through">37.000</span>
-            <span class="text-xl text-red-500"> 20% dto.</span>
-          </div>
-        </div>
-        <fieldset class="fieldset border-base-200 bg-base-100/75 ">
-          <legend class="fieldset-legend">Fotos</legend>
-            <div class="flex justify-center px-3">
-
-          <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
-              <img [src]="product.cover"
-                (click)="changeImage(product.cover)"
-                [class.selected-image]="product.cover === selectedImage()"
-                class="object-cover rounded-lg h-24 w-24 hover:bg-white hover:opacity-75 cursor-pointer"
-                alt="cover" />
-              @for (image of product.productImages; track $index) {
-                <img [src]="image.url"
-                  [alt]="image.altText"
-                  [class.selected-image]="image.url === selectedImage()"
-                  (click)="changeImage(image.url)"
-                  class="object-cover rounded-lg h-24 w-24 hover:bg-white hover:opacity-75 cursor-pointer" />
-              }
-            </div>
-          </div>
-        </fieldset>
-        @let occasions = product.productOccasions;
-        <fieldset class="fieldset border-base-200 bg-secondary/15 rounded">
-          <legend class="fieldset-legend">Ocasiones</legend>
-          <div class="flex flex-wrap gap-1 text-base pb-3 px-2">
-            @for (occasion of occasions; track occasion.productOccasionId;) {
-            <a class="badge badge-secondary" [routerLink]="['/shop', occasion.occasion.slug]">
-              {{occasion.occasion.name | titlecase}}</a>
-            }
-            @empty {
-            <p>Sin caregoria</p>
-            }
-          </div>
-        </fieldset>
-        @let categories = product.productCategories;
-        <fieldset class="fieldset border-base-200 bg-accent/15 rounded">
-          <legend class="fieldset-legend">Categorias</legend>
-          <div class="flex flex-wrap gap-1 text-base pb-3 px-2">
-            @for (category of categories; track category.productCategoryId;) {
-            <a class="badge badge-accent" [routerLink]="['/shop']" [queryParams]="{category: category.category.slug}">
-              {{category.category.name | titlecase}}</a>
-            }
-            @empty {
-            <p>Sin caregoria</p>
-            }
-          </div>
-        </fieldset>
-      </div>
+      <!-- occasions -->
+      <occasions [occasionsInput]="product.productOccasions" />
+      <!-- categories -->
+      <categories [categoriesInput]="product.productCategories" />
+      <!-- details-similar-reviews -->
       <div class="col-span-full">
         <div class="tabs tabs-lift">
-          <input type="radio" name="my_tabs_1" class="tab" aria-label="Descripcion" checked="checked" />
+          <input type="radio" name="my_tabs_1" class="tab" aria-label="Descripción" checked="checked" />
           <div class="tab-content bg-base-100 border-base-300 p-6">
-
             <p class="text-wrap">
-              Condición: nuevo, alta calidad <br>
-              Material: hierro<br>
-              Acabado superficial: Galvanizado<br>
-              Proceso de producción: corte/soldadura por láser.<br>
-              Ubicación de instalación: izquierda<br>
-              Este artículo puede reemplazar la palanca de cambios OEM.<br>
-              Durante el proceso de instalación, si aumenta el equilibrio de la palanca de cambios, se debe ajustar mediante el tornillo de
-              ajuste original/o el conector de la palanca de cambio de velocidad.
-              Fácil de instalar; Sin instrucciones.Reemplazo original.<br>
-              Color: como muestra la imagen<br>
-              Número OEM de referencia: 13242-0088
+              {{product.description}}
             </p>
-
           </div>
-          <input type="radio" name="my_tabs_1" class="tab" aria-label="Similares" />
+          <input type="radio" name="my_tabs_1" class="tab" aria-label="Similares" disabled />
           <div class="tab-content bg-base-100 border-base-300 p-6">Similares</div>
-
+          <input type="radio" name="my_tabs_1" class="tab" aria-label="Reseñas" disabled />
+          <div class="tab-content bg-base-100 border-base-300 p-6">Reseñas</div>
         </div>
       </div>
+
     </div>
-    <pre>{{product | json}}</pre>
     }
 
+  </div>
+  <div class="container my-10">
   </div>
 </section>

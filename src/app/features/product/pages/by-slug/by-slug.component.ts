@@ -1,22 +1,36 @@
-import { JsonPipe, TitleCasePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, signal } from '@angular/core';
+import { Location } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, linkedSignal, PLATFORM_ID, signal } from '@angular/core';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, } from '@angular/router';
 import { ProductService } from '../../service/product.service';
-import { map, Observable, of, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { ProductResponse } from '../../interfaces/product-response.interface';
 import { HeroTitleComponent } from '@shared/components/hero-title/hero-title.component';
-import { ProductTitleSubtitle } from '../../interfaces/product-title-subtitle.interface.ts';
 import { ASSETS } from '@core/assets';
-import { url } from 'inspector';
+import { isPlatformBrowser } from '@angular/common';
+import { SocialShareComponent } from '@shared/components/social-share/social-share.component';
+import { CoverImageComponent } from '../../components/cover-image/cover-image.component';
+import { CarouselImagesComponent } from '../../components/carousel-images/carousel-images.component';
+import { PurshaseControlsComponent } from '../../components/purshase-controls/purshase-controls.component';
+import { OccasionsComponent } from '../../components/occasions/occasions.component';
+import { CategoriesComponent } from '../../components/categories/categories.component';
+import { OrderedNameComponent } from '../../components/ordered-name/ordered-name.component';
+import { PriceComponent } from '../../components/price/price.component';
+
 
 @Component({
   selector: 'app-by-slug',
   imports: [
     HeroTitleComponent,
-    RouterLink,
-    TitleCasePipe,
-    JsonPipe
+    SocialShareComponent,
+    // TitleComponent,
+    OrderedNameComponent,
+    CoverImageComponent,
+    CarouselImagesComponent,
+    PurshaseControlsComponent,
+    OccasionsComponent,
+    CategoriesComponent,
+    PriceComponent,
   ],
   templateUrl: './by-slug.component.html',
   styleUrl: './by-slug.component.css',
@@ -26,6 +40,10 @@ export default class BySlugComponent {
 
   // plataform id
   private productUrl = signal<string>('');
+
+  private platformId = inject(PLATFORM_ID);
+
+  private location = inject(Location);
 
   public socialNetworks = new Map<string, string>([
     ['facebook', 'https://www.facebook.com/sharer/sharer.php?u=']
@@ -45,8 +63,7 @@ export default class BySlugComponent {
       }
       return ASSETS.NO_IMAGE;
     }
-  })
-
+  });
 
   // public title = computed<ProductTitleSubtitle>(() => {
 
@@ -65,6 +82,7 @@ export default class BySlugComponent {
   //   return { title: 'Cargando', subtitle: 'Cargando' };
   // })
 
+  private router = inject(Router);
 
   private productService = inject(ProductService);
 
@@ -76,7 +94,6 @@ export default class BySlugComponent {
       map(param => param.get('slug') ?? ''),
       tap(console.log)
     ), { initialValue: '' }
-
   )
 
   public productRxResource = rxResource({
@@ -86,11 +103,17 @@ export default class BySlugComponent {
     }
   });
 
+
+
   public changeImage(url: string): void {
     this.selectedImage.set(url);
   }
 
-
+  goBack() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.location.back();
+    }
+  }
   public sharedOn(socialNetwork: string) {
 
 
