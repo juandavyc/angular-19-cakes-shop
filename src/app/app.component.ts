@@ -1,48 +1,42 @@
 import { Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-
-import { NavbarComponent } from './shared/components/navbar/navbar.component';
-import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
-import { FooterComponent } from '@shared/components/footer/footer.component';
-import { BreadcrumbComponent } from '@shared/components/breadcrumb/breadcrumb.component';
+import { Router, RouterOutlet } from '@angular/router';
 
 import AOS from 'aos';
-import { CartDetailsComponent } from './features/cart/components/cart-details/cart-details.component';
+import { PlatformIdService } from './shared/service/platform-id.service';
+
+
 
 @Component({
   selector: 'app-root',
   imports: [
-    NavbarComponent,
-    SidebarComponent,
-    BreadcrumbComponent,
-    CartDetailsComponent,
     RouterOutlet,
-    FooterComponent,
     //AppCartDetailsComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
   title = 'pasteleria-jb-ssr';
 
-  private platformId = inject(PLATFORM_ID);
+  public isLoading = signal<boolean>(true);
 
-  public isOpen = signal<boolean>(false);
-
-  public toggleDrawer(){
-    this.isOpen.update(value=>!value);
-  }
+  private platformIdService = inject(PlatformIdService);
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
+
+    if (this.platformIdService.isBrowser()) {
+
       AOS.init({
         duration: 700,
       });
-    }
-  }
 
+      window.addEventListener('DOMContentLoaded', () => {
+        this.isLoading.set(false);
+      });
+    }
+
+  }
 
 }

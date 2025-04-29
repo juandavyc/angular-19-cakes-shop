@@ -1,0 +1,53 @@
+<nav class="navbar fixed top-0 left-0 lg:z-10 z-10 w-full bg-white md:px-3 shadow-md">
+  <div class="flex-1 px-2">
+    <h1 class="sm:text-4xl text-3xl font-extrabold text-pink-600 text-outline-pink tracking-widest">
+      {{name}}
+    </h1>
+  </div>
+  <div class="hidden flex-none lg:block">
+    <ul class="menu menu-horizontal font-bold gap-1">
+      <li>
+        <button class="btn btn-soft btn-sm">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </li>
+      <li>
+        <a [routerLink]="['/']"
+          routerLinkActive="bg-accent text-accent-content"
+          [routerLinkActiveOptions]="{exact:true}">
+          <i class="fa-solid fa-house-chimney"></i>
+          Inicio
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/about-us']" routerLinkActive="bg-accent text-accent-content">
+          Nosotros
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/shop']" routerLinkActive="bg-accent text-accent-content">
+          Tienda
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/contact-us']" routerLinkActive="bg-accent text-accent-content">
+          Contactanos
+        </a>
+      </li>
+      <li class="sm:block hidden">
+        <!-- <a [routerLink]="['/about-us']" routerLinkActive="bg-accent text-accent-content">
+          Carrito
+        </a> -->
+      </li>
+    </ul>
+  </div>
+  <div class="flex gap-3 lg:hidden">
+    <button class="btn btn-accent text-accent-content btn-md">
+      <i class="fa-solid fa-cart-shopping"></i>
+    </button>
+    <button class="btn btn-accent text-accent-content btn-md"
+      (click)="toggle.emit()">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</nav>

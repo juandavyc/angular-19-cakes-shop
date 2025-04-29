@@ -1,7 +1,7 @@
-<div class="bg-secondary/50 text-base-content flex justify-center mt-10">
+<div class="bg-neutral text-neutral-content flex justify-center mt-10">
   <footer class="footer sm:footer-horizontal max-w-[80rem] p-10 grid md:col-span-3 col-span-1">
     <aside >
-      <img [src]="logo" [alt]="name+' logo'" class="w-[82px] shadow-md">
+      <img [src]="logo" [alt]="name+' logo'" class="w-[82px]">
       <div class="grid grid-flow-row gap-[14px]">
         <p> <i class="fa-solid fa-copyright"></i> Copyright <strong>{{name}}</strong>.</p>
         <p> Todos los derechos reservados <strong>{{year}}</strong>.</p>
@@ -10,10 +10,22 @@
     <nav class="sm:order-2 order-3">
       <h6 class="footer-title">Enlaces</h6>
       <div class="grid grid-flow-row gap-[14px]">
-        <a class="link link-hover hover:text-pink-500" [routerLink]="['/about-us']">Nosotros</a>
-        <a class="link link-hover hover:text-pink-500" [routerLink]="['/contact']">Contacto</a>
-        <a class="link link-hover hover:text-pink-500" [routerLink]="['/term-and-conditions']">Términos y condiciones</a>
-        <a class="link link-hover hover:text-primary" [href]="urlDeveloper">Designed & Developed by: <strong>{{nameDeveloper}}</strong></a>
+        <a class="link link-hover hover:text-pink-500"
+          [routerLink]="['/about-us']">
+          Nosotros
+        </a>
+        <a class="link link-hover hover:text-pink-500"
+          [routerLink]="['/contact']">
+          Contacto
+        </a>
+        <a class="link link-hover hover:text-pink-500"
+          [routerLink]="['/term-and-conditions']">
+          Términos y condiciones
+        </a>
+        <a class="link link-hover hover:text-primary"
+          [href]="urlDeveloper">
+          Designed & Developed by: <strong>{{nameDeveloper}}</strong>
+        </a>
       </div>
     </nav>
     <nav class="sm:order-3 order-2">

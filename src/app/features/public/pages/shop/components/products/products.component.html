@@ -1,0 +1,21 @@
+@let shopResource = shopRxResourceInput();
+<div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+  @if(shopResource.isLoading()){
+    @for (item of skeletonCount; track $index) {
+      <skeleton />
+    }
+  }
+  @if(shopResource.hasValue()){
+    @for (product of shopResource.value().content; track product.id; ) {
+      <product-item [productInput]="product"
+       (addToCartOutput)="addProductToCart(product)" />
+    }
+    <div class="col-span-full">
+      <pagination-form [pagePagination]="shopPaginationInput()"/>
+    </div>
+  }
+  @if(shopResource.error()){
+    <!-- TODO: Crear componente de error -->
+    <p>Error xd</p>
+  }
+</div>

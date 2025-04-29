@@ -1,0 +1,74 @@
+@if(cartProducts().length > 0){
+
+  <div class="fixed left-0 right-0 bottom-0 bg-base-200 border-base-300 border-t-2 backdrop-blur z-10">
+    <div class="flex gap-1 p-2">
+      @if (cartProducts().length> 2) {
+        <div class="sm:flex hidden w-10 justify-center">
+          <button class="text-2xl h-full btn btn-neutral p-1 border-0 rounded-e-sm"
+            (click)="scrollCartProductsContainer(scrollDirection.LEFT)">
+              <i class="fa-solid fa-angle-left"></i>
+          </button>
+        </div>
+      }
+
+      <div class="w-full sm:max-w-auto sm:max-h-max sm:overflow-y-auto overflow-x-auto max-h-[74px] bg-white rounded-xl p-[2px] "
+        #cartProductsContainer>
+        <div class="stats sm:bg-accent/50 sm:stats-horizontal stats-vertical mt-[2px]">
+          @for (cartProduct of cartProducts(); track cartProduct.id;) {
+            <cart-product-item
+              [cartProductInput]="cartProduct"
+              (changeQuantityOutput)="changeQuantity($event, cartProduct.id, cartProduct.quantity)"
+              (removeCartProductOutput)="removeCartProduct($event)"/>
+          }
+          @empty {
+            <p>Sin productos en el carrito</p>
+          }
+
+        </div>
+      </div>
+      <div class="flex justify-center"
+        [class.w-10]="cartProducts().length > 2">
+        <div class="sm:hidden block">
+          <div class="flex flex-col justify-between gap-3 h-full">
+            <button class="btn btn-sm btn-neutral text-xl p-0 px-2 border-none rounded-none rounded-t-md"
+              (click)="scrollCartProductsContainer(scrollDirection.TOP)">
+              <i class="fa-solid fa-angle-up"></i>
+            </button>
+            <button class="btn btn-sm btn-neutral text-xl p-0 px-2 border-none rounded-none rounded-b-md"
+              (click)="scrollCartProductsContainer(scrollDirection.BOTTOM)">
+              <i class="fa-solid fa-angle-down"></i>
+            </button>
+          </div>
+        </div>
+        @if (cartProducts().length> 2) {
+        <div class="sm:block hidden h-full ">
+          <button class="text-2xl h-full btn btn-neutral p-1 border-0 rounded-s-sm" (click)="scrollCartProductsContainer(scrollDirection.RIGHT)">
+            <i class="fa-solid fa-angle-right"></i>
+          </button>
+        </div>
+        }
+      </div>
+      <div class="w-[240px] text-black ">
+        <div class="grid sm:grid-cols-2 grid-cols-1 h-full items-center bg-base-100 px-2 py-[1px] rounded-sm">
+          <div class="text-start text-sm sm:block hidden ">
+            Productos
+          </div>
+          <span class="font-bold sm:text-lg text-base text-center sm:block hidden">
+            {{cartProducts().length}}
+          </span>
+          <div class="text-sm sm:block hidden">
+            Total
+          </div>
+          <span class="font-bold sm:text-lg text-2xl sm:text-start text-center">
+            {{cartTotal() | number}}
+          </span>
+          <div class="col-span-full">
+            <button class="btn sm:btn-xs btn-md py-0 btn-error w-full"> IR A PAGAR</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <cart-remove-modal #cartRemoveModal (removeConfirm)="confirmRemoveCartProduct()"/>
+}

@@ -1,0 +1,61 @@
+@let productRx = productRxResource;
+
+<hero-title [title]="title" [subtitle]="subtitle" class="text-center" />
+<section class="my-10">
+  <div class="container bg-white rounded-xl shadow-lg border-base-200 border-[1px] p-10">
+    @if(productRx.error()){
+      <p>error</p>
+    }
+    @if(productRx.isLoading()){
+      <p>Cargando...</p>
+    }
+    @if (productRx.hasValue()) {
+    @let product = productRx.value();
+      <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-3">
+        <div class="col-span-full">
+          <social-share />
+        </div>
+        <div class="col-span-full">
+          <ordered-name [nameInput]="product.name"
+          [isTopInput]="true" />
+        </div>
+        <cover-image [selectedImageInput]="selectedImage()" />
+        <div class="flex flex-col">
+          <ordered-name [nameInput]="product.name"
+           [isTopInput]="false" />
+          <price [priceInput]="product.price" />
+          <carousel-images
+            [coverInput]="product.cover"
+            [imagesInput]="product.productImages"
+            [selectedInput]="selectedImage()"
+            (selectedOutput)="changeImage($event)" />
+          <div class="col-span-full">
+            <div class="divider"></div>
+          </div>
+          <div class="col-span-full">
+            <purshase-controls (addToCartOutput)="addToCart(product)" />
+          </div>
+        </div>
+        <div class="col-span-full">
+          <div class="divider"></div>
+        </div>
+        <occasions [occasionsInput]="product.productOccasions" />
+        <categories [categoriesInput]="product.productCategories" />
+        <div class="col-span-full">
+          <div class="tabs tabs-lift">
+            <input type="radio" name="my_tabs_1" class="tab" aria-label="Descripción" checked="checked" />
+            <div class="tab-content bg-base-100 border-base-300 p-6">
+              <p class="text-wrap">
+                {{product.description}}
+              </p>
+            </div>
+            <input type="radio" name="my_tabs_1" class="tab" aria-label="Similares" disabled />
+            <div class="tab-content bg-base-100 border-base-300 p-6">Similares</div>
+            <input type="radio" name="my_tabs_1" class="tab" aria-label="Reseñas" disabled />
+            <div class="tab-content bg-base-100 border-base-300 p-6">Reseñas</div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</section>

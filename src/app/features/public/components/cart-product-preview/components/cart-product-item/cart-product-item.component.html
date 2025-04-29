@@ -1,0 +1,41 @@
+@let cartProduct = cartProductInput();
+<div class="stat-figure">
+  <a class="hover:opacity-65"
+    [routerLink]="['/product', cartProduct.slug]">
+    <figure>
+      <img class="object-cover w-14 h-14 aspect-[4/3] rounded-md"
+        [src]="cartProduct.cover"
+        [alt]="cartProduct.name+' image'"/>
+    </figure>
+  </a>
+</div>
+<div class="stat-title text-base">
+ <a class="font-medium text-gray-900 hover:hover:text-pink-500"
+  [routerLink]="['/product', cartProduct.slug]">
+  {{ cartProduct.name | truncatePipe:20 | titlecase }}
+ </a>
+</div>
+<div class="flex flex-row items-center gap-3">
+  <button class="btn btn-xs"
+    (click)="changeQuantityCartProduct(changeQuantity.DECREMENT)">
+      <i class="fa-solid fa-minus"></i>
+  </button>
+  <p class="font-bold">
+    {{cartProduct.quantity}}
+  </p>
+  <button class="btn btn-xs"
+    (click)="changeQuantityCartProduct(changeQuantity.INCREMENT)"
+    [disabled]="cartProduct.quantity >= 10">
+      <i class="fa-solid fa-plus"></i>
+  </button>
+  <button class="btn btn-xs btn-error text-white"
+    (click)="removeCartProduct(cartProduct.id)">
+      <i class="fa-solid fa-trash"></i>
+  </button>
+</div>
+<div class="stat-desc text-sm text-gray-900">
+  {{cartProduct.price | number}} * {{cartProduct.quantity}} =
+  <span class="font-bold">
+    {{(cartProduct.price * cartProduct.quantity) | number}}
+  </span>
+</div>

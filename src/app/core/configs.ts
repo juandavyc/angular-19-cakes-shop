@@ -2,7 +2,6 @@ export const CONFIG = {
   APP_NAME: 'Pastelería JB x',
   API_BASE_URL: 'http://localhost:8081/api',
   SUPPORT_EMAIL: 'soporte@pasteleriajb.com',
-
   TOOLTIPS: [
     '¡Lo encontraste!',
     '¡Se ve delicioso!',
@@ -53,7 +52,6 @@ export const CONFIG = {
         size: '9',
         page: '0'
       }
-
     },
 
     SORT: [

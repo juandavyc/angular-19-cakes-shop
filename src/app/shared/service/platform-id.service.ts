@@ -8,7 +8,7 @@ export class PlatformIdService {
 
   private platformId = inject(PLATFORM_ID);
 
-  constructor() {}
+  constructor() { }
 
   public isBrowser(): boolean {
     return isPlatformBrowser(this.platformId);

@@ -1,0 +1,23 @@
+<div class="drawer">
+  <input type="checkbox"
+    class="drawer-toggle"
+    (change)="toggleDrawer()"
+    [checked]="isOpen()"/>
+  <div class="drawer-content">
+    <app-navbar (toggle)="toggleDrawer()" />
+    <div class="mt-[65px]">
+      <app-breadcrumb />
+      <router-outlet />
+      <app-footer />
+    </div>
+  </div>
+  <div class="drawer-side z-20 ">
+    <div class="drawer-overlay"
+      (click)="toggleDrawer()">
+    </div>
+    <app-sidebar (toggle)="toggleDrawer()" />
+  </div>
+</div>
+@if(!isPayRoute()){
+  <cart-product-preview />
+}
