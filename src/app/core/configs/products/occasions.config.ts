@@ -81,11 +81,11 @@ export const OCCASIONS: Occasion[] = [
   //   "name": "Despedidas",
   //   "slug": "despedidas"
   // },
-  {
-    "id": 38,
-    "name": "Regalos / Detalles",
-    "slug": "regalos-detalles"
-  },
+  // {
+  //   "id": 38,
+  //   "name": "Regalos / Detalles",
+  //   "slug": "regalos-detalles"
+  // },
   {
     "id": 39,
     "name": "Eventos empresariales",
@@ -95,5 +95,15 @@ export const OCCASIONS: Occasion[] = [
     "id": 40,
     "name": "Personalizados",
     "slug": "personalizados"
+  },
+  {
+    "id": 41,
+    "name": "matrimonios",
+    "slug": "matrimonios"
+  },
+  {
+    "id": 42,
+    "name": "regalos",
+    "slug": "regalos"
   }
 ]

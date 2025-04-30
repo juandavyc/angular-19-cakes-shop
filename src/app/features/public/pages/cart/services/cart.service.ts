@@ -42,6 +42,9 @@ export class CartService {
 
   public total = computed(() => this.cart().reduce((acc, pro) => acc + pro.price * pro.quantity, 0));
 
+  public numberItems = computed(()=>this.cart().length);
+
+
   public addProduct(product: Product) {
 
     const productMapped = CartMapper.productToCartProduct(product, 1);

@@ -17,4 +17,15 @@ export class SidebarComponent {
   public name = CONFIG.APP_NAME;
   public toggle = output<void>();
 
+  public numberItemsOfCartInput = input.required<number>();
+  public isShopRouteInput = input.required<boolean>();
+
+  public openSearchModalOutput = output<void>();
+
+  public openSearchModal():void{
+    this.openSearchModalOutput.emit();
+  }
+
+
+
 }

@@ -19,7 +19,17 @@ export const SHOP_CONFIG = {
       "max-price": '',
       sort: 'created',
       size: '9',
-      page: '0'
+      page: '0',
     },
-  }
+  },
+  sort: [
+    'created',
+    'min_price',
+    'max_price'
+  ],
+  size: [
+    9,
+    12,
+    15
+  ]
 }

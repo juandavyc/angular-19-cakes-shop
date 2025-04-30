@@ -1,35 +1,46 @@
-<ul class="menu bg-base-200 w-80 h-screen p-4 gap-3 pt-10 text-xl" (click)="toggle.emit()">
-  <li>
-    <h1 class="text-3xl font-bold text-pink-600">
-      {{name}}
-    </h1>
-  </li>
-  <li>
-    <a [routerLink]="['/']"
-      routerLinkActive="bg-accent text-accent-content"
-      [routerLinkActiveOptions]="{exact:true}">
-      Home
-    </a>
-  </li>
-  <li>
-    <a [routerLink]="['/about-us']" routerLinkActive="bg-accent text-accent-content">
-      Nosotros
-    </a>
-  </li>
-  <li>
-    <a [routerLink]="['/shop']" routerLinkActive="bg-accent text-accent-content" class="flex items-center gap-1">
-      Tienda
-      <span class="badge badge-xs badge-secondary relative -translate-y-1">
-        <i class="fa-solid fa-cart-shopping"></i>
-      </span>
-    </a>
-  </li>
-  <li>
-    <a [routerLink]="['/contact-us']" routerLinkActive="bg-accent text-accent-content">
-      Contactanos
-    </a>
-  </li>
-  <li>
-    <input type="text" class="input input-sm" placeholder="Buscar">
-  </li>
-</ul>
+<div class="bg-base-200 w-80 p-4 gap-3">
+  <h1 class="sm:text-4xl text-3xl font-extrabold text-pink-600 text-outline-pink tracking-widest">
+    {{name}}
+  </h1>
+  <div class="divider">
+    Menú
+  </div>
+  <ul class="menu h-screen w-full text-xl divide-y divide-gray-300 gap-3" (click)="toggle.emit()">
+    <li>
+      <a [routerLink]="['/']" routerLinkActive="bg-accent text-accent-content" [routerLinkActiveOptions]="{exact:true}">
+        Inicio
+      </a>
+    </li>
+    <li>
+      <a [routerLink]="['/about-us']" routerLinkActive="bg-accent text-accent-content">
+        Nosotros
+      </a>
+    </li>
+    <li>
+      <a [routerLink]="['/shop']" routerLinkActive="bg-accent text-accent-content" class="flex items-center gap-1">
+        Tienda
+      </a>
+    </li>
+    @if(numberItemsOfCartInput() > 0){
+      <li>
+        <a [routerLink]="['/pay']" routerLinkActive="bg-error text-error-content">
+          <span> Pagar </span>
+          <span class="badge badge-secondary">{{numberItemsOfCartInput()}}</span>
+        </a>
+      </li>
+    }
+    <li>
+      <a [routerLink]="['/contact-us']" routerLinkActive="bg-accent text-accent-content">
+        Contactanos
+      </a>
+    </li>
+    @if (!isShopRouteInput()) {
+      <li>
+        <button class="btn h-[33px]" (click)="openSearchModal()">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          Buscar en la Tienda
+        </button>
+      </li>
+    }
+  </ul>
+</div>

@@ -10,7 +10,7 @@ import { ASSETS } from '@core/assets';
 })
 export class HeroComponent {
 
-    public logo:string = ASSETS.LOGO;
-    public background = { 'background-image': `url(${ASSETS.HERO_BACKGROUND})` };
+    public readonly logo = ASSETS.LOGO;
+    public readonly background = { 'background-image': `url(${ASSETS.HERO_BACKGROUND})` };
 
 }

@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CONFIG } from '@core/configs';
 
@@ -13,7 +13,17 @@ import { CONFIG } from '@core/configs';
 })
 export class NavbarComponent {
 
- public name = CONFIG.APP_NAME;
- public toggle = output<void>();
+  public name = CONFIG.APP_NAME;
+  public toggle = output<void>();
+
+  public numberItemsOfCartInput = input.required<number>();
+
+  public isShopRouteInput = input.required<boolean>();
+
+  public openSearchModalOutput = output<void>();
+
+  public openSearchModal():void{
+    this.openSearchModalOutput.emit();
+  }
 
 }

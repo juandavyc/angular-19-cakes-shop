@@ -1,0 +1,26 @@
+<dialog class="modal" #shopSearchModal>
+  <div class="modal-box max-w-[320px]">
+    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" (click)="openModal(false)">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="flex flex-col gap-3">
+      <h3 class="text-lg font-bold">Buscar en la Tienda</h3>
+      <form [formGroup]="myForm" (submit)="myFormSubmit()">
+        <div class="join">
+          <input
+            class="input join-item"
+            placeholder="Pastel de frutos rojos"
+            formControlName="title"/>
+          <button class="btn btn-neutral join-item rounded-r-full">
+            Buscar
+          </button>
+        </div>
+      </form>
+      @if(isInvalidField('title')){
+        <p class="text-error font-bold">
+          {{getErrorField('title')}}
+        </p>
+      }
+    </div>
+  </div>
+</dialog>

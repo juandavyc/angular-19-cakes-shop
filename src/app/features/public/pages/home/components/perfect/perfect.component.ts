@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { HeroTitleComponent } from '@shared/components/hero-title/hero-title.component';
+import { HOME_CONFIGS } from '../../configs/home.configs';
 
 @Component({
   selector: 'perfect',
@@ -11,6 +12,6 @@ import { HeroTitleComponent } from '@shared/components/hero-title/hero-title.com
 })
 export class PerfectComponent {
 
-  title = '¡El pastel perfecto en 4 pasos!';
+  public readonly title = HOME_CONFIGS.perfect.title;
 
 }

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { StatHero } from './interface/StatHero';
-import { CONFIG } from '@core/configs';
 import { NgClass } from '@angular/common';
+import { HOME_CONFIGS } from '../../configs/home.configs';
 
 
 @Component({
@@ -15,24 +15,24 @@ import { NgClass } from '@angular/common';
 })
 export class StatsComponent {
 
-  stats:StatHero[]=[
+  public readonly stats:StatHero[]=[
 
     {
       icon: 'fa-solid fa-cake-candles',
       title: 'Pasteles',
-      value: CONFIG.STATS.cakes,
+      value: HOME_CONFIGS.stats.cakes,
       desc: 'Entregados'
     },
     {
       icon: 'fa-solid fa-calendar-check',
       title: 'Experiencia',
-      value: CONFIG.STATS.years,
+      value: HOME_CONFIGS.stats.years,
       desc: 'Endulzando momentos'
     },
     {
       icon: 'fa-solid fa-star',
       title: 'Valoracion',
-      value: CONFIG.STATS.rating,
+      value: HOME_CONFIGS.stats.rating,
       desc: 'Reseñas de clientes'
     }
   ];

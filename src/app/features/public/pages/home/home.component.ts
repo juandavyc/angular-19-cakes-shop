@@ -18,4 +18,7 @@ import { StatsComponent } from './components/stats/stats.component';
   styleUrl: './home.component.css',
   //changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent { }
+export class HomeComponent {
+
+
+ }

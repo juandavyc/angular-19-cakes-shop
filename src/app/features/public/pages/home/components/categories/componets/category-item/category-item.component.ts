@@ -12,5 +12,5 @@ import { CategoryHero } from '../../interfaces/category.interfaces';
   //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryItemComponent {
-  public category = input.required<CategoryHero>();
+  public occasionInput = input.required<CategoryHero>();
 }

@@ -16,6 +16,7 @@ import { Product, ShopResponse } from './interfaces';
 import { PaginationResponse } from '@shared/interfaces';
 import { ProductsComponent } from './components/products/products.component';
 import { SHOP_CONFIG } from './configs/shop.config';
+import { R } from 'node_modules/@angular/core/event_dispatcher.d-pVP0-wST';
 
 @Component({
   selector: 'app-shop',
@@ -68,8 +69,8 @@ export class ShopComponent {
         minPrice: this.buildUrlsService.getQueryParam(params, QueryParamsKeys.MIN_PRICE),
         maxPrice: this.buildUrlsService.getQueryParam(params, QueryParamsKeys.MAX_PRICE),
         category: this.buildUrlsService.getQueryParam(params, QueryParamsKeys.CATEGORY),
-        sort: this.buildUrlsService.getQueryParam(params, QueryParamsKeys.SORT),
-        size: this.buildUrlsService.getQueryParam(params, QueryParamsKeys.SIZE),
+        sort: this.getSortPage(this.buildUrlsService.getQueryParam(params, QueryParamsKeys.SORT)),
+        size: this.getSizePage(this.buildUrlsService.getQueryParam(params, QueryParamsKeys.SIZE)),
         page: this.buildUrlsService.getQueryParam(params, QueryParamsKeys.PAGE),
       })),
       tap(params => {
@@ -127,7 +128,11 @@ export class ShopComponent {
     }
   })
 
+  public getSizePage(size: string): string {
+    return this.buildUrlsService.getSizePage(size);
+  }
 
-
-
+  public getSortPage(sort: string):string{
+    return this.buildUrlsService.getSortPage(sort);
+  }
 }

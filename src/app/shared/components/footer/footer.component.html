@@ -15,7 +15,7 @@
           Nosotros
         </a>
         <a class="link link-hover hover:text-pink-500"
-          [routerLink]="['/contact']">
+          [routerLink]="['/contact-us']">
           Contacto
         </a>
         <a class="link link-hover hover:text-pink-500"
@@ -31,18 +31,12 @@
     <nav class="sm:order-3 order-2">
       <h6 class="footer-title">Encuentrame en</h6>
       <div class="grid grid-flow-row gap-1">
-        <a [href]="facebookUrl" class="flex items-center gap-2 hover:text-pink-500">
-          <i class="fa-brands fa-facebook-f text-2xl w-7 h-7 shrink-0"></i> {{facebook}}
-        </a>
-        <a [href]="instagramUrl" class="flex items-center gap-2 hover:text-pink-500">
-          <i class="fa-brands fa-instagram text-2xl w-7 h-7 shrink-0"></i>{{instagram}}
-        </a>
-        <a [href]="tiktokUrl" class="flex items-center gap-2 hover:text-pink-500">
-          <i class="fa-brands fa-tiktok text-2xl w-7 h-7 shrink-0"></i> {{tiktok}}
-        </a>
-        <a [href]="whatsappUrl" class="flex items-center gap-2 hover:text-pink-500">
-          <i class="fa-brands fa-whatsapp text-2xl w-7 h-7 shrink-0"></i> {{whatsapp}} 🇨🇴
-        </a>
+        @for (socialNetwork of socialNetworks; track $index) {
+          <a [href]="socialNetwork.url" class="flex items-center gap-2 hover:text-pink-500">
+            <i [ngClass]="socialNetwork.icon" class="text-2xl w-7 h-7 shrink-0"></i>
+            {{socialNetwork.title}}
+          </a>
+        }
       </div>
     </nav>
   </footer>

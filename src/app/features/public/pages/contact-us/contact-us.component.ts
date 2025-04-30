@@ -1,13 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { HeroTitleComponent } from '@shared/components/hero-title/hero-title.component';
 import { CONTACT_US_CONFIG } from './config/contact-us.config';
-import { JsonPipe, NgClass } from '@angular/common';
-
-interface SocialNetwork {
-  icon: string;
-  title: string;
-  url: string
-}
+import { NgClass } from '@angular/common';
+import { SocialNetwork } from '@core/interfaces/social-network.interface';
 
 @Component({
   selector: 'app-contact',

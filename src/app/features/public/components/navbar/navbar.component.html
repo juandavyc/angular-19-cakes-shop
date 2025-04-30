@@ -5,49 +5,68 @@
     </h1>
   </div>
   <div class="hidden flex-none lg:block">
-    <ul class="menu menu-horizontal font-bold gap-1">
-      <li>
-        <button class="btn btn-soft btn-sm">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
-      </li>
+    <ul class="menu menu-horizontal font-semibold">
+      @if (!isShopRouteInput()) {
+        <li class="me-0.5">
+          <button class="btn btn-ghost h-[33px] text-gray-500"
+            (click)="openSearchModal()">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Buscar
+          </button>
+        </li>
+      }
       <li>
         <a [routerLink]="['/']"
-          routerLinkActive="bg-accent text-accent-content"
-          [routerLinkActiveOptions]="{exact:true}">
-          <i class="fa-solid fa-house-chimney"></i>
+          [routerLinkActiveOptions]="{exact:true}"
+          routerLinkActive="bg-accent text-accent-content">
           Inicio
         </a>
       </li>
       <li>
-        <a [routerLink]="['/about-us']" routerLinkActive="bg-accent text-accent-content">
+        <a [routerLink]="['/about-us']"
+          routerLinkActive="bg-accent text-accent-content">
           Nosotros
         </a>
       </li>
       <li>
-        <a [routerLink]="['/shop']" routerLinkActive="bg-accent text-accent-content">
+        <a [routerLink]="['/shop']"
+          routerLinkActive="bg-accent text-accent-content">
           Tienda
         </a>
       </li>
+      @if(numberItemsOfCartInput() > 0){
+      <li>
+        <a [routerLink]="['/pay']"
+          routerLinkActive="bg-error text-error-content">
+          <div class="indicator">
+            <span class="indicator-item badge badge-secondary h-3 px-2">
+              {{numberItemsOfCartInput()}}
+            </span>
+            Pagar
+          </div>
+        </a>
+      </li>
+      }
       <li>
         <a [routerLink]="['/contact-us']" routerLinkActive="bg-accent text-accent-content">
           Contactanos
         </a>
       </li>
-      <li class="sm:block hidden">
-        <!-- <a [routerLink]="['/about-us']" routerLinkActive="bg-accent text-accent-content">
-          Carrito
-        </a> -->
-      </li>
     </ul>
   </div>
-  <div class="flex gap-3 lg:hidden">
+  <div class="flex gap-1 lg:hidden">
+    <button class="btn btn-accent text-accent-content btn-md"
+      (click)="openSearchModal()">
+        <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+    @if(numberItemsOfCartInput() > 0){
     <button class="btn btn-accent text-accent-content btn-md">
       <i class="fa-solid fa-cart-shopping"></i>
+      {{numberItemsOfCartInput()}}
     </button>
-    <button class="btn btn-accent text-accent-content btn-md"
-      (click)="toggle.emit()">
-        <i class="fa-solid fa-bars"></i>
+    }
+    <button class="btn btn-accent text-accent-content btn-md" (click)="toggle.emit()">
+      <i class="fa-solid fa-bars"></i>
     </button>
   </div>
 </nav>

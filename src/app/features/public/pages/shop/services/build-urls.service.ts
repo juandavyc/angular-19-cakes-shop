@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ParamMap, Params } from '@angular/router';
-import { CONFIG } from '@core/configs';
 import { QueryParamsKeys } from '../enums';
 import { QueryParams } from '../interfaces';
 import { OCCASIONS } from '@core/configs/products/occasions.config';
+import { SHOP_CONFIG } from '../configs/shop.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BuildUrlsService {
 
-  private readonly DEFAULTS = CONFIG.SHOP.DEFAULTS;
+  private readonly DEFAULTS = SHOP_CONFIG.defaults;
   private readonly OCCASIONS = OCCASIONS;
 
   private sortBackend = new Map<string, string>([
@@ -76,4 +76,21 @@ export class BuildUrlsService {
     });
     return (new URLSearchParams(queryParams).toString());
   }
+
+  public getSizePage(sizeUrl: string): string {
+    const size = parseInt(sizeUrl.trim());
+    if (!size) return SHOP_CONFIG.defaults.url.size;
+    if (SHOP_CONFIG.size.includes(size)) return sizeUrl.trim();
+    return SHOP_CONFIG.defaults.url.size;
+  }
+
+  public getSortPage(sortUrl: string): string {
+    const sort = sortUrl.trim();
+    if (!sort) return SHOP_CONFIG.defaults.url.sort;
+    if (SHOP_CONFIG.sort.includes(sort)) return sort;
+    return SHOP_CONFIG.defaults.url.sort;
+  }
+
+
+
 }

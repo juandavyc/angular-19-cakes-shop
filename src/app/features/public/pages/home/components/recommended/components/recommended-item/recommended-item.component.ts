@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { Recommended } from '../../interfaces/recommended.interface';
 import { CONFIG } from '@core/configs';
+import { RecommendedCake } from '../../interfaces/recommended.interface';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'recommended-item',
   imports: [
+    RouterLink
   ],
   templateUrl: './recommended-item.component.html',
   styleUrl: './recommended-item.component.css',
@@ -15,13 +17,6 @@ import { CONFIG } from '@core/configs';
 
 export class RecommendedItemComponent {
 
-  public recommended = input.required<Recommended>();
-
-  private tips: string[] = CONFIG.TOOLTIPS;
-
-  public getRandomToolTip():string {
-    const index = Math.floor(Math.random() * this.tips.length);
-    return this.tips[index] ?? '';
-  }
+  public recommended = input.required<RecommendedCake>();
 
 }
