@@ -28,19 +28,30 @@ const PublicRoutes: Routes = [
         data: { title: 'Product' }
       },
       {
+        path: 'pay',
+        loadChildren: () => import('./pages/pay/pay.routes'),
+        data: { title: 'Pay' }
+      },
+      {
         path: 'contact-us',
         component: ContactUsComponent,
+        data: { title: 'Contact-us' }
+      },
+      {
+        path: 'login',
+        loadChildren: () => import('./pages/auth/auth.routes'),
+        data: { title: 'Login' }
       },
       {
         path: '**',
-        redirectTo: '/shop'
+        redirectTo: ''
       }
     ]
   },
 
   {
     path: '**',
-    redirectTo: '/shop'
+    redirectTo: ''
   }
 ];
 

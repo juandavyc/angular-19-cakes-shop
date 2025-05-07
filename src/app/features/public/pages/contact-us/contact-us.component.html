@@ -6,37 +6,65 @@
   <div class="join sm:join-horizontal join-vertical">
 
     @for (socialNetwork of socialNetworks; track $index) {
-    <div class="join-item btn btn-accent">
-      <a [href]="socialNetwork.url" class="flex items-center gap-2">
-        <i [ngClass]="socialNetwork.icon" class="text-2xl w-7 h-7 shrink-0"></i>
-        {{socialNetwork.title}}
-      </a>
-    </div>
+      <div class="join-item btn btn-accent">
+        <a [href]="socialNetwork.url" class="flex items-center gap-2">
+          <i [ngClass]="socialNetwork.icon" class="text-2xl w-7 h-7 shrink-0"></i>
+          {{socialNetwork.title}}
+        </a>
+      </div>
     }
   </div>
 </div>
 
 <section class="my-10">
   <div class="container max-w-lg bg-white rounded-xl shadow-lg border-base-200 border-[1px] p-10">
-    <form>
-      <div class="flex flex-col gap-3">
-        <label>Nombre</label>
-        <label class="input w-full">
-          <i class="fa-solid fa-align-left opacity-50"></i>
-          <input type="text" class="grow" placeholder="Tu nombre" />
-        </label>
-        <label>Celular</label>
-        <label class="input w-full">
-          <i class="fa-brands fa-whatsapp opacity-50"></i>
-          <input type="number" class="grow" placeholder="Tu numero" />
-        </label>
-        <label>Mensaje</label>
-        <textarea class="textarea w-full resize-none" rows="4" placeholder="Tu mensaje"></textarea>
-        <div class="divider divider-neutral"> Opciones </div>
+    @if (formRx.isLoading()) {
+      <p>Enviando, espere...</p>
+    }
+    @if (isSubmitted() && formRx.hasValue()) {
+      <div class="alert alert-success">
+        <span>{{formRx.value()}}</span>
       </div>
-      <div class="flex justify-center">
-        <button type="submit" class="btn btn-neutral btn-wide hover:bg-pink-500">Enviar</button>
+    }
+    @if (formRx.error()) {
+      <div class="alert alert-error">
+        <span>Ocurrió un error al enviar. Intenta de nuevo más tarde.</span>
       </div>
-    </form>
+    }
+    @if (!isSubmitted() && !formRx.isLoading()) {
+      <form [formGroup]="myForm" (submit)="onSubmit()">
+        <div class="flex flex-col gap-3">
+          <label>Nombre</label>
+          <label class="input w-full">
+            <i class="fa-solid fa-align-left opacity-50"></i>
+            <input type="text" class="grow" placeholder="Tu nombre" formControlName="name" />
+          </label>
+          @if (isInvalidField('name')){
+            <p class="text-error text-shadow-sm">{{getErrorField('name')}}</p>
+          }
+          <label>Celular</label>
+          <label class="input w-full">
+            <i class="fa-brands fa-whatsapp opacity-50"></i>
+            <input type="text" class="grow" placeholder="Tu numero" formControlName="phoneNumber"/>
+          </label>
+          @if (isInvalidField('phoneNumber')){
+            <p class="text-error text-shadow-sm">{{getErrorField('phoneNumber')}}</p>
+          }
+          <label>Mensaje</label>
+          <textarea class="textarea w-full resize-none rounded-3xl" rows="4" placeholder="Tu mensaje" formControlName="message"></textarea>
+          @if (isInvalidField('message')){
+            <p class="text-error text-shadow-sm">{{getErrorField('message')}}</p>
+          }
+          <div class="divider divider-neutral"> Opciones </div>
+        </div>
+
+        <div class="flex justify-center">
+          <button type="submit" class="btn btn-neutral btn-wide hover:bg-pink-500"
+            [disabled]="myForm.invalid">
+            Enviar
+          </button>
+        </div>
+      </form>
+    }
   </div>
 </section>

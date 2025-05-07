@@ -12,6 +12,7 @@ export class CartMapper {
       cover: product.cover,
       price: product.price,
       quantity,
+      pay:true,
     };
   }
 }

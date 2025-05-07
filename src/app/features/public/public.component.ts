@@ -42,7 +42,7 @@ export class PublicComponent {
   }
 
   public isPayRoute(): boolean {
-    return this.router.url.startsWith('/about-us');
+    return this.router.url.startsWith('/pay');
   }
   public isShopRoute():boolean{
     return this.router.url.startsWith('/shop');

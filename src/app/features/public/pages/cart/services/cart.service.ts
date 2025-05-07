@@ -6,6 +6,7 @@ import { CartMapper } from '../mappers/cart.mapper';
 import { isPlatformBrowser } from '@angular/common';
 import { PlatformIdService } from '@shared/service/platform-id.service';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -42,7 +43,7 @@ export class CartService {
 
   public total = computed(() => this.cart().reduce((acc, pro) => acc + pro.price * pro.quantity, 0));
 
-  public numberItems = computed(()=>this.cart().length);
+  public numberItems = computed(() => this.cart().length);
 
 
   public addProduct(product: Product) {
@@ -61,17 +62,14 @@ export class CartService {
     else {
       this.cart.update(prod => [...prod, productMapped]);
     }
-
   }
 
   public incrementQuantity(id: string): void {
-
     if (this.verifyId(id)) {
       this.cart.update(products =>
         products.map(product => this.incrementQuantityProduct(product, id))
       )
     }
-
   }
 
   public decrementQuantity(id: string): void {
@@ -93,6 +91,29 @@ export class CartService {
     }
   }
 
+  public payProduct(id: string, toPay:boolean): void {
+    if (this.verifyId(id)) {
+      this.cart.update(products =>
+        products.map(product => product.id === id ? { ...product, pay: toPay } : product)
+      )
+    }
+  }
+
+  public payProducts(toPayProducts: boolean) {
+    this.cart.update(products =>
+      products.map(product => ({...product, pay:toPayProducts}))
+    )
+  }
+
+  public removeToPayProducts() {
+    this.cart.update(products =>
+      products.filter(product => !product.pay)
+    )
+  }
+
+  public removeAllProducts() {
+    this.cart.set([]);
+  }
   private verifyId(id: string): boolean {
     const existingProduct = this.cart()
       .find(product => product.id == id);
@@ -105,5 +126,9 @@ export class CartService {
   private decrementQuantityProduct(product: CartProduct, id: string): CartProduct {
     return product.id === id ? { ...product, quantity: product.quantity - 1 } : product
   }
+
+
+
+
 
 }

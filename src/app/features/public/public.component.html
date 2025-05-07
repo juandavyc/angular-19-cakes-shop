@@ -4,13 +4,11 @@
     (change)="toggleDrawer()"
     [checked]="isOpen()"/>
   <div class="drawer-content">
-
     <app-navbar
       [numberItemsOfCartInput]="numberItemsOfCart()"
       [isShopRouteInput]="isShopRoute()"
       (toggle)="toggleDrawer()"
       (openSearchModalOutput)="openSearchModal()"/>
-
     <div class="mt-[65px]">
       <app-breadcrumb />
       <router-outlet />

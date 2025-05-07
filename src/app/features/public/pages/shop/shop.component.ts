@@ -16,7 +16,6 @@ import { Product, ShopResponse } from './interfaces';
 import { PaginationResponse } from '@shared/interfaces';
 import { ProductsComponent } from './components/products/products.component';
 import { SHOP_CONFIG } from './configs/shop.config';
-import { R } from 'node_modules/@angular/core/event_dispatcher.d-pVP0-wST';
 
 @Component({
   selector: 'app-shop',

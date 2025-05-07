@@ -1,0 +1,50 @@
+<div class="flex flex-col justify-center my-5">
+  <hero-title [title]="title" [subtitle]="subtitle" class="text-center" />
+</div>
+
+<section class="container my-10">
+  <div class="h-[70vh] flex flex-col gap-3 justify-center items-center">
+    <div class="bg-white w-[359px] border border-base-200 rounded-box shadow-lg sm:px-10 px-3 py-5 ">
+      <div class="flex flex-col gap-2">
+        <h3 class="text-center font-semibold">Ingrese sus Credenciales</h3>
+        <label class="text-sm"> Nombre </label>
+        <label class="input">
+          <i class="fa-solid fa-user text-gray-300"></i>
+          <input type="text" placeholder="Nombre" disabled/>
+        </label>
+        <label class="text-sm"> Usuario o Email </label>
+        <label class="input">
+          <i class="fa-solid fa-user text-gray-300"></i>
+          <input type="text" placeholder="Correo@gmail.com" disabled/>
+        </label>
+
+        <label class="text-sm"> Contraseña </label>
+        <label class="input border-e-0 rounded-e-none">
+          <i class="fa-solid fa-lock text-gray-300"></i>
+          <input type="text" class="grow" placeholder="Contraseña" disabled />
+        </label>
+
+        <label class="text-sm"> Confirmar Contraseña </label>
+        <label class="input border-e-0 rounded-e-none">
+          <i class="fa-solid fa-lock text-gray-300"></i>
+          <input type="text" class="grow" placeholder="Confirmar contraseña" disabled />
+        </label>
+        <div class="divider my-1"></div>
+        <button class="btn btn-info w-full" disabled>
+          Crear cuenta
+        </button>
+      </div>
+    </div>
+    <div class="bg-white w-[359px] border border-base-200 rounded-box shadow-lg sm:px-10 px-3 py-5 ">
+      <div class="flex sm:flex-row flex-col gap-3 justify-center text-center">
+       <span>Ya tienes cuenta? </span>
+       <a [routerLink]="['/login']" class="link text-blue-400 font-bold">
+         Iniciar sesion
+       </a>
+      </div>
+     </div>
+  </div>
+</section>
+
+
+

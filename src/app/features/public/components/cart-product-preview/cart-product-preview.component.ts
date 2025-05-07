@@ -7,6 +7,7 @@ import { CartRemoveModalComponent } from '../cart-remove-modal/cart-remove-modal
 import { CartService } from '@public/pages/cart/services/cart.service';
 import { CartProduct } from '@public/pages/cart/interfaces';
 import { ChangeQuantity } from '@public/pages/cart/enums/change-quantity.enums';
+import { RouterLink } from '@angular/router';
 
 enum ScrollDirection {
   TOP,
@@ -18,6 +19,7 @@ enum ScrollDirection {
 @Component({
   selector: 'cart-product-preview',
   imports: [
+    RouterLink,
     CartProductItemComponent,
     CartRemoveModalComponent,
     DecimalPipe,
@@ -56,7 +58,6 @@ export class CartProductPreviewComponent {
         this.cartService.decrementQuantity(id);
       }
     }
-
   }
 
   public removeCartProduct(id: string): void {

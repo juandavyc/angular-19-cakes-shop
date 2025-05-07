@@ -5,4 +5,5 @@ export interface CartProduct {
   cover: string;
   price: number;
   quantity: number;
+  pay:boolean;
 }

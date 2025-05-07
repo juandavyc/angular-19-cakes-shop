@@ -1,0 +1,39 @@
+@let cartProduct = cartProductItemInput();
+<li class="list-row text-base hover:bg-base-100">
+  <div class="leading-10">
+    <input type="checkbox"
+      class="checkbox"
+      [checked]="cartProduct.pay"
+      (change)="productToPayOutput.emit(isToPayProduct.checked)" #isToPayProduct>
+  </div>
+  <a class="hover:opacity-75" [routerLink]="['/product', cartProduct.slug]">
+    <img class="size-10 rounded-sm w-12 h-12" [src]="cartProduct.cover" />
+  </a>
+  <div class="list-col-grow">
+    <a class="hover:text-pink-500"
+      [routerLink]="['/product', cartProduct.slug]">
+      {{cartProduct.name | titlecase}}
+    </a>
+    <div class="font-semibold text-gray-700">$ {{cartProduct.price | number}}</div>
+  </div>
+  <div class="flex flex-row gap-1 items-center">
+    <div class="join items-center">
+      <button class="btn btn-sm  join-item"
+        (click)="changeQuantityOutput.emit(changeQuantity.DECREMENT)">
+        <i class="fa-solid fa-minus"></i>
+      </button>
+      <span class="font-bold bg-base-100 border-y-2 w-10 text-center py-[2px] border-base-300">
+        {{cartProduct.quantity}}
+      </span>
+      <button class="btn btn-sm join-item"
+        (click)="changeQuantityOutput.emit(changeQuantity.INCREMENT)"
+        [disabled]="cartProduct.quantity >= 10">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </div>
+    <button class="btn btn-sm btn-error text-white join-item"
+      (click)="removeCartProductOutput.emit(cartProduct.id)">
+      <i class="fa-solid fa-trash"></i>
+    </button>
+  </div>
+</li>

@@ -9,7 +9,6 @@ import { ChangeDetectionStrategy, Component, ElementRef, output, viewChild } fro
 })
 export class CartRemoveModalComponent {
 
-
   private cartRemoveModal = viewChild<ElementRef<HTMLDialogElement>>('cartRemoveModal');
 
   public removeConfirm = output<void>();

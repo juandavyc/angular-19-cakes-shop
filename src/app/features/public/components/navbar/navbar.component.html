@@ -52,6 +52,11 @@
           Contactanos
         </a>
       </li>
+      <li>
+        <a [routerLink]="['/login']" routerLinkActive="bg-accent text-accent-content">
+          Mi Cuenta
+        </a>
+      </li>
     </ul>
   </div>
   <div class="flex gap-1 lg:hidden">
@@ -60,10 +65,10 @@
         <i class="fa-solid fa-magnifying-glass"></i>
     </button>
     @if(numberItemsOfCartInput() > 0){
-    <button class="btn btn-accent text-accent-content btn-md">
+    <a [routerLink]="['/pay']" class="btn btn-accent text-accent-content btn-md">
       <i class="fa-solid fa-cart-shopping"></i>
       {{numberItemsOfCartInput()}}
-    </button>
+    </a>
     }
     <button class="btn btn-accent text-accent-content btn-md" (click)="toggle.emit()">
       <i class="fa-solid fa-bars"></i>

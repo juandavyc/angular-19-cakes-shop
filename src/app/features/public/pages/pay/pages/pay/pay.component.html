@@ -1,0 +1,78 @@
+<hero-title [title]="title" [subtitle]="subtitle" class="text-center" />
+
+
+<div class="flex justify-center">
+  <ul class="steps">
+    <li class="step step-accent">
+      <span class="step-icon">1 </span>Crear orden
+    </li>
+    <li class="step">
+      <span class="step-icon">2</span>Confirmar orden
+    </li>
+    <li class="step">
+      <span class="step-icon">3</span>Disfrutar
+    </li>
+  </ul>
+</div>
+<section class="my-10">
+    <div class="container">
+
+    @if (payloadRx.isLoading()) {
+      <p>Enviando, espere...</p>
+    }
+    @if (payloadRx.hasValue() && payloadRx.value()) {
+      <div class="alert alert-success">
+        <span>{{payloadRx.value()}}</span>
+      </div>
+    }
+    @if (payloadRx.error()) {
+      <div class="alert alert-error">
+        <span>Ocurrió un error al enviar. Intenta de nuevo más tarde.</span>
+        <p>{{payloadRx.error()}}</p>
+      </div>
+    }
+
+    @if (!payloadRx.isLoading()) {
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="sm:col-span-2 col-span-1 sm:order-1 order-2 flex flex-col gap-6">
+          <div class="bg-white rounded-xl shadow-sm p-3">
+            <h3 class="text-2xl font-bold">Carrito de Compras ( {{summary().quantity}} )</h3>
+            <div class="flex flex-row gap-3 items-center">
+              <label class="label text-neutral">
+                <input type="checkbox"
+                  class="checkbox"
+                  [checked]="hasProductsToPay()"
+                  (change)="productsToPay(isToPayProducts.checked)" #isToPayProducts>
+                Seleccionar todos
+              </label>
+              <div class="divider"></div>
+              <button class="btn btn-ghost btn-error"
+                (click)="removeToPayProducts()">
+                Borrar los seleccionados
+              </button>
+            </div>
+          </div>
+          <ul class="list bg-white rounded-xl shadow-sm p-3">
+            <li class="p-4 pb-2 text-sm opacity-60 tracking-wide">Seleccione los productos a Pagar</li>
+            @for (cartProduct of cartProducts(); track $index) {
+              <cart-product-item
+                [cartProductItemInput]="cartProduct"
+                (productToPayOutput)="productToPay(cartProduct.id, $event)"
+                (changeQuantityOutput)="changeQuantityProduct($event, cartProduct.id, cartProduct.quantity)"
+                (removeCartProductOutput)="removeCartProduct(cartProduct.id)"/>
+            }
+          </ul>
+        </div>
+        <div class="col-span-1 sm:order-2 order-1">
+          <pay-summary
+            [summaryInput]="summary()"
+            [hasProductsInput]="hasProductsToPay()"
+            (toPayOutput)="confirmProductsToPay()"/>
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+<cart-remove-modal #cartRemoveModal (removeConfirm)="confirmRemoveCartProduct()"/>
+<cart-remove-modal #cartRemoveToPayModal (removeConfirm)="confirmRemoveToPayProducts()"/>
