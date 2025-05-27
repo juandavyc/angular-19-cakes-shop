@@ -34,7 +34,16 @@
             <div class="divider"></div>
           </div>
           <div class="col-span-full">
-            <purshase-controls (addToCartOutput)="addToCart(product)" />
+            <div class="grid sm:grid-cols-2 grid-cols-1 gap-3">
+              <button class="btn btn-success" (click)="sendWhatsapp(product.slug)">
+                <i class="fa-brands fa-whatsapp"></i>
+                Comprar
+              </button>
+              <button class="btn btn-neutral" disabled>
+                <i class="fa-brands fa-whatsapp"></i>
+                Añadir al carrito
+              </button>
+            </div>
           </div>
         </div>
         <div class="col-span-full">
