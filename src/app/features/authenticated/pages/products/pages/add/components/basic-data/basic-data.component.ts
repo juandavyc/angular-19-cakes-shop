@@ -44,7 +44,7 @@ export class BasicDataComponent {
     cover: [,
       [Validators.required, Validators.minLength(3), Validators.maxLength(200), this.formValidatorService.isValidImage()]
     ],
-    description: ['', [Validators.maxLength(200)]],
+    description: [''],
   });
 
   public isInvalidField(field: string) {

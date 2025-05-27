@@ -1,4 +1,7 @@
-import { ChangeDetectionStrategy, Component, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, output } from '@angular/core';
+import { Router } from '@angular/router';
+import { CONTACT_US } from '@core/configs/contact-us/contact-us.config';
+import { PlatformIdService } from '@shared/service/platform-id.service';
 
 
 @Component({
@@ -10,7 +13,10 @@ import { ChangeDetectionStrategy, Component, output } from '@angular/core';
 })
 export class PurshaseControlsComponent {
 
+  private router = inject(Router);
   public addToCartOutput = output<void>();
+  private platformIdService = inject(PlatformIdService);
+
 
   // public buyProduct(): void {
   //   if (product) {
@@ -22,4 +28,15 @@ export class PurshaseControlsComponent {
     this.addToCartOutput.emit();
   }
 
+  public sendWhatsapp(slug: string) {
+    if (!this.platformIdService.isBrowser) return;
+
+    const url = location.origin + this.router.serializeUrl(
+      this.router.createUrlTree(['/product', slug])
+    );
+    const encodedMessage = encodeURIComponent(`Hola, ¿Sigue estando disponible este artículo? - ${url}`);
+    const waUrl = `https://wa.me/${CONTACT_US.number}?text=${encodedMessage}`;
+
+    window.open(waUrl, '_blank');
+  }
 }

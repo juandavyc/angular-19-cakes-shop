@@ -21,8 +21,8 @@ export const CONTACT_US = {
       url: 'https://api.whatsapp.com/send/?phone=573112388851&text=Hola%2C%20me%20gustar%C3%ADa%20recibir%20m%C3%A1s%20informaci%C3%B3n%20sobre%20tu%20pasteler%C3%ADa'
     },
   ],
-  address: 'Calle Falsa 123, Ciudad',
-  number: '573222205301',
+  address: '',
+  number: '573112388851',
   email: 'soporte@pasteleriajb.com',
 
 
