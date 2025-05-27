@@ -4,7 +4,8 @@
     class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-105">
   <div class="card-body flex flex-col justify-center items-center relative z-10">
     <a class="btn btn-wide bg-white text-black border-[#e5e5e5] text-xl hover:bg-secondary shadow-2xl"
-      [routerLink]="['/shop', occasion.url]">
+      [routerLink]="['/shop']"
+      [queryParams]="{ occasion: occasion.url}">
       {{occasion.name}}
     </a>
   </div>

@@ -66,11 +66,6 @@
             [value]="occasion.slug"
             [attr.aria-label]="occasion.name| titlecase"/>
         }
-        <ul>
-                @for (occasion of occasions(); track occasion.id) {
-                  <li>{{occasion.name}}</li>
-                }
-              </ul>
       </div>
       @if (isInvalidField('occasion')){
         <p class="text-error">{{getErrorField('occasion')}}</p>
