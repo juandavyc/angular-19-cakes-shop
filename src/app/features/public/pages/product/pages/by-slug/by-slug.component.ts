@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, linkedSignal, } from '@angular/core';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, } from '@angular/router';
+import { ActivatedRoute, Router, } from '@angular/router';
 import { ASSETS } from '@core/assets';
 import { Product } from '@public/pages/shop/interfaces';
 import { HeroTitleComponent } from '@shared/components/hero-title/hero-title.component';
@@ -19,6 +19,7 @@ import { ProductService } from '../../service/product.service';
 import { PlatformIdService } from '@shared/service/platform-id.service';
 import { CartService } from '@public/pages/cart/services/cart.service';
 import { PRODUCT_CONFIG } from '../../configs/product.config';
+import { CONTACT_US } from '@core/configs/contact-us/contact-us.config';
 
 
 
@@ -31,7 +32,7 @@ import { PRODUCT_CONFIG } from '../../configs/product.config';
     OrderedNameComponent,
     CoverImageComponent,
     CarouselImagesComponent,
-    PurshaseControlsComponent,
+    //PurshaseControlsComponent,
     OccasionsComponent,
     CategoriesComponent,
     PriceComponent,
@@ -44,6 +45,8 @@ export default class BySlugComponent {
 
   public readonly title = PRODUCT_CONFIG.title;
   public readonly subtitle = PRODUCT_CONFIG.subtitle;
+
+  private router = inject(Router);
 
   private platformIdService = inject(PlatformIdService);
   private location = inject(Location);
@@ -79,7 +82,7 @@ export default class BySlugComponent {
     this.selectedImage.set(url);
   }
 
-  public addToCart(product: Product){
+  public addToCart(product: Product) {
     this.cartService.addProduct(product);
   }
 
@@ -88,5 +91,20 @@ export default class BySlugComponent {
       this.location.back();
     }
   }
+
+  public sendWhatsapp(slug: string) {
+    if (!this.platformIdService.isBrowser) return;
+
+    const url = location.origin + this.router.serializeUrl(
+      this.router.createUrlTree(['/product', slug])
+    );
+    const encodedMessage = encodeURIComponent(`Hola, ¿Sigue estando disponible este artículo? - ${url}`);
+    const waUrl = `https://wa.me/${CONTACT_US.number}?text=${encodedMessage}`;
+
+    window.open(waUrl, '_blank');
+  }
+
+
+
 
 }
