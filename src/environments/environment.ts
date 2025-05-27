@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: import.meta.env.NG_APP_API_URL || ''
+  apiUrl: 'https://easy-morissa-juandavyc-44423044.koyeb.app/api'
 }
