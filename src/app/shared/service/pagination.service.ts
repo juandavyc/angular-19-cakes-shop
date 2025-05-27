@@ -14,15 +14,15 @@ export class PaginationService {
 
   private buildPageSummary(pageInformation: PageInformation): string {
     const { page, totalPages, totalElements } = pageInformation;
-    const pageText = page > 0 ? (`Pagina ${(page)} de ${totalPages},`) : '';
+    const pageText = page > 0 ? (`Pagina ${(page)} de ${totalPages-1},`) : 'Pagina principal, ';
     return `${pageText} Mostrando ${totalElements} Resultado${totalElements > 1 ? 's' : ''} `;
   }
 
 
 
-  public buildPagination(information: PageInformation): Pagination {
+  private buildPagination(information: PageInformation): Pagination {
     return {
-      page: (information.first) ? 0 : information.page +1,
+      page: (information.first) ? 0 : information.page,
       total: information.totalPages,
       next: (information.last) ? 0 : information.page + 1,
       previous: (information.first) ? 0 : information.page - 1,
@@ -31,18 +31,22 @@ export class PaginationService {
     };
   }
 
+  public emptyPagination(){
+    return {
+      message: '',
+      pagination: null
+    };
+  }
+
   public getPagination(pageInformation: PageInformation): PaginationResponse {
     if (pageInformation.empty) {
-      return {
-        message: '',
-        pagination: null
-      };
+     this.emptyPagination();
     }
     return {
       message:  this.buildPageSummary(pageInformation),
       pagination:  this.buildPagination(pageInformation),
     }
-
   }
+
 
 }

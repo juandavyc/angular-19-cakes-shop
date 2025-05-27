@@ -1,0 +1,13 @@
+<div class="drawer-overlay backdrop-blur-xs"
+  (click)="handleToggleClick($event)"></div>
+<div class="bg-neutral text-neutral-content min-h-full w-80 p-4"
+  (click)="handleToggleClick($event)">
+  <div class="flex justify-center">
+    <logo/>
+  </div>
+  <div class="divider divider-start divider-secondary">
+    Menú
+  </div>
+  <menu-items class="menu-vertical w-full bg-[#2b2b2b] rounded-2xl"
+    [isMobile]="true"/>
+</div>

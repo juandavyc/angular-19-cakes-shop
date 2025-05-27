@@ -1,29 +1,43 @@
-<div class="flex flex-row justify-center">
-  <div class="join">
-    @let pagination = pagePagination();
-    @if(pagination){
+@let pagination = paginationValues();
+@if(pagination){
+  <div class="flex flex-row justify-center">
     <div class="join">
+
+      <div class="join-item">
+        <select class="select" (change)="changePage(selectPage.value)" #selectPage>
+          @for (pages of totalPages(); track $index; let first = $first) {
+            <option [value]="pages" [selected]="pages === pagination.page">
+              @if(first){
+                Principal
+              }
+              @else{
+                {{pages}}
+              }
+            </option>
+          }
+        </select>
+      </div>
       <div class="join-item tooltip" data-tip="Primera">
-        <button (click)="goToPage(0)" class="btn btn-ghost btn-md" [disabled]="pagination.first">
+        <button (click)="changePage(0)" class="btn btn-ghost btn-md" [disabled]="pagination.first">
           <i class="fa-solid fa-angles-left"></i>
         </button>
       </div>
       <div class="join-item tooltip" data-tip="Anterior">
-        <button (click)="goToPage(pagination.previous)" class="btn btn-ghost btn-md" [disabled]="pagination.first">
+        <button (click)="changePage(pagination.previous)" class="btn btn-ghost btn-md" [disabled]="pagination.first">
           <i class="fa-solid fa-chevron-left"></i>
         </button>
       </div>
       <div class="join-item tooltip" data-tip="Siguiente">
-        <button (click)="goToPage(pagination.next)" class="btn btn-ghost btn-md" [disabled]="pagination.last">
+        <button (click)="changePage(pagination.next)" class="btn btn-ghost btn-md" [disabled]="pagination.last">
           <i class="fa-solid fa-chevron-right"></i>
         </button>
       </div>
-
       <div class="join-item tooltip" data-tip="Ultima">
-        <button (click)="goToPage(pagination.total)" class="btn btn-ghost btn-md" [disabled]="pagination.last">
+        <button (click)="changePage(pagination.total-1)" class="btn btn-ghost btn-md" [disabled]="pagination.last">
           <i class="fa-solid fa-angles-right"></i>
         </button>
       </div>
+
     </div>
-    }
   </div>
+}

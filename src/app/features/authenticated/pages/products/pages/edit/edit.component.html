@@ -1,0 +1,55 @@
+@let productStatus = productRx;
+
+@if(productStatus.error()){
+  <p>{{productStatus.error()}}</p>
+}
+@else if(productStatus.isLoading()){
+  <p>Cargando...</p>
+}
+@else if(productStatus.hasValue() && productStatus.value() != null){
+  @let product = productStatus.value();
+  <div class="flex flex-col gap-6">
+    <div class="collapse collapse-plus bg-white border border-base-300 shadow-sm">
+      <input type="radio" name="my-accordion-1" checked="checked" />
+      <div class="collapse-title md:text-base lg:text-xl font-semibold">
+        <span class="text-gray-400">#</span> Datos basicos
+      </div>
+      <div class="collapse-content">
+        <basic-data-form [productData]="product!.basicData"
+          [productId]="product!.id" />
+      </div>
+    </div>
+    <div class="collapse collapse-plus bg-white border border-base-300 shadow-sm">
+      <input type="radio" name="my-accordion-1" />
+      <div class="collapse-title md:text-base lg:text-xl font-semibold">
+        <span class="text-gray-400">#</span> Gestionar Categorias
+      </div>
+      <div class="collapse-content">
+        <categories-form [productCategories]="product!.categories"
+          [productId]="product!.id" />
+      </div>
+    </div>
+
+    <div class="collapse collapse-plus bg-white border border-base-300 shadow-sm">
+      <input type="radio" name="my-accordion-1" />
+      <div class="collapse-title md:text-base lg:text-xl font-semibold">
+        <span class="text-gray-400">#</span> Gestionar Ocaciones
+      </div>
+      <div class="collapse-content">
+        <occasions-form [productOccasions]="product!.occasions"
+          [productId]="product!.id" />
+      </div>
+    </div>
+    <div class="collapse collapse-plus bg-white border border-base-300 shadow-sm">
+      <input type="radio" name="my-accordion-1" />
+      <div class="collapse-title md:text-base lg:text-xl font-semibold">
+        <span class="text-gray-400">#</span> Gestionar Fotos
+      </div>
+      <div class="collapse-content">
+        <images-form [productImages]="product!.images"
+          [productId]="product!.id" />
+      </div>
+    </div>
+
+  </div>
+}

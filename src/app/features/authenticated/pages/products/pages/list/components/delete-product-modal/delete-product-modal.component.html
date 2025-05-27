@@ -1,0 +1,42 @@
+@let deleteStatus = productToDeleteRx();
+
+<dialog class="modal" #confirmToDeleteModal>
+  <div class="modal-box">
+    @if(deleteStatus.isLoading()){
+      <p class="text-center">Eliminando, espere...</p>
+    }
+    @if(deleteStatus.error()){
+      <div class="flex flex-col gap-3">
+        <p>{{deleteStatus.error()}}</p>
+        <button class="btn" (click)="modalEvent.emit('close')">
+          Salir
+        </button>
+      </div>
+    }
+    @else if(deleteStatus.hasValue() && deleteStatus.value() === null){
+      <h3 class="text-lg font-bold">¿Estás seguro?</h3>
+      <p class="py-4 text-center">
+        <strong>Eliminarás</strong> este propducto para Siempre.
+      </p>
+      <div class="flex flex-col gap-2">
+        <button class="btn btn-sm btn-error text-white"
+          (click)="modalEvent.emit('delete')">
+          SI, BORRAR
+        </button>
+        <button class="btn btn-sm" (click)="modalEvent.emit('close')">
+          NO
+        </button>
+      </div>
+    }
+    @else if(deleteStatus.hasValue() && deleteStatus.value() !== null){
+      <p class="py-4 text-center">
+        El producto fue <strong>Eliminado</strong> para Siempre.
+      </p>
+      <div class="flex flex-col gap-2">
+        <button class="btn" (click)="modalEvent.emit('close-reload')">
+          Salir
+        </button>
+      </div>
+    }
+  </div>
+</dialog>

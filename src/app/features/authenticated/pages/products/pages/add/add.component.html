@@ -1,0 +1,98 @@
+@let currentStep = step();
+@let resetForm = shouldResetForm();
+
+<p class="text-center text-xl" #moduleName>Agregar nuevo</p>
+
+<div class="flex justify-center my-10">
+  <div class="sm:block hidden">
+    <ul class="steps sm:steps-horizontal steps-vertical">
+      @for (stepName of stepsConfig; track $index; let i = $index;) {
+      <li class="step me-1" [class.step-primary]="i <= currentStep" #stepElement>
+        {{stepName}}
+      </li>
+      }
+    </ul>
+  </div>
+  <div class="sm:hidden block">
+    <div class="flex flex-row gap-3 items-center">
+      <div class="radial-progress bg-base-200 text-neutral font-bold" [ngStyle]="{'--value': progress()}" [attr.aria-valuenow]="progress()"
+        role="progressbar">
+        {{(currentStep +1)}} / {{(stepsConfig.length+1)}}
+      </div>
+      <h3 class="text-xl font-bold">
+        {{stepsConfig[currentStep]}}
+      </h3>
+    </div>
+  </div>
+</div>
+<div class="bg-white rounded-xl shadow-lg border-base-200 border-[1px] px-5 py-10">
+  <div class="flex flex-col gap-3">
+
+    @let productState = saveProductRx;
+    @if(productState.isLoading()){
+      <p>Agregando producto, espere...</p>
+    }
+    @if(productState.error()){
+      <p>{{productState.error()}}</p>
+      <div class="divider">Opciones</div>
+      <div class="flex justify-center">
+        <div class="join ">
+          <button class="btn btn-error join-item" (click)="onSaveProduct()">
+            Intentar guardar
+          </button>
+          <button class="btn join-item" (click)="resetAllForms()">
+            Ingresar uno nuevo
+          </button>
+        </div>
+      </div>
+    }
+    @else if(productState.hasValue() && productState.value() === null){
+
+    <h2 class="text-2xl text-center font-bold border-b border-base-200 py-3" [hidden]="currentStep === 0">
+      {{productName()}}
+    </h2>
+    <verify [hidden]="currentStep !== 0"
+      [shouldResetForm]="resetForm" (productName)="verifyNext($event)" />
+
+    <basic-data [hidden]="currentStep !== 1"
+      [shouldResetForm]="resetForm"
+      [productName]="productName()"
+      (previousStep)="goToStep(0)"
+      (dataBasicPayload)="basicDataNext($event)" />
+
+    <categories [hidden]="currentStep !== 2"
+      [shouldResetForm]="resetForm"
+      (previousStep)="goToStep(1)"
+      (categoriesPayload)="categoriesNext($event)" />
+
+    <occasions [hidden]="currentStep !== 3"
+      [shouldResetForm]="resetForm"
+      (previousStep)="goToStep(2)"
+      (occasionsPayload)="occasionsNext($event)" />
+
+    <images [hidden]="currentStep !== 4"
+      [shouldResetForm]="resetForm"
+      (previousStep)="goToStep(3)"
+      (imagesPayload)="imagesNext($event)" />
+
+    }
+    @else if(productState.hasValue() && productState.value() !== null){
+      @let response = productState.value();
+      <h3 class="text-3xl text-center">¡Guardado correctamente!</h3>
+      <div class="divider">Opciones</div>
+      <div class="flex justify-center">
+        <div class="join ">
+          <a class="btn join-item" [routerLink]="['/product',response!.slug]">
+            Ver en la Tienda
+          </a>
+          <a class="btn join-item" [routerLink]="['/authenticated/products/edit',response!.id]">
+            Editar
+          </a>
+          <button class="btn btn-info join-item" (click)="resetAllForms()">
+            Ingresar uno nuevo
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

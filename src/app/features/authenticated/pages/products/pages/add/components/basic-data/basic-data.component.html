@@ -1,0 +1,60 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="flex flex-col gap-3">
+    <div class="text-xl font-semibold">
+      <span class="text-gray-400">2 - </span> Datos
+    </div>
+    <label class="font-bold">Precio</label>
+    <div class="input w-full">
+      <i class="fa-solid fa-dollar-sign text-base-300"></i>
+      <input type="number"
+        placeholder="1.000.000"
+        formControlName="price">
+    </div>
+    @if (isInvalidField('price')){
+      <p class="text-error">{{getErrorField('price')}}</p>
+    }
+    <images-cdn />
+    <label class="font-bold">Imagen de portada</label>
+    <div class="join w-full">
+      <label class="input join-item w-full">
+        <i class="fa-solid fa-image text-base-300"></i>
+        <input type="text"
+          class="join-item"
+          placeholder="url-de-la-imagen"
+          formControlName="cover">
+      </label>
+    </div>
+
+    @if (isInvalidField('cover')){
+      <p class="text-error">{{getErrorField('cover')}}</p>
+    }
+    @else{
+      <div class="flex justify-center bg-base-100 rounded-box p-3 shadow-sm">
+        <img class="w-full h-full max-w-sm object-cover rounded-2xl"
+          [src]="cover.value"
+          alt="url-de-la-imagen">
+      </div>
+    }
+    <label class="font-bold">Descripcion</label>
+    <textarea class="textarea w-full rounded-3xl resize-none"
+      placeholder="Descripcion"
+      rows="5"
+      formControlName="description"></textarea>
+    @if (isInvalidField('description')){
+      <p class="text-error">{{getErrorField('description')}}</p>
+    }
+    <div class="divider">Opciones</div>
+    <div class="flex flex-row justify-between gap-3">
+      <button type="button" class="btn"
+        (click)="previousStep.emit()">
+          <i class="fa-solid fa-angle-left"></i>
+        Anterior
+      </button>
+      <button class="btn btn-neutral hover:btn-primary"
+        [disabled]="form.invalid || form.pending">
+          Siguiente
+        <i class="fa-solid fa-angle-right"></i>
+      </button>
+  </div>
+  </div>
+</form>

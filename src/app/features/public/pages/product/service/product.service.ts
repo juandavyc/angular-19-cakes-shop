@@ -3,20 +3,21 @@ import { inject, Injectable } from '@angular/core';
 import { CONFIG } from '@core/configs';
 import { catchError, delay, Observable, of, throwError } from 'rxjs';
 import { ProductResponse } from '../interfaces/product-response.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  private baseUrl = CONFIG.API_BASE_URL;
+  private apiUrl = environment.apiUrl;
   private http = inject(HttpClient);
 
   constructor() { }
 
   public getBySlug(slug: string): Observable<ProductResponse> {
 
-    const url = `${this.baseUrl}/products/slug/${slug}`;
+    const url = `${this.apiUrl}/products/slug/${slug}`;
     console.log('request: ', url);
     return this.http.get<ProductResponse>(url).pipe(
       delay(1000),

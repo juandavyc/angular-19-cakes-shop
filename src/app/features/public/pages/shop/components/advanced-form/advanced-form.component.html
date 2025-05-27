@@ -1,74 +1,80 @@
 <fieldset class="fieldset bg-[#FCFBFA] border border-base-300 p-4 rounded-box text-base">
   <legend class="fieldset-legend lg:hidden block">Filtros</legend>
-  <form [formGroup]="form">
+  <div [formGroup]="form()">
     <div class="flex flex-col gap-3 me-3">
-      <!-- price-start -->
       <label class="font-semibold">Precios</label>
-      <div class="grid grid-cols-2 gap-3 ">
-        <!-- price: min-input -->
+      <div class="grid grid-cols-2 gap-3">
+
         <input type="text"
           formControlName="minPrice"
           class="input bg-white"
           placeholder="Minimo" />
 
-        <!-- price: max-input -->
         <input type="text"
           formControlName="maxPrice"
           class="input bg-white"
           placeholder="Maximo" />
 
-        <!-- price: min-errors -->
-        <div>
-          @if (isInvalidField('minPrice')){
-            <p class="text-error text-sm text-shadow-sm">{{getErrorField('minPrice')}}</p>
-          }
-        </div>
-
-        <!-- price: max-errors -->
-        <div>
-          @if (isInvalidField('maxPrice')){
-            <p class="text-error text-sm text-shadow-sm">{{getErrorField('maxPrice')}}</p>
-          }
-        </div>
+        @if (isInvalidField('minPrice')){
+          <p class="text-error">{{getErrorField('minPrice')}}</p>
+        }
+        @if (isInvalidField('maxPrice')){
+          <p class="text-error">{{getErrorField('maxPrice')}}</p>
+        }
       </div>
-      <!-- price-end -->
-
-      <!-- categories-start -->
       <label class="font-semibold">Categorias</label>
       <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-col-2 gap-3">
-        <!-- categories:loop - radios -->
-        @for (category of Cateogries; track $index) {
+        <label class="flex items-center gap-2">
+          <input type="radio"
+            formControlName="category"
+            name="category"
+            value="todas-las-categorias"
+            class="radio bg-white" />
+          <span class="cursor-pointer">
+            {{'todas las categorias' | titlecase}}
+          </span>
+        </label>
+        @for (category of categories(); track category.id) {
           <label class="flex items-center gap-2">
             <input type="radio"
               formControlName="category"
               name="category"
               [value]="category.slug"
               class="radio bg-white" />
-            <span class="cursor-pointer">{{category.name | titlecase}}</span>
+            <span class="cursor-pointer">
+              {{category.name | titlecase}}
+            </span>
           </label>
         }
-
       </div>
       @if (isInvalidField('category')){
-        <p class="text-error text-sm text-shadow-sm">{{getErrorField('category')}}</p>
+        <p class="text-error">{{getErrorField('category')}}</p>
       }
-      <!-- categories-end -->
-
-      <!-- occasions-start -->
       <label class="font-semibold">Momentos</label>
       <div class="flex flex-wrap gap-2">
-        @for (occasion of Occasions; track $index) {
+        <input type="radio"
+            formControlName="occasion"
+            name="occasion"
+            class="join-item btn"
+            value="todas-las-ocasiones"
+            aria-label="Todas las ocasiones"/>
+        @for (occasion of occasions(); track occasion.id) {
           <input type="radio"
             formControlName="occasion"
             name="occasion"
-            class="join-item btn" [value]="occasion.slug" [attr.aria-label]="occasion.name| titlecase"/>
+            class="join-item btn"
+            [value]="occasion.slug"
+            [attr.aria-label]="occasion.name| titlecase"/>
         }
+        <ul>
+                @for (occasion of occasions(); track occasion.id) {
+                  <li>{{occasion.name}}</li>
+                }
+              </ul>
       </div>
-      <!-- occasions: errors -->
       @if (isInvalidField('occasion')){
-        <p class="text-error text-sm text-shadow-sm">{{getErrorField('occasion')}}</p>
+        <p class="text-error">{{getErrorField('occasion')}}</p>
       }
-      <!-- occasions-end -->
     </div>
-  </form>
+  </div>
 </fieldset>

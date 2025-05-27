@@ -22,7 +22,7 @@ export const CONTACT_US = {
     },
   ],
   address: 'Calle Falsa 123, Ciudad',
-  number: '57456 7890',
+  number: '573222205301',
   email: 'soporte@pasteleriajb.com',
 
 

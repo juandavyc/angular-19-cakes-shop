@@ -1,0 +1,14 @@
+<nav class="fixed top-0 left-0 z-10 navbar bg-neutral text-neutral-content w-full shadow">
+  <div class="mx-2 flex-1 px-2">
+    <logo />
+  </div>
+  <div class="hidden flex-none lg:block">
+    <menu-items class="menu-horizontal"/>
+  </div>
+  <div class="flex-none lg:hidden">
+    <button class="btn btn-square btn-neutral border-none z-20"
+      (click)="toggleSidebar.emit()">
+        <i class="fa-solid fa-bars fa-lg"></i>
+    </button>
+  </div>
+</nav>

@@ -1,0 +1,42 @@
+@let occasionsStatus= occasionsRx;
+@if(occasionsStatus.error()){
+  <pre>{{occasionsStatus.error()}}</pre>
+}
+@else if(occasionsStatus.isLoading()){
+  <p>Cargando...</p>
+}
+@else if(occasionsStatus.hasValue() && occasionsStatus.value() === null){
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="bg-base-100 rounded-box p-3 shadow-sm">
+      <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        @for (occasion of occasions(); track occasion.id) {
+          @let isChecked = form.value.occasions?.includes(occasion.id);
+          <label class="label text-neutral"
+            [class.font-bold]="isChecked">
+            <input type="checkbox"
+              class="checkbox"
+              [checked]="isChecked"
+              [value]="occasion.id"
+              (change)="onCategoryChange(occasion.id, $event)">
+            {{occasion.name | titlecase}}
+          </label>
+        }
+      </div>
+    </div>
+    <div class="divider">opciones</div>
+    <div class="flex justify-center">
+      <button type="submit" class="btn btn-neutral border-none btn-wide hover:btn-primary">
+        Guardar
+      </button>
+    </div>
+  </form>
+}
+@else if(occasionsStatus.hasValue() && occasionsStatus.value() !== null){
+  <div class="flex flex-col justify-center gap-3">
+    <p class="text-center font-bold">Cambios guardados correctamente</p>
+    <button class="btn btn-info"
+    (click)="formPayload.set(null)">
+      Continuar
+    </button>
+  </div>
+}

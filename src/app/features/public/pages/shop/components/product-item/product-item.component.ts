@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
 import { DecimalPipe, TitleCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Product } from '../../interfaces';
+import { PlatformIdService } from '@shared/service/platform-id.service';
 
 
 @Component({
@@ -17,11 +18,14 @@ import { Product } from '../../interfaces';
 })
 export class ProductItemComponent {
 
+
   public productInput = input.required<Product>();
+ // public addToCartOutput = output<void>();
+  public productSlug = output<string>();
 
-  public addToCartOutput = output<void>();
+  // public addToCart():void{
+  //   this.addToCartOutput.emit();
+  // }
 
-  public addToCart():void{
-    this.addToCartOutput.emit();
-  }
+
 }

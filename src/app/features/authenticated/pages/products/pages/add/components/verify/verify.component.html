@@ -1,0 +1,38 @@
+<div class="flex flex-col justify-between gap-3">
+  <div class="md:text-base lg:text-xl font-semibold">
+    <span class="text-gray-400">1 - </span> Verificar
+  </div>
+  <div class="flex flex-col justify-center items-center gap-3 border-y-2 border-base-200 py-3">
+    <p>El nombre debe estar disponible en la base de datos</p>
+    <label class="input">
+      <input type="text" class="grow" placeholder="pastel de frutos rojos" [formControl]="name">
+      @if(name.pristine){
+        <i class="fa-solid fa-magnifying-glass"></i>
+      }
+      @else if(name.pending){
+        <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+      }
+      @else if(name.valid){
+        <i class="fa-solid fa-check text-success"></i>
+      }
+      @else if(name.invalid){
+        <i class="fa-solid fa-xmark text-red-400"></i>
+      }
+    </label>
+    @if (isInvalidControl()) {
+      <p class="text-error">{{getErrorControl()}}</p>
+    }
+  </div>
+  <div class="flex flex-row justify-between gap-3">
+      <button class="btn" disabled>
+        <i class="fa-solid fa-angle-left"></i>
+        Anterior
+      </button>
+      <button class="btn btn-neutral hover:btn-primary"
+        (click)="emmitName()"
+        [disabled]="name.invalid || name.pending">
+        Siguiente
+        <i class="fa-solid fa-angle-right"></i>
+      </button>
+  </div>
+</div>

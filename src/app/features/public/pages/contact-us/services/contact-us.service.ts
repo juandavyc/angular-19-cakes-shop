@@ -3,6 +3,7 @@ import { CONFIG } from '@core/configs';
 import { Contact } from '../interfaces/contact.interface';
 import { HttpClient } from '@angular/common/http';
 import { catchError, delay, map, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -11,13 +12,13 @@ import { catchError, delay, map, throwError } from 'rxjs';
 })
 export class ContactUsService {
 
-  private apiUrl = `${CONFIG.API_BASE_URL}/contact-us`;
+  private apiUrl = environment.apiUrl;
   private http = inject(HttpClient);
 
   constructor() {}
 
   create(value: Contact) {
-
+    const url = `${this.apiUrl}/contact-us`
     return this.http.post(this.apiUrl, value, {observe: 'response'}).pipe(
       delay(2000),
       map(response=>{

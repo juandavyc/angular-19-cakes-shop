@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormFilterService } from '../../services/form-filter.service';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TitleCasePipe } from '@angular/common';
 import { Category, Occasion } from '@core/interfaces';
+import { CATEGORIES } from '@core/configs/products/categories.config';
+import { OCCASIONS } from '@core/configs/products/occasions.config';
+import { FormValidatorService } from '@core/services/form-validator.service';
 
 @Component({
   selector: 'advanced-form',
@@ -16,26 +18,25 @@ import { Category, Occasion } from '@core/interfaces';
 })
 export class AdvancedFormComponent {
 
-  private formFilterService = inject(FormFilterService);
+  public form = input.required<FormGroup>();
+
+  public readonly categories = signal<Category[]>(this.sortArray(CATEGORIES));
+  public readonly occasions = signal<Occasion[]>(this.sortArray(OCCASIONS));
+
+  private formValidatorService = inject(FormValidatorService);
 
   public isInvalidField(field: string): boolean | null {
-    return this.formFilterService.isInvalidField(field);
+    return this.formValidatorService.isInvalidControl(this.form().get(field));
   }
-
   public getErrorField(field: string): string | null {
-    return this.formFilterService.getErrorField(field);
+    return this.formValidatorService.getErrorControl(this.form().get(field));
   }
 
-  public get form() {
-    return this.formFilterService.form;
-  }
-
-  public get Occasions():Occasion[] {
-    return this.formFilterService.Occasions;
-  }
-
-  public get Cateogries():Category[] {
-    return this.formFilterService.Categories;
+  private sortArray(array: Category[] | Occasion[]): Category[] | Occasion[] {
+    const first = array[0];
+    const sorted = array.sort((a, b) => a.name.localeCompare(b.name))
+      .filter(value => value != first);
+    return [...sorted];
   }
 
 }

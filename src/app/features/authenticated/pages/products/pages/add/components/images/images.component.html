@@ -1,0 +1,116 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <div class="flex flex-col gap-3">
+    <div class="text-xl font-semibold">
+      <span class="text-gray-400">5 - </span> Imagenes
+    </div>
+    <p>Debes tener Minimo <span class="font-bold">(1)</span> Maximo <span class="font-bold">(8)</span> Imagenes</p>
+    <images-cdn />
+    <fieldset class="fieldset bg-base-100 border-base-300 rounded-box border p-4">
+      <legend class="fieldset-legend">
+        Agregar nueva imagen
+      </legend>
+      <div class="flex flex-col gap-3 text-base">
+        <label class="font-bold">
+          Url de la imagen
+        </label>
+        <div class="join w-full">
+          <input type="text"
+            class="input w-full join-item bg-white"
+            placeholder="Url de la imagen"
+            [formControl]="newImage">
+          <button type="button"
+            class="btn join-item btn-primary"
+            (click)="addImage()"
+            [disabled]="newImage.invalid">
+            Agregar
+          </button>
+        </div>
+        <label class="font-bold">
+          Previsualizacion
+        </label>
+        @if(isInvalidNewImage()){
+          <p class="text-error text-center font-bold">
+            Error: {{getErrorNewImage()}}
+          </p>
+        }
+        @else{
+          @if(newImage.value){
+            <div class="flex justify-center bg-base-100 rounded-box py-3">
+              <img class="sm:w-96 sm:h-96 w-52 h-52 object-cover rounded-2xl"
+              [src]="newImage.value" alt="new-image-alt">
+            </div>
+          }
+          @else{
+            <p class="text-success text-center font-bold">
+              - Agrega una url de imagen -
+            </p>
+          }
+        }
+      </div>
+    </fieldset>
+
+    <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-3"
+      [hidden]="images.length === 0"
+      formArrayName="images">
+
+      <div class="col-span-full">
+        <div class="divider divider-success font-bold">Imagenes agregadas</div>
+      </div>
+
+      @for (image of images.value; track $index; let i = $index) {
+        <fieldset class="fieldset bg-accent/25 border-base-300 rounded-box border p-4">
+          <legend class="fieldset-legend">
+            Imagen # {{$index+1}}
+          </legend>
+          <div class="flex flex-col gap-3 p-3">
+            <div class="join w-full">
+              <input type="text"
+                class="input w-full join-item bg-white"
+                placeholder="url de la imagen"
+                [formControlName]="i">
+              <button type="button"
+                class="btn join-item btn-error text-white"
+                (click)="removeImage(i)">
+                Eliminar
+              </button>
+            </div>
+            @if(isInvalidImageInArray(i)){
+              <p class="text-error">Error:
+                {{getErrorImageInArray(i)}}
+              </p>
+            }
+            @else{
+              @let image = images.at(i).value;
+                @if(image){
+                <div class="flex justify-center bg-base-100 rounded-box py-3">
+                  <img class="sm:w-96 sm:h-96 w-52 h-52 object-cover rounded-2xl"
+                  [src]="image">
+                </div>
+                }
+              @else{
+                <p class="text-success text-center font-bold">
+                  Agrega una url de imagen
+                </p>
+              }
+            }
+          </div>
+        </fieldset>
+      }
+    </div>
+    <div class="divider">Opciones</div>
+    <div class="flex flex-row justify-between gap-3">
+      <button type="button" class="btn"
+        (click)="previousStep.emit()">
+        <i class="fa-solid fa-angle-left"></i>
+        Anterior
+      </button>
+      <button type="submit"
+        class="btn btn-neutral hover:btn-primary"
+        [disabled]="form.invalid || form.pending">
+          Finalizar y Guardar
+        <i class="fa-solid fa-floppy-disk"></i>
+      </button>
+    </div>
+  </div>
+</form>

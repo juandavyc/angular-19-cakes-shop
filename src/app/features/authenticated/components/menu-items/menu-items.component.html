@@ -1,0 +1,43 @@
+<li>
+  <a [routerLink]="['/']"
+    [routerLinkActiveOptions]="{exact:true}"
+    routerLinkActive="active">
+    Web Principal
+  </a>
+</li>
+<li>
+  <a [routerLink]="['/authenticated']"
+    [routerLinkActiveOptions]="{exact:true}"
+    routerLinkActive="active">
+    Inicio
+  </a>
+</li>
+<li routerLinkActive="active rounded-box">
+  <details [open]="isMobile()" #productos>
+      <summary>Productos</summary>
+      <ul>
+        <li>
+          <a [routerLink]="['products']" (click)="closeDetails(productos)">
+            Listado
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['products/add']" (click)="closeDetails(productos)">
+            Agregar
+          </a>
+        </li>
+      </ul>
+  </details>
+</li>
+<li>
+  <a [routerLink]="['orders']"
+    routerLinkActive="active">
+    Ordenes
+  </a>
+</li>
+<li>
+  <a [routerLink]="['contact']"
+    routerLinkActive="active">
+    Contacto
+  </a>
+</li>

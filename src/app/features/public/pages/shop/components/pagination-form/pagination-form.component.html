@@ -1,6 +1,0 @@
-
-@let pagination = pagePagination();
-
-@if(pagination && pagination.total > 1){
-  <pagination [pagePagination]="pagination" (pageOutput)="gotToPage($event)" />
-}

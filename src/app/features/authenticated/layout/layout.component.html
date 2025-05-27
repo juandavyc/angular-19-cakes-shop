@@ -1,0 +1,10 @@
+<div class="drawer">
+  <input type="checkbox" class="drawer-toggle" [checked]="isOpen()"/>
+  <div class="drawer-content">
+    <navbar (toggleSidebar)="toggleSidebar()"/>
+    <div class="mt-40"></div>
+    <router-outlet/>
+    <shared-footer/>
+  </div>
+  <sidebar (toggle)="toggleSidebar()" />
+</div>

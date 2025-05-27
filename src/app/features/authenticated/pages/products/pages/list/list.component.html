@@ -1,0 +1,49 @@
+<div class="bg-white rounded-xl shadow-lg border-base-200 border-[1px] px-5 py-10">
+  <form [formGroup]="form">
+    <search-form [form]="form" />
+    <div class="flex justify-end gap-3 mt-3">
+      <button type="button" class="btn btn-error" (click)="resetForm()" [disabled]="form.pristine">
+        <i class="fa-solid fa-delete-left"></i>
+        Limpiar filtros
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="bg-white rounded-xl shadow-lg border-base-200 border-[1px] px-5 py-10 mt-10">
+  <div class="flex flex-col gap-3">
+    @let productsStatus = productListRx;
+
+    @if(productsStatus.isLoading()){
+      <skeleton />
+    }
+    @else if(productsStatus.error()){
+      <p>Error: {{productsStatus.error()}}</p>
+    }
+    @else if(productsStatus.hasValue() && productsStatus.value().content.length > 0){
+      <h3 class="text-xl font-bold"> Resultados </h3>
+      <!-- <h4 class="text-end"> {{paginationValues()!.message}}</h4> -->
+      <ul class="list space-y-4">
+        @for (product of productsStatus.value().content; track product.id) {
+          <li class="border-b border-base-200 py-1.5">
+            <product-item [product]="product" (toDelete)="toDelete($event)" />
+          </li>
+        }
+      </ul>
+      <pagination class="mt-10"
+        [paginationValues]="paginationValues()!.pagination"
+        (pageChange)="changePage($event)" />
+    }
+    @else if(productsStatus.hasValue()){
+      <div class="flex flex-col justify-center items-center gap-3">
+        <p class="text-2xl font-bold text-center">Sin resultados</p>
+        <button type="button" class="btn btn-error text-error-content btn-wide"
+          (click)="resetForm()" >
+          Buscar de nuevo
+        </button>
+      </div>
+    }
+  </div>
+</div>
+
+<delete-product-modal [productToDeleteRx]="productToDeleteRx" (modalEvent)="modalEvent($event)" #deleteProductModal/>

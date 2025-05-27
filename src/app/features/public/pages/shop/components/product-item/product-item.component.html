@@ -17,10 +17,11 @@
       $ {{product.price | number }}
     </span>
     <div class="flex flex-row justify-end gap-1">
-      <button class="btn btn-sm">
+      <button class="btn btn-sm"
+        (click)="productSlug.emit(product.slug)">
         <i class="fa-solid fa-cart-shopping"></i> Comprar
       </button>
-      <button class="btn btn-sm" (click)="addToCart()">
+      <button class="btn btn-sm" disabled>
         <i class="fa-solid fa-cart-plus"></i> Añadir
       </button>
     </div>

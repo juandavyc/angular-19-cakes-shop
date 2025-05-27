@@ -1,6 +1,6 @@
 // accceder a los default
 export enum QueryParamsKeys {
-  TITLE = 'title',
+  NAME = 'name',
   MIN_PRICE = 'min-price',
   MAX_PRICE = 'max-price',
   CATEGORY = 'category',

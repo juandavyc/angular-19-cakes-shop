@@ -21,8 +21,9 @@
         </div>
         <cover-image [selectedImageInput]="selectedImage()" />
         <div class="flex flex-col">
-          <ordered-name [nameInput]="product.name"
-           [isTopInput]="false" />
+          <ordered-name
+            [nameInput]="product.name"
+            [isTopInput]="false" />
           <price [priceInput]="product.price" />
           <carousel-images
             [coverInput]="product.cover"
@@ -45,7 +46,7 @@
           <div class="tabs tabs-lift">
             <input type="radio" name="my_tabs_1" class="tab" aria-label="Descripción" checked="checked" />
             <div class="tab-content bg-base-100 border-base-300 p-6">
-              <p class="text-wrap">
+              <p class="whitespace-pre-line">
                 {{product.description}}
               </p>
             </div>

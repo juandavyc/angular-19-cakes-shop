@@ -8,7 +8,8 @@
     "paths": {
       "@core/*": ["src/app/core/*"],
       "@shared/*": ["src/app/shared/*"],
-      "@public/*": ["src/app/features/public/*"]
+      "@public/*": ["src/app/features/public/*"],
+      "@authenticated/*": ["src/app/features/authenticated/*"]
     },
     "strict": true,
     "noImplicitOverride": true,

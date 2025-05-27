@@ -5,23 +5,22 @@ import { CheckoutRequest } from '../interfaces/checkout-request.interface';
 import { catchError, delay, map, of, throwError } from 'rxjs';
 import { response } from 'express';
 import { m } from 'node_modules/@angular/core/weak_ref.d-Bp6cSy-X';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PayService {
 
-  private apiUrl = `${CONFIG.API_BASE_URL}/orders`;
+  private apiUrl = environment.apiUrl;
   private http = inject(HttpClient);
 
   constructor() { }
 
-
-
   public create(payload: CheckoutRequest) {
 
-
-    return this.http.post(this.apiUrl, payload, { observe: 'response' }).pipe(
+    const url = `${this.apiUrl}/orders`
+    return this.http.post(url, payload, { observe: 'response' }).pipe(
       delay(2000),
       map(response => {
         if (response.status === 201) {

@@ -3,30 +3,27 @@ import { inject, Injectable } from '@angular/core';
 import { ShopResponse } from '../interfaces';
 import { catchError, delay, Observable, of, throwError } from 'rxjs';
 import { CONFIG } from '@core/configs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopService {
 
-  private baseUrl = CONFIG.API_BASE_URL;
+  private apiUrl = environment.apiUrl;
   private http = inject(HttpClient);
 
   constructor() { }
 
-  getCakes(httpRequest: string): Observable<ShopResponse> {
-
-    const url = this.baseUrl.concat('/products').concat(httpRequest.trim() === '' ? '' : ('/search?').concat(httpRequest));
-
-    console.log("getRequest: ", url)
-
-    return this.http.get<ShopResponse>(url).pipe(
-      delay(1000),
+  public searchProducts(params: Record<string, string>): Observable<ShopResponse> {
+    const endpoint = Object.keys(params).length > 0 ? 'products/search?' : 'products';
+    const url = `${this.apiUrl}/${endpoint}`;
+    return this.http.get<ShopResponse>(url, { params }).pipe(
+      delay(2000),
       catchError(err => throwError(() => new Error(`An error ocurred: ${JSON.stringify(err)}`)))
     )
   }
-
-  getEmptyShop(): Observable<ShopResponse> {
+  emptyProducts(): Observable<ShopResponse> {
     return of({
       content: [],
       pageInformation: {

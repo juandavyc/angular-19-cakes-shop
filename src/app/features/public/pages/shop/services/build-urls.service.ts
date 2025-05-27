@@ -1,96 +1,132 @@
 import { Injectable } from '@angular/core';
-import { ParamMap, Params } from '@angular/router';
-import { QueryParamsKeys } from '../enums';
-import { QueryParams } from '../interfaces';
 import { OCCASIONS } from '@core/configs/products/occasions.config';
-import { SHOP_CONFIG } from '../configs/shop.config';
+import { CATEGORIES } from '@core/configs/products/categories.config';
+import { Category, Occasion } from '@core/interfaces';
+
+
+interface ProductFormPartial {
+  occasion: string | null;
+  category: string | null;
+  name: string | null;
+  minPrice: string | null;
+  maxPrice: string | null;
+  sort: string | null;
+  size: string | null;
+  page: string | null;
+}
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class BuildUrlsService {
 
-  private readonly DEFAULTS = SHOP_CONFIG.defaults;
-  private readonly OCCASIONS = OCCASIONS;
+
+  private readonly categories: Category[] = CATEGORIES;
+  private readonly occasions: Occasion[] = OCCASIONS;
+
+  private readonly defaultOccasion = 'todas-las-ocasiones';
+  private readonly defaultCategories = 'todas-las-categorias';
+
+  private readonly sorts: string[] = ['created', 'price,asc', 'price,desc'];
+  private readonly sizes: string[] = ['9', '12', '15'];
+
+  private readonly formDefault = new Map<string, string>([
+    ["name", ""],
+    ["minPrice", ""],
+    ["maxPrice", ""],
+    ["category", "todas-las-categorias"],
+    ["occasion", "todas-las-ocasiones"],
+    ["sort", "created"],
+    ["size", "9"],
+    ["page", "0"],
+  ]);
 
   private sortBackend = new Map<string, string>([
     ["min-price", "price,asc"],
     ["max-price", "price,desc"]
-  ])
+  ]);
 
-  private frontMap = new Map<string, string>([
-    ["maxPrice", "max-price"],
-    ["minPrice", "min-price"],
-  ])
 
-  constructor() {
+  constructor() { }
+
+  public queryParamCategory(categoryParam: string | undefined): string {
+    //console.log({ categoryParam });
+    return this.getParamFromList(categoryParam, this.categories, this.defaultCategories);
   }
 
-  public getOccasionParam(param: ParamMap): string {
-    return param.get('occasion') ?? this.DEFAULTS.url.occasion;
+  public queryParamOccasion(occasionParam: string | undefined): string {
+    //console.log({ occasionParam });
+    return this.getParamFromList(occasionParam, this.occasions, this.defaultOccasion);
   }
 
-  public getQueryParam(param: Params, key: QueryParamsKeys) {
-    return param[key] ?? this.DEFAULTS.url[key];
+  public queryParamSort(sortParam: string | undefined): string {
+    return this.getParamFromArray(sortParam, this.sorts, this.sorts[0]);
   }
 
-  public isValidOccasion(value: string): boolean {
-    return this.OCCASIONS.some(occasion => occasion.slug === value);
+  public queryParamSize(sizeParam: string | undefined): string {
+    return this.getParamFromArray(sizeParam, this.sizes, this.sizes[0]);
   }
 
-  buildPathParams(occasion: string | null | undefined): string[] {
-    const occasionTrim = occasion?.trim();
-    if (occasionTrim) {
-      const isDefaultOccasion = occasionTrim === this.DEFAULTS.url.occasion;
-      if (isDefaultOccasion) return ['/shop'];
-      return ['/shop', occasionTrim]
+  public queryParamPage(pageParam: string | undefined): string {
+    if (!pageParam) return '0';
+    return !isNaN(Number(pageParam)) ? pageParam : '0';
+  }
+
+  public queryParamPrice(priceParam: string | undefined): string {
+    if (!priceParam) return '';
+    return !isNaN(Number(priceParam)) ? priceParam : '';
+  }
+
+  public getParamFromList(param: string | undefined, list: Category[] | Occasion[], defaultParam: string): string {
+
+    if (!param) {
+    //  console.log({ defaultParam });
+      return defaultParam;
     }
-    return ['/shop'];
+    else {
+      const contentSlug = list.find(ls => ls.slug === param)
+     // console.log({ contentSlug });
+      if (contentSlug) {
+      //  console.log('if ', contentSlug.slug);
+        return contentSlug.slug;
+      }
+      else {
+       // console.log('else ', defaultParam);
+        return defaultParam;
+      }
+    }
   }
 
-  buildQueryParams(form: QueryParams) {
-    const queryParams: Record<string, string> = {};
+  public getParamFromArray(param: string | undefined, list: string[], defaultParam: string): string {
+    if (!param) return defaultParam;
+    const contentSlug = list.find(ls => ls === param)
+    if (contentSlug) return contentSlug;
+    else return defaultParam;
+  }
 
-    Object.keys(form).forEach((key) => {
 
-      const typedKey = key as keyof QueryParams;
-      const value = form[typedKey];
-      if (typeof value === 'string' && value.trim()) {
-        if (value.trim() !== this.DEFAULTS.url[typedKey]) {
-          queryParams[this.frontMap.get(key) ?? typedKey] = value.trim();
-        }
+  public cleanParams(source: Partial<ProductFormPartial>): any {
+    const params: Record<string, string> = {};
+    Object.entries(source).forEach(([key, value]) => {
+
+
+      if (value !== '' && value !== this.formDefault.get(key)) {
+        let currentValue = value!;
+        // if (key == 'sort') params[key] = this.sortBackend.get(currentValue)!;
+        // else params[key] = currentValue;
+        params[key] = currentValue;
       }
     });
-
-    return queryParams;
+    return params;
   }
 
-  buildQueryBackend(pathParams: string[], queryParams: Record<string, string>) {
-
-    if (pathParams.length > 1 && pathParams[1]) {
-      queryParams['occasion'] = pathParams[1];
-    }
-
-    Object.entries(queryParams).forEach(([key, value]) => {
-      queryParams[key] = this.sortBackend.get(queryParams[key]) ?? value;
-    });
-    return (new URLSearchParams(queryParams).toString());
+  public defaultValue(key: string): string {
+    return this.formDefault.get(key)!;
   }
 
-  public getSizePage(sizeUrl: string): string {
-    const size = parseInt(sizeUrl.trim());
-    if (!size) return SHOP_CONFIG.defaults.url.size;
-    if (SHOP_CONFIG.size.includes(size)) return sizeUrl.trim();
-    return SHOP_CONFIG.defaults.url.size;
+  defaultValues() {
+    return Object.fromEntries(this.formDefault);
   }
-
-  public getSortPage(sortUrl: string): string {
-    const sort = sortUrl.trim();
-    if (!sort) return SHOP_CONFIG.defaults.url.sort;
-    if (SHOP_CONFIG.sort.includes(sort)) return sort;
-    return SHOP_CONFIG.defaults.url.sort;
-  }
-
-
 
 }

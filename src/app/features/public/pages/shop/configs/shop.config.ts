@@ -5,7 +5,7 @@ export const SHOP_CONFIG = {
     form: {
       occasion: 'todas-las-ocasiones',
       category: 'todas-las-categorias',
-      title: '',
+      name: '',
       minPrice: '',
       maxPrice: '',
       sort: 'created',
@@ -14,7 +14,7 @@ export const SHOP_CONFIG = {
     url: {
       occasion: 'todas-las-ocasiones',
       category: 'todas-las-categorias',
-      title: '',
+      name: '',
       "min-price": '',
       "max-price": '',
       sort: 'created',

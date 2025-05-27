@@ -1,20 +1,26 @@
-@let shopResource = shopRxResourceInput();
+@let productsStatus = productsListRx();
 <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-  @if(shopResource.isLoading()){
+  @if(productsStatus.isLoading()){
     @for (item of skeletonCount; track $index) {
       <skeleton />
     }
   }
-  @if(shopResource.hasValue()){
-    @for (product of shopResource.value().content; track product.id; ) {
+  @if(productsStatus.hasValue()){
+    @for (product of productsStatus.value().content; track product.id; ) {
+      <!-- <product-item [productInput]="product"
+      (addToCartOutput)="addProductToCart(product)" /> -->
       <product-item [productInput]="product"
-       (addToCartOutput)="addProductToCart(product)" />
+        (productSlug)="productSlug.emit($event)"/>
+    }
+    @empty {
+    <p>Sin resultados</p>
     }
     <div class="col-span-full">
-      <pagination-form [pagePagination]="shopPaginationInput()"/>
+      <pagination [paginationValues]="productsPagination()"
+      (pageChange)="changePage.emit($event)"/>
     </div>
   }
-  @if(shopResource.error()){
+  @if(productsStatus.error()){
     <!-- TODO: Crear componente de error -->
     <p>Error xd</p>
   }

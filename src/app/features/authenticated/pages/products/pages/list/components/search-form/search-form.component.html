@@ -1,0 +1,89 @@
+<div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3" [formGroup]="form()">
+  <div class="col-span-full">
+    <h3 class="text-2xl font-bold"> Buscador </h3>
+  </div>
+  <div class="sm:col-span-2 col-span-1 flex flex-col gap-3">
+    <label class="font-semibold">Nombre</label>
+    <label class="input w-full">
+      <span class="label">
+        <i class="fa-solid fa-align-left"></i>
+      </span>
+      <input type="text" placeholder="Pastel de frutos rojos" formControlName="name" />
+    </label>
+  </div>
+  <div class="sm:col-span-2 col-span-1 flex flex-col gap-3">
+    <label class="font-semibold">Precio</label>
+    <div class="flex flex-row gap-3 items-center">
+      <label class="input">
+        <span class="label">
+          <i class="fa-solid fa-dollar-sign"></i>
+        </span>
+        <input type="text" placeholder="Minimo" formControlName="minPrice" />
+      </label>
+      <span class="font-bold"> a </span>
+      <label class="input">
+        <span class="label">
+          <i class="fa-solid fa-dollar-sign"></i>
+        </span>
+        <input type="text" placeholder="Maximo" formControlName="maxPrice" />
+      </label>
+    </div>
+  </div>
+  <div class="sm:col-span-1 col-span-full flex flex-col gap-3">
+    <label class="font-semibold">Categoria</label>
+    <label class="select w-full">
+      <span class="label">
+        <i class="fa-solid fa-list"></i>
+      </span>
+      <select class="w-full" formControlName="category">
+        <option value="todas-las-categorias">Todas las categorias</option>
+        @for (category of categories(); track category.id) {
+          <option [value]="category.slug">{{category.name | titlecase}}</option>
+        }
+      </select>
+    </label>
+  </div>
+  <div class="sm:col-span-1 col-span-full flex flex-col gap-3">
+    <label class="font-semibold">Ocasiones</label>
+    <label class="select w-full">
+      <span class="label">
+        <i class="fa-solid fa-list"></i>
+      </span>
+      <select formControlName="occasion">
+        <option value="todas-las-ocasiones">
+          Todas las ocasiones
+        </option>
+        @for (occasion of occasions(); track occasion.id) {
+          <option [value]="occasion.slug">
+            {{occasion.name | titlecase}}
+          </option>
+        }
+      </select>
+    </label>
+  </div>
+  <div class="sm:col-span-2 col-span-1 flex flex-col gap-3">
+    <label class="font-semibold">Order y resultados</label>
+    <div class="flex flex-row gap-3">
+      <label class="select w-full">
+        <span class="label">
+          <i class="fa-solid fa-arrow-up-z-a"></i>
+        </span>
+        <select formControlName="sort">
+          <option value="created">Creado</option>
+          <option value="price,asc">Precio mas Bajo</option>
+          <option value="price,desc">Precio mas Alto</option>
+        </select>
+      </label>
+      <label class="select w-full">
+        <span class="label">
+          <i class="fa-solid fa-list-ol"></i>
+        </span>
+        <select formControlName="size">
+          <option value="9">9</option>
+          <option value="12">12</option>
+          <option value="15">15</option>
+        </select>
+      </label>
+    </div>
+  </div>
+</div>

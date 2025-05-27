@@ -5,41 +5,77 @@
 <section class="container my-10">
   <div class="h-[50vh] flex flex-col gap-3 justify-center items-center">
     <div class="bg-white w-[359px] border border-base-200 rounded-box shadow-lg sm:px-10 px-3 py-5 ">
-      <div class="flex flex-col gap-2">
-        <h3 class="text-center font-semibold">Ingrese sus Credenciales</h3>
-        <label class="text-sm"> Usuario o Email </label>
-        <label class="input">
-          <i class="fa-solid fa-user text-gray-300"></i>
-          <input type="text" placeholder="Correo@gmail.com" />
-        </label>
-        <div class="flex flex-row justify-between text-sm">
-          <label>Contraseña </label>
-          <a [routerLink]="['/login/recovery']" class="link text-blue-400 font-semibold">
-            Olvidaste tu contraseña?
-          </a>
-        </div>
-        <div class="flex flex-row">
-          <label class="input border-e-0 rounded-e-none">
-            <i class="fa-solid fa-lock text-gray-300"></i>
-            <input type="text" class="grow" placeholder="Contraseña" />
+      @let loginStatus = loginRx;
+
+      @if(loginStatus.isLoading()){
+      <p>Cargando</p>
+      }
+      @else if(loginStatus.error()){
+      <p>Error</p>
+      }
+      @else if(loginStatus.hasValue() && loginStatus.value() === null){
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="flex flex-col gap-2">
+          <h3 class="text-center font-semibold">
+            Ingrese sus Credenciales
+          </h3>
+          <label class="text-sm"> Usuario o Email </label>
+          <label class="input">
+            <i class="fa-solid fa-user text-gray-300"></i>
+            <input type="text" placeholder="correo@gmail.com" formControlName="username" />
           </label>
-          <button class="btn rounded-s-none">
-            <i class="fa-solid fa-eye"></i>
+          <div class="flex flex-row justify-between text-sm">
+            <label>Contraseña </label>
+            <!-- <a class="link text-blue-400 font-semibold"
+              [routerLink]="['/login/recovery']" aria-disabled="true" >
+              Olvidaste tu contraseña?
+            </a> -->
+          </div>
+          <div class="flex flex-row">
+            <label class="input border-e-0 rounded-e-none">
+              <i class="fa-solid fa-lock text-gray-300"></i>
+              <input type="password" class="grow" placeholder="Contraseña" formControlName="password" #passwordInput />
+            </label>
+            <label class="swap">
+              <input type="checkbox" (change)="changePasswordType(showPassword.checked)" #showPassword>
+              <button type="button" class="btn rounded-s-none">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+              <div class="swap-on btn rounded-s-none">
+                <i class="fa-solid fa-eye-slash"></i>
+              </div>
+              <div class="swap-off btn rounded-s-none">
+                <i class="fa-solid fa-eye"></i>
+              </div>
+            </label>
+          </div>
+          <div class="divider my-1"></div>
+          <button type="submit" class="btn btn-info w-full text-white">
+            Ingresar
           </button>
         </div>
-        <div class="divider my-1"></div>
-        <button class="btn btn-info w-full">
-          Ingresar
-        </button>
+      </form>
+      }
+      @else if(loginRx.hasValue() && loginRx.value() == false){
+      <div class="flex flex-col gap-3">
+        <p>Usuario o contraseña incorrecta</p>
+        <button class="btn btn-error text-white" (click)="payload.set(null)"> Intentar de nuevo</button>
       </div>
+      }
     </div>
     <div class="bg-white w-[359px] border border-base-200 rounded-box shadow-lg sm:px-10 px-3 py-5 ">
-     <div class="flex sm:flex-row flex-col gap-3 justify-center text-center">
-      <span>¿Nuevo por acá?</span>
-      <a [routerLink]="['/login/signup']" class="link text-blue-400 font-bold">
-        Crear una cuenta
-      </a>
-     </div>
+      <div class="flex sm:flex-row flex-col gap-3 justify-center text-center">
+        <span>¿Nuevo por acá?</span>
+        <a [routerLink]="['/login/signup']" class="link text-blue-400 font-bold">
+          Crear una cuenta
+        </a>
+      </div>
     </div>
   </div>
 </section>
+
+<div #myToast class="toast">
+  <div class="alert alert-info">
+    <span>Mensaje nuevo</span>
+  </div>
+</div>

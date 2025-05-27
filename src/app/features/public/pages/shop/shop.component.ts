@@ -1,30 +1,35 @@
-import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, linkedSignal, signal, viewChild } from '@angular/core';
 import { HeroTitleComponent } from '@shared/components/hero-title/hero-title.component';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 
-import { debounceTime, distinctUntilChanged, filter, map, Observable, of, startWith, tap } from 'rxjs';
-import { ShopService } from './services/shop.service';
+import { debounceTime, delay, distinctUntilChanged, filter, map, merge, Observable, of, startWith, take, tap } from 'rxjs';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormFilterService } from './services/form-filter.service';
 import { BasicFormComponent } from './components/basic-form/basic-form.component';
 import { AdvancedFormComponent } from './components/advanced-form/advanced-form.component';
 import { BuildUrlsService } from './services/build-urls.service';
-import { QueryParamsKeys } from './enums';
-import { PaginationService } from '@shared/service/pagination.service';
-import { Product, ShopResponse } from './interfaces';
-import { PaginationResponse } from '@shared/interfaces';
-import { ProductsComponent } from './components/products/products.component';
 import { SHOP_CONFIG } from './configs/shop.config';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ShopResponse } from './interfaces';
+import { ShopService } from './services/shop.service';
+import { ProductsComponent } from './components/products/products.component';
+import { PaginationResponse } from '@shared/interfaces';
+import { PaginationService } from '@shared/service/pagination.service';
+import { PlatformIdService } from '@shared/service/platform-id.service';
+import { CONTACT_US } from '@core/configs/contact-us/contact-us.config';
 
 @Component({
   selector: 'app-shop',
   imports: [
+    ReactiveFormsModule,
     HeroTitleComponent,
     // components
     BasicFormComponent,
     AdvancedFormComponent,
     ProductsComponent,
+
+    //pipes
+    //JsonPipe,
   ],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.css',
@@ -32,71 +37,98 @@ import { SHOP_CONFIG } from './configs/shop.config';
 })
 export class ShopComponent {
 
+
   public readonly title = SHOP_CONFIG.title;
   public readonly subtitle = SHOP_CONFIG.subtitle;
 
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
+  private fb = inject(FormBuilder);
 
   private shopService = inject(ShopService);
-  private formFilterService = inject(FormFilterService);
-  private buildUrlsService = inject(BuildUrlsService);
-
-
+  private buildUrlService = inject(BuildUrlsService);
   private paginationService = inject(PaginationService);
+  private platformIdService = inject(PlatformIdService);
 
-  private httpPathParams = toSignal(
-    this.activatedRoute.paramMap.pipe(
-      map(params => this.buildUrlsService.getOccasionParam(params)),
-      tap((occasion) => {
-        if (!this.buildUrlsService.isValidOccasion(occasion)) {
-          this.router.navigate(['/shop']);
-        }
-      }),
-      tap((occasion) => {
-        this.formFilterService.form.patchValue({
-          occasion
-        }, { emitEvent: false })
-      })
-    )
-  )
+  public form = this.fb.group({
+    name: ['',
+      [Validators.minLength(2), Validators.maxLength(50)]
+    ],
+    minPrice: ['',
+      [Validators.minLength(4), Validators.maxLength(7)] //digitsOnlyValidator()  occasion: 'todas-las-ocasiones',
+    ],
+    maxPrice: ['',
+      [Validators.minLength(4), Validators.maxLength(7)] //digitsOnlyValidator()
+    ],
+    occasion: ['todas-las-ocasiones', Validators.required],
+    category: ['todas-las-categorias', Validators.required],
+    sort: ['created', Validators.required],
+    size: ['9', Validators.required],
+    page: ['0', Validators.required]
+  });
 
-  private httpQueryParams = toSignal(
+  public payload = signal<Record<string, string> | null>(null);
+
+  // public formPayload = linkedSignal({
+  //   source: () => this.payload(),
+  //   computation: (source) => {
+
+  //     console.log("petion: ", source);
+
+  //   }
+  // });
+
+  constructor() {
+    // if (this.platformIdService.isBrowser()) {
+    //   window.addEventListener('popstate', () => {
+    //     this.isFromBackButton = true;
+    //   });
+    // }
+    //   setTimeout(() => {
+    //     //
+    //     //this.productListRx.reload();
+    //     console.log(this.formPayload());
+    //   }, 500)
+    // }
+  }
+  private httpParams = toSignal(
     this.activatedRoute.queryParams.pipe(
+      distinctUntilChanged(),
       map(params => ({
-        title: this.buildUrlsService.getQueryParam(params, QueryParamsKeys.TITLE),
-        minPrice: this.buildUrlsService.getQueryParam(params, QueryParamsKeys.MIN_PRICE),
-        maxPrice: this.buildUrlsService.getQueryParam(params, QueryParamsKeys.MAX_PRICE),
-        category: this.buildUrlsService.getQueryParam(params, QueryParamsKeys.CATEGORY),
-        sort: this.getSortPage(this.buildUrlsService.getQueryParam(params, QueryParamsKeys.SORT)),
-        size: this.getSizePage(this.buildUrlsService.getQueryParam(params, QueryParamsKeys.SIZE)),
-        page: this.buildUrlsService.getQueryParam(params, QueryParamsKeys.PAGE),
+        name: params['name'] ?? '',
+        minPrice: this.buildUrlService.queryParamPrice(params['minPrice']),
+        maxPrice: this.buildUrlService.queryParamPrice(params['maxPrice']),
+        category: this.buildUrlService.queryParamCategory(params['category']),
+        occasion: this.buildUrlService.queryParamOccasion(params['occasion']),
+        sort: this.buildUrlService.queryParamSort(params['sort']),
+        size: this.buildUrlService.queryParamSize(params['size']),
+        page: this.buildUrlService.queryParamPage(params['page']),
       })),
       tap(params => {
-        if (this.formFilterService.form.invalid) {
-          this.router.navigate(['/shop']);
-        }
-        else {
-          this.formFilterService.form.patchValue({
-            ...params
-          }, { emitEvent: false })
-        }
+        this.form.patchValue(params, { emitEvent: false });
+        const queryParams = this.buildUrlService.cleanParams(params);
+        this.payload.set(queryParams)
+      })
+    )
+  )
+  private formSignal = toSignal(
+    this.form.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      filter(() => this.form.valid),
+      tap(params => {
+        const queryParams = this.buildUrlService.cleanParams(params);
+        this.router.navigate([], {
+          relativeTo: this.activatedRoute,
+          queryParams
+        });
+        this.payload.set(null);
       })
     )
   )
 
-  private myFormSignal = toSignal(
-    this.formFilterService.form.valueChanges
-      .pipe(
-        debounceTime(1000),
-        distinctUntilChanged(),
-        startWith(this.formFilterService.form.value),
-        filter(() => this.formFilterService.form.valid),
-      )
-  )
-
-  public shopPagination = linkedSignal({
-    source: () => this.shopRxResource,
+  public productPagination = linkedSignal({
+    source: () => this.productListRx,
     computation: (source): PaginationResponse | null => {
       if (source.error()) return { message: 'Error', pagination: null };
       if (source.hasValue()) return this.paginationService.getPagination(source.value().pageInformation);
@@ -104,34 +136,28 @@ export class ShopComponent {
     }
   })
 
-
-  public shopRxResource = rxResource({
-    request: () => ({ form: this.myFormSignal() }),
+  public productListRx = rxResource({
+    request: () => ({ payload: this.payload() }),
     loader: (params): Observable<ShopResponse> => {
-
-      const { request } = params;
-      if (request.form) {
-        const { occasion, ...requestForm } = request.form;
-        const pathParams = this.buildUrlsService.buildPathParams(occasion);
-        const queryParams = this.buildUrlsService.buildQueryParams(requestForm);
-        const httpRequest = this.buildUrlsService.buildQueryBackend([...pathParams], { ...queryParams });
-        this.router.navigate(pathParams, {
-          queryParams,
-        });
-
-        return this.shopService.getCakes(httpRequest);
-      }
-      else {
-        return this.shopService.getEmptyShop();
-      }
+      if (!params.request.payload) return this.shopService.emptyProducts();
+      return this.shopService.searchProducts(params.request.payload);
     }
   })
 
-  public getSizePage(size: string): string {
-    return this.buildUrlsService.getSizePage(size);
+
+  public changePage(page: number): void {
+    this.form.controls.page.setValue(page.toString());
   }
 
-  public getSortPage(sort: string):string{
-    return this.buildUrlsService.getSortPage(sort);
+  public sendWhatsapp(slug: string) {
+    if (!this.platformIdService.isBrowser) return;
+
+    const url = location.origin + this.router.serializeUrl(
+      this.router.createUrlTree(['/product', slug])
+    );
+    const encodedMessage = encodeURIComponent(`Hola, ¿Sigue estando disponible este artículo? - ${url}`);
+    const waUrl = `https://wa.me/${CONTACT_US.number}?text=${encodedMessage}`;
+
+    window.open(waUrl, '_blank');
   }
 }

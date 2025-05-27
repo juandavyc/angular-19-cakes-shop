@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, linkedSignal, output } from '@angular/core';
 import { Pagination } from '@shared/interfaces';
 
 @Component({
@@ -10,12 +10,21 @@ import { Pagination } from '@shared/interfaces';
 })
 export class PaginationComponent {
 
-  pagePagination = input<Pagination | null >();
 
-  pageOutput = output<number>();
+  public totalPages = linkedSignal({
+    source: () => this.paginationValues(),
+    computation: (source) => {
+      if (source) return Array.from({ length: source.total }, (_, i) => i);
+      return [];
+    }
+  });
 
-  goToPage(page:number){
-    this.pageOutput.emit(page);
+  paginationValues = input<Pagination | null>();
+
+  pageChange = output<number>();
+
+  public changePage(page: number | string) {
+    this.pageChange.emit(Number(page));
   }
 
 }

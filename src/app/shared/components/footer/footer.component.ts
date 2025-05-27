@@ -7,7 +7,7 @@ import { CONTACT_US } from '@core/configs/contact-us/contact-us.config';
 import { SocialNetwork } from '@core/interfaces/social-network.interface';
 
 @Component({
-  selector: 'app-footer',
+  selector: 'shared-footer',
   imports: [
     RouterLink,
     NgClass,

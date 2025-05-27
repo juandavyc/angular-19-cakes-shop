@@ -23,20 +23,20 @@
         </a>
       </li>
       <li>
-        <a [routerLink]="['/about-us']"
+        <a [routerLink]="['about-us']"
           routerLinkActive="bg-accent text-accent-content">
           Nosotros
         </a>
       </li>
       <li>
-        <a [routerLink]="['/shop']"
+        <a [routerLink]="['shop']"
           routerLinkActive="bg-accent text-accent-content">
           Tienda
         </a>
       </li>
       @if(numberItemsOfCartInput() > 0){
       <li>
-        <a [routerLink]="['/pay']"
+        <a [routerLink]="['pay']"
           routerLinkActive="bg-error text-error-content">
           <div class="indicator">
             <span class="indicator-item badge badge-secondary h-3 px-2">
@@ -48,12 +48,12 @@
       </li>
       }
       <li>
-        <a [routerLink]="['/contact-us']" routerLinkActive="bg-accent text-accent-content">
+        <a [routerLink]="['contact-us']" routerLinkActive="bg-accent text-accent-content">
           Contactanos
         </a>
       </li>
       <li>
-        <a [routerLink]="['/login']" routerLinkActive="bg-accent text-accent-content">
+        <a [routerLink]="['login']" routerLinkActive="bg-accent text-accent-content">
           Mi Cuenta
         </a>
       </li>
@@ -65,7 +65,7 @@
         <i class="fa-solid fa-magnifying-glass"></i>
     </button>
     @if(numberItemsOfCartInput() > 0){
-    <a [routerLink]="['/pay']" class="btn btn-accent text-accent-content btn-md">
+    <a [routerLink]="['pay']" class="btn btn-accent text-accent-content btn-md">
       <i class="fa-solid fa-cart-shopping"></i>
       {{numberItemsOfCartInput()}}
     </a>

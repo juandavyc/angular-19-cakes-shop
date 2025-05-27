@@ -1,0 +1,76 @@
+@let basicDataStatus = basicDataRx;
+@if(basicDataStatus.error()){
+  <pre>{{basicDataStatus.error()}}</pre>
+}
+@else if(basicDataStatus.isLoading()){
+  <p>Cargando...</p>
+}
+@else if(basicDataStatus.hasValue() && basicDataStatus.value() === null){
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="flex flex-col gap-3">
+      <label class="font-bold">Nombre - Titulo</label>
+      <div class="input w-full">
+        <i class="fa-solid fa-align-left text-base-300"></i>
+        <input type="text"
+          placeholder="Pastel de frutos rojos"
+          formControlName="name">
+      </div>
+      @if (isInvalidField('name')){
+        <p class="text-error">{{getErrorField('name')}}</p>
+      }
+      <label class="font-bold">Precio</label>
+      <div class="input w-full">
+        <i class="fa-solid fa-dollar-sign text-base-300"></i>
+        <input type="number" placeholder="1.000.000" formControlName="price">
+      </div>
+      @if (isInvalidField('price')){
+        <p class="text-error">{{getErrorField('price')}}</p>
+      }
+      <label class="font-bold">Imagen de portada</label>
+      <div class="join w-full">
+        <label class="input join-item w-full">
+          <i class="fa-solid fa-image text-base-300"></i>
+          <input type="text"
+            class="join-item"
+            placeholder="url-de-la-imagen"
+            formControlName="cover">
+        </label>
+      </div>
+      <images-cdn/>
+      @if (isInvalidField('cover')){
+        <p class="text-error">{{getErrorField('cover')}}</p>
+      }
+      @else{
+        <div class="flex justify-center bg-base-100 rounded-box p-3 shadow-sm">
+          <img class="w-full h-full max-w-sm object-cover rounded-2xl" [src]="coverImage()" alt="cover-image" >
+        </div>
+      }
+      <label class="font-bold">Descripcion</label>
+      <textarea class="textarea w-full rounded-3xl resize-none"
+        placeholder="Descripcion"
+        rows="5"
+        formControlName="description"></textarea>
+      @if (isInvalidField('description')){
+        <p class="text-error">{{getErrorField('description')}}</p>
+      }
+      <div class="divider">Opciones</div>
+      <div class="flex justify-center">
+        <button type="submit"
+          class="btn btn-neutral border-none btn-wide hover:btn-primary"
+          [disabled]="form.invalid">
+          Guardar cambios
+        </button>
+      </div>
+    </div>
+  </form>
+}
+@else if(basicDataStatus.hasValue() && basicDataStatus.value() !== null){
+  <div class="flex flex-col justify-center gap-3">
+    <p class="text-center font-bold">Cambios guardados correctamente</p>
+    <button class="btn btn-info"
+    (click)="formPayload.set(null)">
+      Continuar
+    </button>
+  </div>
+}
+

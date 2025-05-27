@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
-import { FormFilterService } from '../../services/form-filter.service';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormValidatorService } from '@core/services/form-validator.service';
 
 @Component({
   selector: 'basic-form',
@@ -13,22 +13,25 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class BasicFormComponent {
 
-  public pageSummary = input<string | null>();
+  // public pageSummary = input<string | null>();
+  // private formFilterService = inject(FormFilterService);
 
-  private formFilterService = inject(FormFilterService);
+  public form = input.required<FormGroup>();
 
-  public isInvalidField(field: string): boolean | null {
-    return this.formFilterService.isInvalidField(field);
-  }
-  public getErrorField(field: string): string | null {
-    return this.formFilterService.getErrorField(field);
-  }
+  private formValidatorService = inject(FormValidatorService);
 
-  public get form() {
-    return this.formFilterService.form
+  public isInvalidField(): boolean | null {
+    return this.formValidatorService.isInvalidControl(this.form().get('name'));
+  }
+  public getErrorField(): string | null {
+    return this.formValidatorService.getErrorControl(this.form().get('name'));
   }
 
-  public search(value: string) {
-    this.form.controls.title.setValue(value);
-  }
+  // public get form() {
+  //   return this.formFilterService.form
+  // }
+
+  // public search(value: string) {
+  //   this.form.controls.name.setValue(value);
+  // }
 }
