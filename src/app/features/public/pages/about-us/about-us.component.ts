@@ -27,7 +27,7 @@ export default class AboutUsComponent {
   public readonly title = ABOUT_US_CONFIG.title;
   public readonly subtitle = ABOUT_US_CONFIG.subtitle;
 
-  public readonly left = ABOUT_US_ASSETS.cover;
+  public readonly cover = ABOUT_US_ASSETS.cover;
 
   public readonly chats: Chat[] = ABOUT_US_CONFIG.chats;
 
