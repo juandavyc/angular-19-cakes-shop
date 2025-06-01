@@ -14,7 +14,6 @@ import { ProductItemComponent } from './components/product-item/product-item.com
 import { ProductService } from './services/product.service';
 import { DeleteProductModalComponent } from './components/delete-product-modal/delete-product-modal.component';
 
-
 @Component({
   selector: 'app-list',
   imports: [

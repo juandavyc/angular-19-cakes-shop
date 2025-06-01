@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+.swiper-button-next,
+.swiper-button-prev{
+  background: rgba(19, 19, 19, 0.555);
+  color:white;
+  width: 37px;
+  border-radius: 10px;
+  height: 57px;
+}
+

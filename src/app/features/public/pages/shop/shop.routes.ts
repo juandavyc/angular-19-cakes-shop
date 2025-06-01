@@ -1,19 +1,22 @@
 import { Routes } from "@angular/router";
-import { ShopComponent } from "./shop.component";
-import { ShopLayoutComponent } from "./layouts/shop-layout/shop-layout.component";
+import { LayoutComponent } from "./layout/layout.component";
+import { ShopComponent } from "./pages/list/shop.component";
+import { ProductComponent } from "./pages/product/product.component";
+
+
 
 const ShopRoutes: Routes = [
   {
     path: '',
-    component: ShopLayoutComponent,
+    component: LayoutComponent,
     children: [
       {
         path: '',
         component: ShopComponent,
       },
       {
-        path: ':occasion',
-        component: ShopComponent,
+        path: 'product/:slug',
+        component: ProductComponent,
       },
       {
         path: '**',

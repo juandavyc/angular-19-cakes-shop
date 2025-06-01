@@ -1,6 +1,11 @@
 import { HOME_ASSETS } from "./home.assets";
 
 export const HOME_CONFIGS = {
+  seo: {
+    title: 'Pastelería JB | Endulzando tus mejores momentos en Cubarral, Meta',
+    description: 'Descubre la magia de la repostería artesanal en Pastelería JB, desde Cubarral, Meta. Creamos tortas personalizadas para cumpleaños, bodas, baby showers y más. ¡Con mucho amor para cada ocasión!',
+    tags: 'Pastelería JB, pasteles personalizados Cubarral, tortas Meta, repostería artesanal, eventos especiales, cumpleaños, bodas, baby shower, endulzando tus mejores momentos'
+  },
   stats: {
     cakes: 600,
     years: '5 Años',
@@ -77,7 +82,7 @@ export const HOME_CONFIGS = {
       {
         name: 'Todos',
         image: HOME_ASSETS.occasions[6],
-        url: 'todas-las-ocasiones'
+        url: ''
       },
     ]
   },

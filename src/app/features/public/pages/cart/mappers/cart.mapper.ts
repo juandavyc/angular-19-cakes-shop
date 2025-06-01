@@ -1,4 +1,3 @@
-import ProductRoutes from "../../product/product.routes";
 import { Product } from "../../shop/interfaces";
 import { CartProduct } from "../interfaces";
 

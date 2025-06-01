@@ -1,10 +1,9 @@
 @let pagination = paginationValues();
-@if(pagination){
+@if(pagination && pagination.total > 0 ){
   <div class="flex flex-row justify-center">
     <div class="join">
-
       <div class="join-item">
-        <select class="select" (change)="changePage(selectPage.value)" #selectPage>
+        <select class="select" (change)="changePage(selectPage.value)" #selectPage [disabled]="pagination.first && pagination.last">
           @for (pages of totalPages(); track $index; let first = $first) {
             <option [value]="pages" [selected]="pages === pagination.page">
               @if(first){

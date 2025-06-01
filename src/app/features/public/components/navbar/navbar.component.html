@@ -1,77 +1,21 @@
-<nav class="navbar fixed top-0 left-0 lg:z-10 z-10 w-full bg-white md:px-3 shadow-md">
-  <div class="flex-1 px-2">
-    <h1 class="sm:text-4xl text-3xl font-extrabold text-pink-600 text-outline-pink tracking-widest">
-      {{name}}
-    </h1>
+<nav class="navbar fixed top-0 left-0 lg:z-10 z-10 w-full bg-white/70 backdrop-blur-md md:px-3 shadow-md">
+  <div class="mx-2 flex-1 px-2">
+    <logo />
   </div>
-  <div class="hidden flex-none lg:block">
-    <ul class="menu menu-horizontal font-semibold">
-      @if (!isShopRouteInput()) {
-        <li class="me-0.5">
-          <button class="btn btn-ghost h-[33px] text-gray-500"
-            (click)="openSearchModal()">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            Buscar
-          </button>
-        </li>
-      }
-      <li>
-        <a [routerLink]="['/']"
-          [routerLinkActiveOptions]="{exact:true}"
-          routerLinkActive="bg-accent text-accent-content">
-          Inicio
-        </a>
-      </li>
-      <li>
-        <a [routerLink]="['about-us']"
-          routerLinkActive="bg-accent text-accent-content">
-          Nosotros
-        </a>
-      </li>
-      <li>
-        <a [routerLink]="['shop']"
-          routerLinkActive="bg-accent text-accent-content">
-          Tienda
-        </a>
-      </li>
-      @if(numberItemsOfCartInput() > 0){
-      <li>
-        <a [routerLink]="['pay']"
-          routerLinkActive="bg-error text-error-content">
-          <div class="indicator">
-            <span class="indicator-item badge badge-secondary h-3 px-2">
-              {{numberItemsOfCartInput()}}
-            </span>
-            Pagar
-          </div>
-        </a>
-      </li>
-      }
-      <li>
-        <a [routerLink]="['contact-us']" routerLinkActive="bg-accent text-accent-content">
-          Contactanos
-        </a>
-      </li>
-      <li>
-        <a [routerLink]="['login']" routerLinkActive="bg-accent text-accent-content">
-          Mi Cuenta
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div class="flex gap-1 lg:hidden">
-    <button class="btn btn-accent text-accent-content btn-md"
-      (click)="openSearchModal()">
-        <i class="fa-solid fa-magnifying-glass"></i>
+  @if (!isShopRoute()) {
+    <button class="btn btn-ghost"
+      (click)="onOpenSearchModal()">
+      <i class="fa-solid fa-magnifying-glass"></i>
+        Buscar
     </button>
-    @if(numberItemsOfCartInput() > 0){
-    <a [routerLink]="['pay']" class="btn btn-accent text-accent-content btn-md">
-      <i class="fa-solid fa-cart-shopping"></i>
-      {{numberItemsOfCartInput()}}
-    </a>
-    }
-    <button class="btn btn-accent text-accent-content btn-md" (click)="toggle.emit()">
-      <i class="fa-solid fa-bars"></i>
+  }
+  <div class="hidden flex-none lg:block">
+    <menu-items class="menu-horizontal text-base py-0"/>
+  </div>
+  <div class="flex-none lg:hidden">
+    <button class="btn btn-square btn-accent border-none z-20"
+      (click)="onToggleSidebar()">
+        <i class="fa-solid fa-bars fa-lg"></i>
     </button>
   </div>
 </nav>

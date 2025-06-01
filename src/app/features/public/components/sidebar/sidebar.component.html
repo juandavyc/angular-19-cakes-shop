@@ -1,46 +1,25 @@
-<div class="bg-base-200 w-80 p-4 gap-3">
-  <h1 class="sm:text-4xl text-3xl font-extrabold text-pink-600 text-outline-pink tracking-widest">
-    {{name}}
-  </h1>
-  <div class="divider">
+<div class="drawer-overlay backdrop-blur-xs"
+  (click)="handleToggleClick($event)">
+</div>
+<div class="flex flex-col bg-base-200 w-80 h-screen gap-3 p-3"
+  (click)="handleToggleClick($event)">
+  <div class="flex justify-center pt-4">
+    <logo/>
+  </div>
+  <div class="divider divider-start">
     Menú
   </div>
-  <ul class="menu h-screen w-full text-xl divide-y divide-gray-300 gap-3" (click)="toggle.emit()">
-    <li>
-      <a [routerLink]="['/']" routerLinkActive="bg-accent text-accent-content" [routerLinkActiveOptions]="{exact:true}">
-        Inicio
-      </a>
-    </li>
-    <li>
-      <a [routerLink]="['/about-us']" routerLinkActive="bg-accent text-accent-content">
-        Nosotros
-      </a>
-    </li>
-    <li>
-      <a [routerLink]="['/shop']" routerLinkActive="bg-accent text-accent-content" class="flex items-center gap-1">
-        Tienda
-      </a>
-    </li>
-    @if(numberItemsOfCartInput() > 0){
-      <li>
-        <a [routerLink]="['/pay']" routerLinkActive="bg-error text-error-content">
-          <span> Pagar </span>
-          <span class="badge badge-secondary">{{numberItemsOfCartInput()}}</span>
-        </a>
-      </li>
-    }
-    <li>
-      <a [routerLink]="['/contact-us']" routerLinkActive="bg-accent text-accent-content">
-        Contactanos
-      </a>
-    </li>
-    @if (!isShopRouteInput()) {
-      <li>
-        <button class="btn h-[33px]" (click)="openSearchModal()">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          Buscar en la Tienda
-        </button>
-      </li>
-    }
-  </ul>
+  <menu-items class="menu-vertical w-full bg-base-100 rounded-2xl text-lg"
+    [isMobile]="true"/>
+
+  @if (!isShopRoute()) {
+    <div class="divider divider-start">
+      Tienda
+    </div>
+    <button class="btn btn-lg btn-secondary"
+      (click)="onOpenSearchModal()">
+      <i class="fa-solid fa-magnifying-glass"></i>
+        Buscar en la Tienda
+    </button>
+  }
 </div>

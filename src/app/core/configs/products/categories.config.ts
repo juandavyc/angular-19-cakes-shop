@@ -2,7 +2,7 @@ import { Category } from "@core/interfaces";
 export const CATEGORIES: Category[] = [
   {
     "id": 1,
-    "name": "Todas Las Categorias",
+    "name": "Todas Las Categorías",
     "slug": "todas-las-categorias"
   },
   {

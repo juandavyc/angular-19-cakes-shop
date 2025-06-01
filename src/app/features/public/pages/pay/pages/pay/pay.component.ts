@@ -17,11 +17,11 @@ import { filter, of, tap } from 'rxjs';
 @Component({
   selector: 'app-pay',
   imports: [
-    HeroTitleComponent,
-    CartRemoveModalComponent,
-    //cm
-    PaySummaryComponent,
-    CartProductItemComponent,
+    // HeroTitleComponent,
+    // CartRemoveModalComponent,
+    // //cm
+    // PaySummaryComponent,
+    // CartProductItemComponent,
   ],
   templateUrl: './pay.component.html',
   styleUrl: './pay.component.css',
@@ -30,126 +30,126 @@ import { filter, of, tap } from 'rxjs';
 export default class PayComponent {
 
 
-  public readonly title = 'Pagar';
-  public readonly subtitle = 'Confirme sus productos';
+  // public readonly title = 'Pagar';
+  // public readonly subtitle = 'Confirme sus productos';
 
-  public readonly changeQuantity = ChangeQuantity;
+  // public readonly changeQuantity = ChangeQuantity;
 
-  private cartService = inject(CartService);
-  private payService = inject(PayService);
-  private router = inject(Router);
+  // private cartService = inject(CartService);
+  // private payService = inject(PayService);
+  // private router = inject(Router);
 
-  private cartProductToRemove = signal<string>('');
+  // private cartProductToRemove = signal<string>('');
 
-  private cartRemoveModal = viewChild<CartRemoveModalComponent>('cartRemoveModal');
-  private cartRemoveToPayModal = viewChild<CartRemoveModalComponent>('cartRemoveToPayModal');
-
-
-  private payload = signal<CheckoutRequest | null>(null);
-
-  public cartProducts = computed<CartProduct[]>(() => {
-    const products = this.cartService.getCarProducts();
-    if (products.length > 0) return products;
-    else return [];
-  });
+  // private cartRemoveModal = viewChild<CartRemoveModalComponent>('cartRemoveModal');
+  // private cartRemoveToPayModal = viewChild<CartRemoveModalComponent>('cartRemoveToPayModal');
 
 
-  public summary = computed<Summary>(() => {
-    return this.cartProducts()
-      .reduce((acc, cartProduct) => {
-        if (cartProduct.pay) {
-          acc.total += cartProduct.price * cartProduct.quantity,
-            acc.quantity++;
-        }
-        return acc;
-      }, { total: 0, quantity: 0 })
-  });
+  // private payload = signal<CheckoutRequest | null>(null);
 
-  public hasProductsToPay = computed(() => this.cartProducts().some(cartProduct => cartProduct.pay == true))
-
-  //request: () => ({ form: this.payload() }),
-  public payloadRx = rxResource({
-    request: () => ({ order: this.payload() }),
-    loader: (params) => {
-      if(params.request.order){
-        return this.payService.create(params.request.order).pipe(
-          filter(response=> response != null),
-          tap(()=>this.cartService.removeAllProducts()),
-          tap((response)=>{
-            const id = response.split('/').pop();
-            this.router.navigate(['/pay/orders',id]);
-          })
-        )
-      }
-      else{
-        return of(null);
-      }
-    }
-  })
+  // public cartProducts = computed<CartProduct[]>(() => {
+  //   const products = this.cartService.getCarProducts();
+  //   if (products.length > 0) return products;
+  //   else return [];
+  // });
 
 
+  // public summary = computed<Summary>(() => {
+  //   return this.cartProducts()
+  //     .reduce((acc, cartProduct) => {
+  //       if (cartProduct.pay) {
+  //         acc.total += cartProduct.price * cartProduct.quantity,
+  //           acc.quantity++;
+  //       }
+  //       return acc;
+  //     }, { total: 0, quantity: 0 })
+  // });
 
+  // public hasProductsToPay = computed(() => this.cartProducts().some(cartProduct => cartProduct.pay == true))
 
-  public changeQuantityProduct(changeQuantity: ChangeQuantity, id: string, quantity: number): void {
-    if (changeQuantity == ChangeQuantity.INCREMENT) {
-      this.cartService.incrementQuantity(id);
-    }
-    else {
-      if (quantity == 1) {
-        this.removeCartProduct(id);
-      }
-      else {
-        this.cartService.decrementQuantity(id);
-      }
-    }
-  }
+  // //request: () => ({ form: this.payload() }),
+  // public payloadRx = rxResource({
+  //   request: () => ({ order: this.payload() }),
+  //   loader: (params) => {
+  //     if(params.request.order){
+  //       return this.payService.create(params.request.order).pipe(
+  //         filter(response=> response != null),
+  //         tap(()=>this.cartService.removeAllProducts()),
+  //         tap((response)=>{
+  //           const id = response.split('/').pop();
+  //           this.router.navigate(['/pay/orders',id]);
+  //         })
+  //       )
+  //     }
+  //     else{
+  //       return of(null);
+  //     }
+  //   }
+  // })
 
 
 
 
+  // // public changeQuantityProduct(changeQuantity: ChangeQuantity, id: string, quantity: number): void {
+  // //   if (changeQuantity == ChangeQuantity.INCREMENT) {
+  // //     this.cartService.incrementQuantity(id);
+  // //   }
+  // //   else {
+  // //     if (quantity == 1) {
+  // //       this.removeCartProduct(id);
+  // //     }
+  // //     else {
+  // //       this.cartService.decrementQuantity(id);
+  // //     }
+  // //   }
+  // // }
 
-  public removeCartProduct(id: string): void {
-    const removeModal = this.cartRemoveModal();
-    if (!removeModal) return;
-    this.cartProductToRemove.set(id);
-    removeModal.openModal(true);
-  }
-  public removeToPayProducts(): void {
-    const removeModal = this.cartRemoveToPayModal();
-    if (!removeModal) return;
-    removeModal.openModal(true);
-  }
 
-  public confirmRemoveCartProduct() {
-    this.cartService.removeProduct(this.cartProductToRemove());
-  }
-  public confirmRemoveToPayProducts() {
-    this.cartService.removeToPayProducts();
-  }
 
-  public productToPay(id: string, toPayProduct: boolean): void {
-    this.cartService.payProduct(id, toPayProduct);
-  }
-  public productsToPay(toPayProducts: boolean): void {
-    this.cartService.payProducts(toPayProducts);
-  }
 
-  public confirmProductsToPay(): void {
 
-    const products = this.cartProducts().map(cartProduct => (
-      {
-        id: cartProduct.id,
-        quantity: cartProduct.quantity,
-        subtotal: cartProduct.price * cartProduct.quantity,
-      })
-    );
+  // public removeCartProduct(id: string): void {
+  //   const removeModal = this.cartRemoveModal();
+  //   if (!removeModal) return;
+  //   this.cartProductToRemove.set(id);
+  //   removeModal.openModal(true);
+  // }
+  // public removeToPayProducts(): void {
+  //   const removeModal = this.cartRemoveToPayModal();
+  //   if (!removeModal) return;
+  //   removeModal.openModal(true);
+  // }
 
-    this.payload.set({
-      products,
-      total: this.summary().total,
-      quantity: this.summary().quantity,
-    });
+  // // public confirmRemoveCartProduct() {
+  // //   this.cartService.removeProduct(this.cartProductToRemove());
+  // // }
+  // // public confirmRemoveToPayProducts() {
+  // //   this.cartService.removeToPayProducts();
+  // // }
 
-  }
+  // // public productToPay(id: string, toPayProduct: boolean): void {
+  // //   this.cartService.payProduct(id, toPayProduct);
+  // // }
+  // // public productsToPay(toPayProducts: boolean): void {
+  // //   this.cartService.payProducts(toPayProducts);
+  // // }
+
+  // public confirmProductsToPay(): void {
+
+  //   const products = this.cartProducts().map(cartProduct => (
+  //     {
+  //       id: cartProduct.id,
+  //       quantity: cartProduct.quantity,
+  //       subtotal: cartProduct.price * cartProduct.quantity,
+  //     })
+  //   );
+
+  //   this.payload.set({
+  //     products,
+  //     total: this.summary().total,
+  //     quantity: this.summary().quantity,
+  //   });
+
+  // }
 
 }

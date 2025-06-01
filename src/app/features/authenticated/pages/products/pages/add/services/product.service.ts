@@ -33,7 +33,7 @@ export class ProductService {
 
 
   public availableByName(name: string): Observable<boolean> {
-    const url = `${this.apiUrl}/products/available`;
+    const url = `${this.apiUrl}/api/products/available`;
     return this.http.get<boolean>(url, {params:{name}}).pipe(
       delay(2000),
       catchError((error)=> throwError(()=>new Error(`An error ocurred`)))
@@ -42,7 +42,7 @@ export class ProductService {
 
   public create(payload: ProductPayload): Observable<ProductResponse> {
 
-    const url = `${this.apiUrl}/products`;
+    const url = `${this.apiUrl}/api/products`;
     return this.http.post<ProductResponse>(url, payload, { observe: 'response' }).pipe(
       delay(2000),
       map((response) => {

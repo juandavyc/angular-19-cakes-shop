@@ -10,9 +10,6 @@
       @if(loginStatus.isLoading()){
       <p>Cargando</p>
       }
-      @else if(loginStatus.error()){
-      <p>Error</p>
-      }
       @else if(loginStatus.hasValue() && loginStatus.value() === null){
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="flex flex-col gap-2">
@@ -22,14 +19,13 @@
           <label class="text-sm"> Usuario o Email </label>
           <label class="input">
             <i class="fa-solid fa-user text-gray-300"></i>
-            <input type="text" placeholder="correo@gmail.com" formControlName="username" />
+            <input type="text" placeholder="Algodon de azucar" formControlName="username" />
           </label>
+          @if (isInvalidField('username')){
+            <p class="text-error">{{getErrorField('username')}}</p>
+          }
           <div class="flex flex-row justify-between text-sm">
             <label>Contraseña </label>
-            <!-- <a class="link text-blue-400 font-semibold"
-              [routerLink]="['/login/recovery']" aria-disabled="true" >
-              Olvidaste tu contraseña?
-            </a> -->
           </div>
           <div class="flex flex-row">
             <label class="input border-e-0 rounded-e-none">
@@ -49,6 +45,9 @@
               </div>
             </label>
           </div>
+          @if (isInvalidField('password')){
+            <p class="text-error">{{getErrorField('password')}}</p>
+          }
           <div class="divider my-1"></div>
           <button type="submit" class="btn btn-info w-full text-white">
             Ingresar
@@ -56,11 +55,11 @@
         </div>
       </form>
       }
-      @else if(loginRx.hasValue() && loginRx.value() == false){
-      <div class="flex flex-col gap-3">
-        <p>Usuario o contraseña incorrecta</p>
-        <button class="btn btn-error text-white" (click)="payload.set(null)"> Intentar de nuevo</button>
-      </div>
+      @else if(loginStatus.hasValue() && !loginStatus.value()){
+        <div class="flex flex-col gap-3">
+          <p>Usuario o contraseña incorrecta</p>
+          <button class="btn btn-error text-white" (click)="payload.set(null)"> Intentar de nuevo</button>
+        </div>
       }
     </div>
     <div class="bg-white w-[359px] border border-base-200 rounded-box shadow-lg sm:px-10 px-3 py-5 ">
@@ -74,8 +73,8 @@
   </div>
 </section>
 
-<div #myToast class="toast">
+<!-- <div #myToast class="toast">
   <div class="alert alert-info">
     <span>Mensaje nuevo</span>
   </div>
-</div>
+</div> -->

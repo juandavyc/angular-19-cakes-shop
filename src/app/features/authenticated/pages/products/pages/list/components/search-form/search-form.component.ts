@@ -18,7 +18,6 @@ import { Category, Occasion } from '@core/interfaces';
 })
 export class SearchFormComponent {
 
-
   public readonly categories = signal<Category[]>(this.sortArray(CATEGORIES));
   public readonly occasions = signal<Occasion[]>(this.sortArray(OCCASIONS));
 
@@ -26,8 +25,9 @@ export class SearchFormComponent {
 
   private sortArray(array: Category[] | Occasion[]): Category[] | Occasion[] {
     const first = array[0];
-    const sorted = array.sort((a, b) => a.name.localeCompare(b.name))
+    const sorted = [...array].sort((a, b) => a.name.localeCompare(b.name))
       .filter(value=> value != first);
     return [...sorted];
   }
+
 }

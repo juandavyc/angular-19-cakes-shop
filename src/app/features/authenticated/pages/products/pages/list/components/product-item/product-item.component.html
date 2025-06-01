@@ -5,7 +5,7 @@
       <img class="w-12 h-12 rounded-box " alt="about us image 1" [src]="productDetail.cover" />
       <div class="flex-1 flex flex-col">
         <a class="font-bold hover:text-pink-400 text-base"
-          [routerLink]="['/product', productDetail.slug]">
+          [routerLink]="['edit', productDetail.id]">
           {{productDetail.name | titlecase}}
         </a>
         <span class="text-gray-400">
@@ -23,7 +23,7 @@
     <div class="flex justify-end">
       <div class="join">
         <a class="btn join-item btn-sm btn-neutral border-none"
-          [routerLink]="['/product', productDetail.slug]">
+          [routerLink]="['/shop/product', productDetail.slug]">
           Detalles
         </a>
         <a class="btn join-item btn-sm btn-primary border-none"

@@ -1,0 +1,16 @@
+@let categories = categoriesInput();
+<fieldset class="fieldset border-base-200 bg-accent/15 rounded-md">
+  <legend class="fieldset-legend text-accent-content">Categorías</legend>
+  <div class="flex flex-wrap gap-1 text-base pb-3 px-3">
+    @for (category of categories; track category.productCategoryId;) {
+      <a class="badge badge-accent font-semibold"
+        [routerLink]="['/shop']"
+        [queryParams]="{category: category.category.slug}">
+        {{category.category.name | titlecase}}
+      </a>
+    }
+    @empty {
+      <p>Sin categoria</p>
+    }
+  </div>
+</fieldset>

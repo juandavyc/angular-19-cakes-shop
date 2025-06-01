@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal } fr
 import { Breadcrumb } from './interfaces/breadcrumb';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { filter, map } from 'rxjs';
+import { filter, map, startWith } from 'rxjs';
 
 
 @Component({
@@ -23,7 +23,8 @@ export class BreadcrumbComponent {
   private breadcrumb = toSignal(
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
-      map(router => router.url)
+      map(router => router.url),
+      startWith(this.router.url)
     )
   );
 

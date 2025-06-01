@@ -3,17 +3,17 @@
     <div class="text-xl font-semibold">
       <span class="text-gray-400">4 - </span> Ocasiones
     </div>
-    <p>Debes seleccionar minimo (1) Maximo (4) Ocasiones</p>
+    <p>Debes seleccionar Mínimo (1) Máximo (4) Ocasiones</p>
     <div class="bg-base-100 border border-base-200 rounded-box shadow-sm p-3">
       <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-3">
-        @for (category of categoriesList; track category.id) {
+        @for (occasion of occasionsList; track occasion.id) {
           <label class="label text-neutral"
-            [class.font-bold]="isChecked(category.id)">
+            [class.font-bold]="isChecked(occasion.id)">
             <input type="checkbox"
             class="checkbox bg-white"
-            (change)="onCheckboxChange(category.id, categoryCheckbox.checked)"
-            #categoryCheckbox />
-            {{category.name}}
+            (change)="onCheckboxChange(occasion.id, occasionCheckbox.checked)"
+            #occasionCheckbox />
+            {{occasion.name}}
           </label>
         }
       </div>

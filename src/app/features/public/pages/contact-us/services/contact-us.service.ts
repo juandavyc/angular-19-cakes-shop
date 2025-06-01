@@ -18,8 +18,8 @@ export class ContactUsService {
   constructor() {}
 
   create(value: Contact) {
-    const url = `${this.apiUrl}/contact-us`
-    return this.http.post(this.apiUrl, value, {observe: 'response'}).pipe(
+    const url = `${this.apiUrl}/public/contact-us`
+    return this.http.post(url, value, {observe: 'response'}).pipe(
       delay(2000),
       map(response=>{
         if(response.status === 204){

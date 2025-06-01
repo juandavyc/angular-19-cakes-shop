@@ -4,12 +4,14 @@ import { ImagesCdnComponent } from '@authenticated/pages/products/components/ima
 import { FormValidatorService } from '@core/services/form-validator.service';
 import { BasicDataPayload } from '../../interfaces';
 import { ASSETS } from '@core/assets';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'basic-data',
   imports: [
     ReactiveFormsModule,
     ImagesCdnComponent,
+    DecimalPipe,
   ],
   templateUrl: './basic-data.component.html',
   styleUrl: './basic-data.component.css',

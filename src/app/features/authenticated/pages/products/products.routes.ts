@@ -18,7 +18,7 @@ const ProductsRoutes: Routes = [
         loadComponent: () => import('./pages/edit/edit.component'),
         data: { title: 'Edit' }
       },
-       {
+      {
         path: 'add',
         loadComponent: () => import('./pages/add/add.component'),
         data: { title: 'add' }

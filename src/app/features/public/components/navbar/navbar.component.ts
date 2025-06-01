@@ -1,12 +1,13 @@
 import { Component, input, output } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CONFIG } from '@core/configs';
+import { MenuItemsComponent } from '../menu-items/menu-items.component';
+import { LogoComponent } from '@shared/components/logo/logo.component';
 
 @Component({
   selector: 'app-navbar',
   imports: [
-    RouterLink,
-    RouterLinkActive,
+    MenuItemsComponent,
+    LogoComponent,
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
@@ -14,16 +15,17 @@ import { CONFIG } from '@core/configs';
 export class NavbarComponent {
 
   public name = CONFIG.APP_NAME;
-  public toggle = output<void>();
+  //public numberItemsOfCartInput = input.required<number>();
+  public toggleSidebar = output<void>();
+  public isShopRoute = input.required<boolean>();
+  public openSearchModal = output<void>();
 
-  public numberItemsOfCartInput = input.required<number>();
+  public onOpenSearchModal():void{
+    this.openSearchModal.emit();
+  }
 
-  public isShopRouteInput = input.required<boolean>();
-
-  public openSearchModalOutput = output<void>();
-
-  public openSearchModal():void{
-    this.openSearchModalOutput.emit();
+  public onToggleSidebar():void{
+      this.toggleSidebar.emit();
   }
 
 }

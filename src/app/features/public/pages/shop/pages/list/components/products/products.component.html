@@ -1,0 +1,36 @@
+@let productsStatus = productsListRx();
+<div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+  @if(productsStatus.isLoading()){
+    @for (item of skeletonCount; track $index) {
+      <skeleton />
+    }
+  }
+  @if(productsStatus.hasValue()){
+    @for (product of productsStatus.value().content; track product.id; ) {
+      <product-item [productInput]="product" (productSlug)="productSlug.emit($event)" />
+    }
+    @empty {
+      <div class="col-span-full">
+        <div class="flex flex-col gap-3 justify-center items-center">
+          <no-results class="col-span-full" (resetFilters)="resetFilters.emit()" />
+          <div class="btn btn-info btn-wide hover:btn-neutral text-white" (click)="resetFilters.emit()">
+            Limpiar Filtros
+          </div>
+        </div>
+      </div>
+    }
+    <div class="col-span-full">
+      <pagination [paginationValues]="productsPagination()" (pageChange)="changePage.emit($event)" />
+    </div>
+  }
+  @if(productsStatus.error()){
+    <div class="col-span-full">
+      <div class="flex flex-col gap-3 justify-center items-center">
+        <http-error />
+        <div class="btn btn-error btn-wide hover:btn-neutral text-white" (click)="resetFilters.emit()">
+          Limpiar Filtros
+        </div>
+      </div>
+    </div>
+  }
+</div>

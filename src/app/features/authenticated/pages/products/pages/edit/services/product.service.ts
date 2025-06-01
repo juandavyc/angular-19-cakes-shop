@@ -46,7 +46,7 @@ export class ProductService {
   }
 
   public getProductById(id: string): Observable<ProductData> {
-    const url = `${this.apiUrl}/products/${id}`;
+    const url = `${this.apiUrl}/api/products/${id}`;
     return this.http.get<ProductResponse>(url)
       .pipe(
         delay(2000),
@@ -59,7 +59,7 @@ export class ProductService {
   }
 
   public updateBasicData(payload: BasicDataPayload, id: string): Observable<BasicDataResponse> {
-    const url = `${this.apiUrl}/products/${id}`;
+    const url = `${this.apiUrl}/api/products/${id}`;
     return this.http.put<BasicDataResponse>(url, payload)
       .pipe(
         delay(2000),
@@ -68,7 +68,7 @@ export class ProductService {
   }
 
   public updateCategories(payload: CategoriesPayload, id: string): Observable<CategoriesResponse> {
-    const url = `${this.apiUrl}/products/${id}/categories`;
+    const url = `${this.apiUrl}/api/products/${id}/categories`;
     return this.http.put<CategoriesResponse>(url, payload)
       .pipe(
         delay(2000),
@@ -77,7 +77,7 @@ export class ProductService {
   }
 
   public updateOccasions(payload: OccasionsPayload, id: string): Observable<OccasionsResponse> {
-    const url = `${this.apiUrl}/products/${id}/occasions`;
+    const url = `${this.apiUrl}/api/products/${id}/occasions`;
     return this.http.put<OccasionsResponse>(url, payload)
       .pipe(
         delay(2000),
@@ -86,7 +86,7 @@ export class ProductService {
   }
 
   public updateImages(payload: ImagesPayload, id: string): Observable<ImagesResponse> {
-    const url = `${this.apiUrl}/products/${id}/images`;
+    const url = `${this.apiUrl}/api/products/${id}/images`;
     return this.http.put<ImagesResponse>(url, payload)
       .pipe(
         delay(2000),

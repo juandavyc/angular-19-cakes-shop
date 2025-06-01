@@ -22,7 +22,6 @@
     }
     @else if(productsStatus.hasValue() && productsStatus.value().content.length > 0){
       <h3 class="text-xl font-bold"> Resultados </h3>
-      <!-- <h4 class="text-end"> {{paginationValues()!.message}}</h4> -->
       <ul class="list space-y-4">
         @for (product of productsStatus.value().content; track product.id) {
           <li class="border-b border-base-200 py-1.5">

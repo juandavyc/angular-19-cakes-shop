@@ -8,6 +8,7 @@ const AuthRoutes: Routes = [
   {
     path: '',
     component: AuthLayoutComponent,
+
     children: [
       {
         path: '',

@@ -2,6 +2,7 @@ import { Routes } from "@angular/router";
 import { PublicComponent } from "./public.component";
 import { HomeComponent } from "./pages/home/home.component";
 import { ContactUsComponent } from "./pages/contact-us/contact-us.component";
+import { notAuthenticatedGuard } from "@auth/guards/not-authenticated.guard";
 
 const PublicRoutes: Routes = [
   {
@@ -20,13 +21,13 @@ const PublicRoutes: Routes = [
       {
         path: 'shop',
         loadChildren: () => import('./pages/shop/shop.routes'),
-        data: { title: 'Shop' }
+        data: { title: 'Shop' },
       },
-      {
-        path: 'product',
-        loadChildren: () => import('./pages/product/product.routes'),
-        data: { title: 'Product' }
-      },
+      // {
+      //   path: 'product',
+      //   loadChildren: () => import('./pages/product/product.routes'),
+      //   data: { title: 'Product' },
+      // },
       {
         path: 'pay',
         loadChildren: () => import('./pages/pay/pay.routes'),
@@ -40,7 +41,10 @@ const PublicRoutes: Routes = [
       {
         path: 'login',
         loadChildren: () => import('./pages/auth/auth.routes'),
-        data: { title: 'Login' }
+        data: { title: 'Login' },
+        canMatch: [
+          notAuthenticatedGuard,
+        ]
       },
       {
         path: '**',

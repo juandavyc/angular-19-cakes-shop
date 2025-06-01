@@ -1,12 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal, viewChild } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-
 import { BreadcrumbComponent } from '@shared/components/breadcrumb/breadcrumb.component';
 import { FooterComponent } from '@shared/components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { CartProductPreviewComponent } from './components/cart-product-preview/cart-product-preview.component';
-import { CartService } from './pages/cart/services/cart.service';
 import { ShopSearchModalComponent } from './components/shop-search-modal/shop-search-modal.component';
 
 @Component({
@@ -26,16 +24,12 @@ import { ShopSearchModalComponent } from './components/shop-search-modal/shop-se
 })
 export class PublicComponent {
 
-
   private router = inject(Router);
-  private cartService = inject(CartService);
-
+  // private cartService = inject(CartService);
   private shopSearchModal = viewChild<ShopSearchModalComponent>('shopSearchModal');
 
-
   public isOpen = signal<boolean>(false);
-  public numberItemsOfCart = computed(()=> this.cartService.numberItems());
-
+  // public numberItemsOfCart = computed(()=> this.cartService.numberItems());
 
   public toggleDrawer() {
     this.isOpen.update(value => !value);
@@ -44,11 +38,11 @@ export class PublicComponent {
   public isPayRoute(): boolean {
     return this.router.url.startsWith('/pay');
   }
-  public isShopRoute():boolean{
+  public isShopRoute(): boolean {
     return this.router.url.startsWith('/shop');
   }
 
-  public openSearchModal(){
+  public openSearchModal() {
     this.shopSearchModal()!.openModal(true);
   }
 

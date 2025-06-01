@@ -1,0 +1,107 @@
+@let productRx = productRxResource;
+
+<hero-title [title]="title" [subtitle]="subtitle" class="text-center" />
+<section class="my-10">
+  <div class="container bg-white rounded-xl shadow-lg border-base-200 border-[1px] p-10">
+    @if(productRx.error()){
+      <div class="flex flex-col items-center gap-3">
+        <no-results />
+        <a class="btn btn-error hover:btn-neutral btn-wide"
+          [routerLink]="['/shop']">
+          Ir a la Tienda
+        </a>
+      </div>
+    }
+    @if(productRx.isLoading()){
+      <skeleton />
+    }
+    @if (productRx.hasValue()) {
+    @let product = productRx.value();
+      <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-3">
+        <div class="col-span-full">
+          <div class="flex flex-row gap-3 justify-between">
+            <button class="btn " (click)="goToShop()">
+              <i class="fa-solid fa-arrow-left"></i>
+              Volver
+            </button>
+            <social-share />
+          </div>
+        </div>
+        <div class="col-span-full">
+          <ordered-name [name]="product.name"
+          [isTop]="true" />
+        </div>
+        <carousel-images
+            [cover]="product.cover"
+            [images]="product.productImages"/>
+        <div class="flex flex-col gap-3">
+          <ordered-name [name]="product.name" [isTop]="false" />
+          <rating />
+          <price [price]="product.price" />
+          <div class="col-span-full">
+            <fieldset class="fieldset">
+              <legend class="fieldset-legend text-accent-content">
+                Comprar o añadir
+              </legend>
+              <div class="grid sm:grid-cols-2 grid-cols-1 gap-3">
+                <button class="btn btn-lg btn-success"
+                  (click)="sendWhatsapp(product.slug)">
+                  <i class="fa-brands fa-whatsapp"></i>
+                  Comprar / Cotizar
+                </button>
+                <button class="btn btn-lg btn-info" disabled>
+                  <i class="fa-brands fa-whatsapp"></i>
+                  Añadir al carrito
+                </button>
+              </div>
+            </fieldset>
+          </div>
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend text-accent-content">
+              Medios de pago
+            </legend>
+            <div class="flex flex-row gap-3">
+              <img src="images/pay-methods/visa.png" alt="visa">
+              <img src="images/pay-methods/mastercard.png" alt="mastercard">
+              <img src="images/pay-methods/nequi.png" alt="nequi">
+              <img src="images/pay-methods/daviplata.png" alt="daviplata">
+              <h3>Efectivo</h3>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend text-accent-content">
+              Importante
+            </legend>
+            <ul class="list-disc">
+              <li>Preguntar si el precio contempla costos de envío.</li>
+              <li>El pedido puede tardar entre <strong>2 a 3 </strong><u>días hábiles</u> en estar listo.</li>
+              <li>Se recomienda <strong>almacenar</strong> en un contenedor <strong>fresco y seco</strong> para preservar la calidad del pastel.</li>
+            </ul>
+          </fieldset>
+        </div>
+        <div class="col-span-full">
+          <div class="divider"></div>
+        </div>
+        <div class="col-span-full">
+          <div class="tabs tabs-lift">
+            <input type="radio" name="my_tabs_1" class="tab" aria-label="Descripción" checked="checked" />
+            <div class="tab-content bg-base-100 border-base-300 p-6">
+              <p class="whitespace-pre-line">
+                {{product.description}}
+              </p>
+            </div>
+            <input type="radio" name="my_tabs_1" class="tab" aria-label="Similares" disabled />
+            <div class="tab-content bg-base-100 border-base-300 p-6">Similares</div>
+            <input type="radio" name="my_tabs_1" class="tab" aria-label="Reseñas" disabled />
+            <div class="tab-content bg-base-100 border-base-300 p-6">Reseñas</div>
+          </div>
+        </div>
+        <occasions [occasionsInput]="product.productOccasions" />
+        <categories [categoriesInput]="product.productCategories" />
+        <div class="text-sm text-gray-400">
+          Agregado el: {{product.createdAt | date:'medium'}}
+        </div>
+      </div>
+    }
+  </div>
+</section>

@@ -4,7 +4,6 @@
 
 <div class="flex justify-center items-center py-5">
   <div class="join sm:join-horizontal join-vertical">
-
     @for (socialNetwork of socialNetworks; track $index) {
       <div class="join-item btn btn-accent">
         <a [href]="socialNetwork.url" class="flex items-center gap-2">

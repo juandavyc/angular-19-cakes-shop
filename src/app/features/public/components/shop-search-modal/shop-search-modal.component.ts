@@ -22,7 +22,7 @@ export class ShopSearchModalComponent {
 
 
   public myForm = this.fb.group({
-    title: ['',
+    name: ['',
       [Validators.required, Validators.minLength(2), Validators.maxLength(50)]
     ]
   })
@@ -53,9 +53,9 @@ export class ShopSearchModalComponent {
       return;
     }
 
-    const title = (this.myForm.controls.title.value)!.trim();
-    if(!title) return;
-    this.router.navigate(['/shop'], { queryParams: { title: title } });
+    const name = (this.myForm.controls.name.value)!.trim();
+    if(!name) return;
+    this.router.navigate(['/shop'], { queryParams: { name } });
     this.openModal(false);
   }
 

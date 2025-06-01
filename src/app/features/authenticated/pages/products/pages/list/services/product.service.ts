@@ -16,7 +16,7 @@ export class ProductService {
   constructor() { }
 
   public searchProducts(params: Record<string, string>): Observable<ProductsResponse> {
-    const endpoint = Object.keys(params).length > 0 ? 'products/search?' : 'products';
+    const endpoint = Object.keys(params).length > 0 ? 'api/products/search?' : 'api/products';
     const url = `${this.apiUrl}/${endpoint}`;
     return this.http.get<ProductsResponse>(url, { params }).pipe(
       delay(2000),
@@ -25,7 +25,7 @@ export class ProductService {
   }
 
   public delete(id: string): Observable<{ deleted: boolean }> {
-    const url = `${this.apiUrl}/products/${id}`
+    const url = `${this.apiUrl}/api/products/${id}`
     return this.http.delete(url, { observe: 'response' }).pipe(
       delay(2000),
       map(response => {

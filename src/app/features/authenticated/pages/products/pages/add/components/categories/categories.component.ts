@@ -16,7 +16,7 @@ import { CategoriesPayload } from '../../interfaces';
 })
 export class CategoriesComponent {
 
-  public categoriesList: Category[] = CATEGORIES
+  public categoriesList: Category[] = [...CATEGORIES]
     .sort((a, b) => a.name.localeCompare(b.name))
     .filter(category => category.slug != 'todas-las-categorias');
 

@@ -12,10 +12,10 @@
     Inicio
   </a>
 </li>
-<li routerLinkActive="active rounded-box">
-  <details [open]="isMobile()" #productos>
+<li routerLinkActive="rounded-box active">
+  <details [open]="isMobile()" #productos >
       <summary>Productos</summary>
-      <ul>
+      <ul class="sm:bg-neutral rounded-box">
         <li>
           <a [routerLink]="['products']" (click)="closeDetails(productos)">
             Listado
@@ -29,15 +29,24 @@
       </ul>
   </details>
 </li>
-<li>
-  <a [routerLink]="['orders']"
-    routerLinkActive="active">
-    Ordenes
-  </a>
-</li>
-<li>
-  <a [routerLink]="['contact']"
-    routerLinkActive="active">
-    Contacto
-  </a>
-</li>
+@if(authStatus() === 'authenticated'){
+  <li>
+    <button class="btn btn-sm text-base btn-error" (click)="logout()">
+      Cerrar
+    </button>
+  </li>
+}
+
+@else if(authStatus() === 'not-authenticated'){
+  <li>
+    <a [routerLink]="['/login']"
+      routerLinkActive="active">
+      Login
+    </a>
+  </li>
+}
+@else if(authStatus() === 'not-authenticated'){
+  <li>
+    <span>Verificando...</span>
+  </li>
+}

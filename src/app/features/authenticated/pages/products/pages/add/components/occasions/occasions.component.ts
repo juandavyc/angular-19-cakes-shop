@@ -16,7 +16,7 @@ import { OccasionPayload } from '../../interfaces';
 })
 export class OccasionsComponent {
 
-  public categoriesList: Occasion[] = OCCASIONS
+  public occasionsList: Occasion[] = OCCASIONS
     .sort((a, b) => a.name.localeCompare(b.name))
     .filter(category => category.slug != 'todas-las-ocasiones');
 

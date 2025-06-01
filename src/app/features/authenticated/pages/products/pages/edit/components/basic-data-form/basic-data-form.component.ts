@@ -8,12 +8,14 @@ import { debounceTime, distinctUntilChanged, filter,  Observable, of } from 'rxj
 import { ProductBasicData } from '../../interfaces/product-data.interface';
 import { ProductService } from '../../services/product.service';
 import { ImagesCdnComponent } from '@authenticated/pages/products/components/images-cdn/images-cdn.component';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'basic-data-form',
   imports: [
     ReactiveFormsModule,
-    ImagesCdnComponent
+    ImagesCdnComponent,
+    DecimalPipe,
   ],
   templateUrl: './basic-data-form.component.html',
   styleUrl: './basic-data-form.component.css',
@@ -57,7 +59,7 @@ export class BasicDataFormComponent {
         this.formValidatorService.isValidImage()
       ]
     ],
-    description: ['', [Validators.maxLength(200)]],
+    description: [''],
   });
 
 

@@ -16,5 +16,10 @@ export const ABOUT_US_CONFIG = {
     { isSender: true, message: '!Gracias por las respuetas!' },
     { isSender: false, message: 'confianza que valoro' },
     { isSender: false, message: 'confianza que valoro' },
-  ]
+  ],
+  seo: {
+    title: 'Nosotros | Pastelería JB - Endulzando tus mejores momentos',
+    description: 'En Pastelería JB trabajamos con amor desde Cubarral, Meta, para endulzar tus momentos más especiales. Conoce nuestra historia, pasión y compromiso con la calidad.',
+    tags: 'pastelería artesanal, historia pastelería JB, repostería en Meta, pasteles con amor, tradición pastelera Cubarral',
+  }
 }

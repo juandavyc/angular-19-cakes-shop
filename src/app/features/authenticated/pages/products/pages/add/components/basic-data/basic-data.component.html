@@ -7,9 +7,16 @@
     <div class="input w-full">
       <i class="fa-solid fa-dollar-sign text-base-300"></i>
       <input type="number"
-        placeholder="1.000.000"
-        formControlName="price">
+        placeholder="1000000"
+        class="text-end"
+        formControlName="price" #inputPrice>
     </div>
+    @if(inputPrice.value.length > 0){
+      <div class="flex flex-row gap-3 justify-center items-end">
+        <p class="text-2xl">{{ inputPrice.value | number:'1.0-0' }}</p>
+        <span class="text-base">cop</span>
+      </div>
+    }
     @if (isInvalidField('price')){
       <p class="text-error">{{getErrorField('price')}}</p>
     }
@@ -35,9 +42,9 @@
           alt="url-de-la-imagen">
       </div>
     }
-    <label class="font-bold">Descripcion</label>
+    <label class="font-bold">Descripción</label>
     <textarea class="textarea w-full rounded-3xl resize-none"
-      placeholder="Descripcion"
+      placeholder="Descripción"
       rows="5"
       formControlName="description"></textarea>
     @if (isInvalidField('description')){

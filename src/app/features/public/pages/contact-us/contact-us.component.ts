@@ -9,6 +9,7 @@ import { ContactUsService } from './services/contact-us.service';
 import { Contact } from './interfaces/contact.interface';
 import { debounceTime, delay, distinctUntilChanged, map, of, single, tap } from 'rxjs';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
+import { SeoService } from '@core/services/seo.service';
 
 @Component({
   selector: 'app-contact',
@@ -23,6 +24,8 @@ import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 })
 export class ContactUsComponent {
 
+  private seo = inject(SeoService);
+
   public readonly title = CONTACT_US_CONFIG.title;
   public readonly subtitle = CONTACT_US_CONFIG.subtitle;
 
@@ -31,6 +34,10 @@ export class ContactUsComponent {
   public readonly address = CONTACT_US_CONFIG.address;
   public readonly number = CONTACT_US_CONFIG.number;
   public readonly email = CONTACT_US_CONFIG.email;
+
+  constructor() {
+    this.seo.setSeoMetadata(CONTACT_US_CONFIG.seo);
+  }
 
   private fb = inject(FormBuilder);
   private formValidatorService = inject(FormValidatorService);
@@ -56,12 +63,12 @@ export class ContactUsComponent {
   public formRx = rxResource({
     request: () => ({ form: this.payload() }),
     loader: (params) => {
-      if(params.request.form){
+      if (params.request.form) {
         return this.contactUsService.create(params.request.form).pipe(
-          tap(()=>this.isSubmitted.set(true))
+          tap(() => this.isSubmitted.set(true))
         );
       }
-      else{
+      else {
         return of(null);
       }
     }

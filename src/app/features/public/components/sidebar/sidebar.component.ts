@@ -1,31 +1,31 @@
 import { Component, input, output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { CONFIG } from '@core/configs';
+import { MenuItemsComponent } from '../menu-items/menu-items.component';
+import { LogoComponent } from '@shared/components/logo/logo.component';
+
 
 @Component({
   selector: 'app-sidebar',
   imports: [
-    RouterLink,
-    RouterLinkActive
+    MenuItemsComponent,
+    LogoComponent,
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
   //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent {
-
-  public name = CONFIG.APP_NAME;
   public toggle = output<void>();
 
-  public numberItemsOfCartInput = input.required<number>();
-  public isShopRouteInput = input.required<boolean>();
+  public isShopRoute = input.required<boolean>();
 
-  public openSearchModalOutput = output<void>();
-
-  public openSearchModal():void{
-    this.openSearchModalOutput.emit();
+  public handleToggleClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (target.tagName != "SUMMARY") this.toggle.emit();
   }
+  public openSearchModal = output<void>();
 
-
-
+  public onOpenSearchModal(): void {
+    this.openSearchModal.emit();
+  }
 }

@@ -35,7 +35,7 @@ export default class AddComponent {
   public readonly stepsConfig: string[] = [
     'Verificar',
     'Datos',
-    'Categorias',
+    'Categorías',
     'Ocasiones',
     'Fotos y Guardar'
   ];

@@ -17,9 +17,9 @@ export class LayoutComponent {
 
   public readonly title = "Productos";
 
-  private router = inject(Router);
+  // private router = inject(Router);
 
-  private activatedRoute = inject(ActivatedRoute);
+  // private activatedRoute = inject(ActivatedRoute);
 
   // public title$: Observable<string> = this.router.events.pipe(
   //   filter(event => event instanceof NavigationEnd),
