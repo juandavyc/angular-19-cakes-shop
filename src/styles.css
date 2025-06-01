@@ -1,5 +1,7 @@
 @import "tailwindcss";
-
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
 @plugin "daisyui"{
   themes: cupcake;
 }
