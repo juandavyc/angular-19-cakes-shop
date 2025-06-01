@@ -29,7 +29,10 @@
             "styles": [
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/aos/dist/aos.css",
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/swiper/css/swiper.min.css",
+              "node_modules/swiper/css/navigation.min.css",
+              "node_modules/swiper/css/pagination.min.css"
             ],
             "scripts": [],
             "server": "src/main.server.ts",

@@ -1,18 +1,18 @@
-
-  <div class="swiper sm:w-full md:w-md w-sm" #swiperDiv>
-    <div class="swiper-wrapper bg-base-200 rounded-box shadow-sm">
-      <div class="swiper-slide flex justify-center items-center aspect-[4/3]">
-        <img [src]="cover()" alt="cover-image" class="w-full h-auto object-contain rounded-box" />
-      </div>
-      @for (image of images(); track image.id) {
-      <div class="swiper-slide flex justify-center items-center aspect-[4/3]">
-        <img [src]="image.url" [alt]="image.altText" class="w-full h-auto object-contain rounded-box" />
-      </div>
-      }
+<div class="swiper sm:w-full md:w-md w-sm" #swiperDiv>
+  <div class="swiper-wrapper bg-base-200 rounded-box shadow-sm">
+    <div class="swiper-slide flex justify-center items-center aspect-[4/3]">
+      <img [src]="cover()" alt="cover-image" class="w-full h-auto object-contain rounded-box" />
     </div>
-    <div class="swiper-pagination"></div>
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
-    <div class="swiper-scrollbar"></div>
+    @for (image of images(); track image.id) {
+    <div class="swiper-slide flex justify-center items-center aspect-[4/3]">
+      <img [src]="image.url" [alt]="image.altText" class="w-full h-auto object-contain rounded-box" />
+    </div>
+    }
   </div>
-
+  <div class="swiper-pagination !relative !bottom-0 !mt-4"></div>
+  <div class="swiper-button-next !text-primary after:!text-xl"></div>
+  <div class="swiper-button-prev !text-primary after:!text-xl"></div>
+  <div class="swiper-scrollbar !h-1 !bg-gray-200 !relative !mt-4">
+    <div class="swiper-scrollbar-drag !bg-primary"></div>
+  </div>
+</div>
