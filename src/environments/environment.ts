@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://easy-morissa-juandavyc-44423044.koyeb.app'
+  apiUrl: 'https://010-bakery.fly.dev'
 }
